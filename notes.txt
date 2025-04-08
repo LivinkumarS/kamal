@@ -1,0 +1,32 @@
+// mid night reset  
+  
+  useEffect(() => {
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0); // Set to next midnight
+
+    const timeUntilMidnight = midnight - now; // Time left until midnight
+
+    const resetTimeout = setTimeout(() => {
+      checkoutUser();
+
+      // Reset daily data after 5 seconds
+      setTimeout(() => {
+        setCheckInOutTimes([]);
+        setTotalCheckInTime(0);
+      }, 5000);
+
+      // Schedule the next midnight reset
+      const dailyReset = setInterval(() => {
+        checkoutUser();
+        setTimeout(() => {
+          setCheckInOutTimes([]);
+          setTotalCheckInTime(0);
+        }, 5000);
+      }, 86400000);
+
+      return () => clearInterval(dailyReset);
+    }, timeUntilMidnight);
+
+    return () => clearTimeout(resetTimeout);
+  }, [isCheckedIn, checkInOutTimes]);

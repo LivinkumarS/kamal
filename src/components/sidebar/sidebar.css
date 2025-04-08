@@ -1,0 +1,66 @@
+.sidebar-container {
+  width: 70%;
+  height: 120vh;
+  position: fixed;
+  top: 0;
+  left: -200%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: start;
+  justify-content: start;
+  padding: 20px 10px;
+
+  background-color: #fff;
+
+  z-index: 999;
+
+  animation: ani 0.7s ease-in-out forwards;
+}
+
+.sidebar-container > .sitelogo > img {
+  max-width: 50px;
+  padding: 0;
+}
+.sidebar-container > nav {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: start;
+  gap: 12px;
+  width: 100%;
+  color: #234e70;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.sidebar-container > nav > p {
+  color: #234e70;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.aline-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.masters-list > nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  color: #234e70;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+@keyframes ani {
+  from {
+    left: -200%;
+  }
+  to {
+    left: 0;
+  }
+}

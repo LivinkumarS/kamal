@@ -1,0 +1,163 @@
+.onboard {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  background: hsl(240, 33%, 97%);
+  position: relative;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.onboard:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.onboarding-head {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.onboarding-head > h3 {
+  width: 50%;
+}
+.onboarding-header-right {
+  display: flex;
+  width: 50%;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: end;
+}
+.add-candidate-bts {
+  padding: 8px 10px;
+  background-image: linear-gradient(#0056b3, #405189);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+.add-candidate-bts:hover {
+  transform: scale(1.025);
+  background-image: linear-gradient(#405189, #0056b3);
+}
+
+/* table */
+.candidate-data {
+  margin-top: 20px;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
+}
+.candidate-table {
+  width: 100%;
+}
+.candidate-table > thead > tr > th {
+  min-width: 150px;
+  max-width: 160px;
+  padding: 15px;
+  box-sizing: border-box;
+  border-bottom: 1px solid skyblue;
+  text-align: center;
+  padding: 13px;
+  min-width: 140px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.candidate-table > tbody > tr > td {
+  min-width: 140px;
+  max-width: 160px;
+  padding: 15px;
+  text-align: center;
+  box-sizing: border-box;
+  border-bottom: 1px solid skyblue;
+}
+
+.candidate-table > tbody > tr > td > abbr {
+  text-decoration: none;
+}
+.table-row:hover {
+  background: lightcyan;
+}
+.table-row:hover > #width-edit > .dot-logo {
+  display: block;
+  transition: all 0.2s ease-in-out;
+}
+.list-ul-logo {
+  width: 20px;
+  height: 20px;
+}
+.dot-logo {
+  border-radius: 25%;
+  display: none;
+  width: 20px;
+  height: 20px;
+  transition: all 0.2s ease-in-out;
+}
+.dot-logo:hover {
+  border: 1px solid black;
+  padding: 2px;
+  border-radius: 50%;
+  background: lightseagreen;
+}
+
+/* width of colum */
+#width-eme-num,
+#width-address {
+  min-width: 270px;
+}
+#width-con-num,
+#width-company-mail,
+#width-pre-employee,
+#medical {
+  min-width: 180px;
+}
+
+#width-relative-experience,
+#width-emp-code,
+#width-aathar {
+  min-width: 160px;
+}
+#width-num {
+  min-width: 80px;
+}
+#width-edit {
+  min-width: 50px;
+}
+#width-personal-mail,
+#width-experience {
+  min-width: 170px;
+}
+#width-qualification,
+#width-relative-experience {
+  min-width: 200px;
+}
+#width-edu-doc {
+  min-width: 210px;
+}
+#conveyance,
+#width-lap-cmy {
+  min-width: 230px;
+}
+
+th#width-edit,
+td#width-edit {
+  position: sticky;
+  left: 0;
+  background: hsl(240, 33%, 97%); /* Avoid text overlapping */
+  z-index: 2;
+}
+#width-num {
+  position: sticky;
+  left: 50px;
+  background: hsl(240, 33%, 97%); /* Avoid text overlapping */
+  z-index: 2;
+}
+
+.table-row:hover > #width-num,
+.table-row:hover > #width-edit {
+  background: lightcyan;
+}
