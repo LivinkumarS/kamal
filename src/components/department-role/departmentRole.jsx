@@ -13,6 +13,7 @@ export default function departmentRole() {
 
   const [showDepartmentRole, setshowDepartmentRole] = useState(false);
   const [editDepartmentRole, setEditDepartmentRole] = useState(false);
+  const [editDept, setEditDept] = useState({});
 
   const departmentFromAPI = {
     departmentTableData: [
@@ -96,6 +97,15 @@ export default function departmentRole() {
     }
   };
 
+  const showEditDepartmentRole = (code) => {
+    setEditDept(
+      currentData.find((ele) => {
+        return ele.code === code;
+      })
+    );
+    setEditDepartmentRole(true);
+  };
+
   return (
     <>
       {showNewRole ? (
@@ -107,7 +117,21 @@ export default function departmentRole() {
           {showDepartmentRole && (
             <div className="create-department-role-btn">
               <CreateDepartmentRole
+                editDept={editDept}
+                editDepartmentRole={editDepartmentRole}
+                setEditDept={setEditDept}
                 setshowDepartmentRole={setshowDepartmentRole}
+                setshowNewRole={setshowNewRole}
+              />
+            </div>
+          )}
+          {editDepartmentRole && (
+            <div className="create-department-role-btn">
+              <CreateDepartmentRole
+                editDept={editDept}
+                editDepartmentRole={editDepartmentRole}
+                setEditDept={setEditDept}
+                setshowDepartmentRole={setEditDepartmentRole}
                 setshowNewRole={setshowNewRole}
               />
             </div>
@@ -154,7 +178,11 @@ export default function departmentRole() {
                   {currentData.map((ele, ind) => (
                     <tr key={ind}>
                       <td>{ele.code}</td>
-                      <td onClick={() => setshowDepartmentRole(true)}>
+                      <td
+                        onClick={() => {
+                          showEditDepartmentRole(ele.code);
+                        }}
+                      >
                         {ele.department_name}
                       </td>
                       <td id="department-width-description">

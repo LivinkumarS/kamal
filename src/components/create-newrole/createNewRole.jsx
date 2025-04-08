@@ -2,46 +2,46 @@ import React, { useState, useEffect } from "react";
 import "./createNewRole.css";
 
 export default function CreateNewRole({ setshowNewRole }) {
-  const [roleAccessAPIdata, setroleAccessAPIdata] = useState({});
-  const [roleAccess, setroleAccess] = useState([]);
 
   const [inputRoleAccess, setinputRoleAccess] = useState({
-    role_name: "",
-    description: "",
-    full_access: "",
-    view: "",
-    create: "",
-    edit: "",
-    delete: "",
+    dashboard: {
+      fullAccess: false,
+      view: false,
+      create: false,
+      edit: false,
+      delete: false,
+    },
+    task: {
+      fullAccess: false,
+      view: false,
+      create: false,
+      edit: false,
+      delete: false,
+    },
+    projectTracker: {
+      fullAccess: false,
+      view: false,
+      create: false,
+      edit: false,
+      delete: false,
+    },
+    oboarding: {
+      fullAccess: false,
+      view: false,
+      create: false,
+      edit: false,
+      delete: false,
+    },
+    attendance: {
+      fullAccess: false,
+      view: false,
+      create: false,
+      edit: false,
+      delete: false,
+    },
   });
 
-  const roleAccessFromAPI = {
-    roleAccess: [
-      {
-        menu: "Dashboard",
-      },
-      {
-        menu: "Task",
-      },
-      {
-        menu: "Onboarding",
-      },
-      {
-        menu: "Project Tracker",
-      },
-      {
-        menu: "Attendance",
-      },
-    ],
-  };
-  useEffect(() => {
-    setroleAccessAPIdata(roleAccessFromAPI);
-  }, []);
-  useEffect(() => {
-    if (Object.keys(roleAccessAPIdata).length > 0) {
-      setroleAccess(roleAccessAPIdata.roleAccess);
-    }
-  }, [roleAccessAPIdata]);
+  
 
   const handleInputRoleChange = (e) => {
     setinputRoleAccess((prev) => {
@@ -52,13 +52,41 @@ export default function CreateNewRole({ setshowNewRole }) {
 
   function NewRoleSubmit() {
     setinputRoleAccess({
-      role_name: "",
-      description: "",
-      full_access: "",
-      view: "",
-      create: "",
-      edit: "",
-      delete: "",
+      dashboard: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      task: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      projectTracker: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      oboarding: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      attendance: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
     });
   }
 
@@ -123,9 +151,8 @@ export default function CreateNewRole({ setshowNewRole }) {
               </tr>
             </thead>
             <tbody className="ceate-role-body">
-              {roleAccess.map((ele, ind) => (
-                <tr key={ind}>
-                  <td>{ele.menu}</td>
+                <tr>
+                  <td>Dashboard</td>
                   <td id="check-role">
                     <input
                       id="full_access"
@@ -167,7 +194,7 @@ export default function CreateNewRole({ setshowNewRole }) {
                     />
                   </td>
                 </tr>
-              ))}
+              
             </tbody>
           </table>
         </div>
