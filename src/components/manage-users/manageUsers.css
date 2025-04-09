@@ -148,6 +148,8 @@
   font-weight: 400;
   border-bottom: 1px solid hsla(0, 0%, 0%, 0.119);
 }
+
+/* edit cointainer */
 .dot-logo-manage {
   width: 4px;
   height: 16px;
@@ -155,6 +157,29 @@
   cursor: pointer;
 }
 
+.manageuser-dot-container {
+  display: none;
+  flex-direction: column;
+
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  position: absolute;
+  top: 20px;
+}
+.manageuser-dot-container > div {
+  padding: 10px 15px;
+}
+#manage-width-action:hover > .manageuser-dot-container {
+  display: block;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 7px;
+}
+.manageuser-dot-container div:hover {
+  background: lightgray;
+  cursor: pointer;
+}
 #managa-width-firstname,
 #managa-width-lastname {
   min-width: 160px;
@@ -163,6 +188,7 @@
 #manage-width-action {
   max-width: 95px;
   min-width: 95px;
+  position: relative;
 }
 .table-bottem {
   width: 100%;

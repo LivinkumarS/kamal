@@ -176,6 +176,7 @@ export default function createDepartmentRole({
       branch: "",
       description: "",
     });
+    setshowDepartmentRole(false);
   }
 
   return (
@@ -188,7 +189,7 @@ export default function createDepartmentRole({
           onClick={(e) => {
             e.preventDefault();
             setshowDepartmentRole(false);
-            setEditDept({})
+            setEditDept({});
           }}
         >
           <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
@@ -293,14 +294,22 @@ export default function createDepartmentRole({
                     </tr>
                   </thead>
                   <tbody className="display-role-tablebody">
-                    {rolesDescription.map((ele, ind) => (
-                      <tr key={ind}>
-                        <td id="display-rolename-width">{ele.role}</td>
-                        <td id="display-description-width">
-                          {ele.description}
+                    {rolesDescription.length > 0 ? (
+                      rolesDescription.map((ele, ind) => (
+                        <tr key={ind}>
+                          <td id="display-rolename-width">{ele.role}</td>
+                          <td id="display-description-width">
+                            {ele.description}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td>
+                          <p>No Data Found</p>
                         </td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>

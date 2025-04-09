@@ -83,10 +83,36 @@
   justify-content: center;
   align-items: center;
 }
+
+/* dot-logo */
 .dot-logo-department {
   width: 4px;
   height: 16px;
   fill: #2a2a2a;
+  cursor: pointer;
+}
+
+.department-dot-container {
+  display: none;
+  flex-direction: column;
+
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  position: absolute;
+  top: -25px;
+}
+.department-dot-container > div {
+  padding: 10px 15px;
+}
+#department-width-action:hover > .department-dot-container {
+  display: block;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 7px;
+}
+.department-dot-container div:hover {
+  background: lightgray;
   cursor: pointer;
 }
 
@@ -135,6 +161,7 @@
 #department-width-action {
   max-width: 110px;
   min-width: 110px;
+  position: relative;
 }
 #department-width-description {
   min-width: 320px;

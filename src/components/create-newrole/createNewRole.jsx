@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./createNewRole.css";
 
 export default function CreateNewRole({ setshowNewRole }) {
-
   const [inputRoleAccess, setinputRoleAccess] = useState({
     dashboard: {
       fullAccess: false,
@@ -25,7 +24,7 @@ export default function CreateNewRole({ setshowNewRole }) {
       edit: false,
       delete: false,
     },
-    oboarding: {
+    onboarding: {
       fullAccess: false,
       view: false,
       create: false,
@@ -41,54 +40,16 @@ export default function CreateNewRole({ setshowNewRole }) {
     },
   });
 
-  
-
-  const handleInputRoleChange = (e) => {
-    setinputRoleAccess((prev) => {
-      return { ...prev, [e.target.id]: e.target.value };
-    });
-  };
   console.log(inputRoleAccess);
 
-  function NewRoleSubmit() {
-    setinputRoleAccess({
-      dashboard: {
-        fullAccess: false,
-        view: false,
-        create: false,
-        edit: false,
-        delete: false,
-      },
-      task: {
-        fullAccess: false,
-        view: false,
-        create: false,
-        edit: false,
-        delete: false,
-      },
-      projectTracker: {
-        fullAccess: false,
-        view: false,
-        create: false,
-        edit: false,
-        delete: false,
-      },
-      oboarding: {
-        fullAccess: false,
-        view: false,
-        create: false,
-        edit: false,
-        delete: false,
-      },
-      attendance: {
-        fullAccess: false,
-        view: false,
-        create: false,
-        edit: false,
-        delete: false,
-      },
+  const handleInputRoleChange = (e, pageName) => {
+    setinputRoleAccess((prev) => {
+      return {
+        ...prev,
+        [pageName]: { ...prev[pageName], [e.target.id]: e.target.checked },
+      };
     });
-  }
+  };
 
   return (
     <div className="create-newrole-cointainer">
@@ -103,7 +64,7 @@ export default function CreateNewRole({ setshowNewRole }) {
           <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
         </svg>
       </div>
-      <form onSubmit={NewRoleSubmit}>
+      <form onSubmit={() => setshowNewRole(false)}>
         <div className="create-role-content">
           <div className="create-role-box">
             <label htmlFor="role_name">
@@ -120,7 +81,9 @@ export default function CreateNewRole({ setshowNewRole }) {
             />
           </div>
           <div className="create-role-box">
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">
+              Description<sup>*</sup>
+            </label>
             <input
               id="description"
               name="description"
@@ -151,50 +114,75 @@ export default function CreateNewRole({ setshowNewRole }) {
               </tr>
             </thead>
             <tbody className="ceate-role-body">
-                <tr>
-                  <td>Dashboard</td>
+              {[
+                "dashboard",
+                "task",
+                "projectTracker",
+                "onboarding",
+                "attendance",
+              ].map((page, ind) => (
+                <tr key={ind}>
+                  <td>
+                    {page
+                      .toLowerCase()
+                      .split(" ")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                      )
+                      .join(" ")}
+                  </td>
                   <td id="check-role">
                     <input
-                      id="full_access"
+                      id="fullAccess"
                       type="checkbox"
-                      onChange={handleInputRoleChange}
-                      value={inputRoleAccess.full_access}
+                      value={inputRoleAccess[page].fullAccess}
+                      onChange={(e) => {
+                        handleInputRoleChange(e, page);
+                      }}
                     />
                   </td>
                   <td id="check-role">
                     <input
                       id="view"
                       type="checkbox"
-                      onChange={handleInputRoleChange}
-                      value={inputRoleAccess.view}
+                      value={inputRoleAccess[page].view}
+                      onChange={(e) => {
+                        handleInputRoleChange(e, page);
+                      }}
                     />
                   </td>
                   <td id="check-role">
                     <input
                       id="create"
                       type="checkbox"
-                      onChange={handleInputRoleChange}
-                      value={inputRoleAccess.create}
+                      value={inputRoleAccess[page].create}
+                      onChange={(e) => {
+                        handleInputRoleChange(e, page);
+                      }}
                     />
                   </td>
                   <td id="check-role">
                     <input
                       id="edit"
                       type="checkbox"
-                      onChange={handleInputRoleChange}
-                      value={inputRoleAccess.edit}
+                      value={inputRoleAccess[page].edit}
+                      onChange={(e) => {
+                        handleInputRoleChange(e, page);
+                      }}
                     />
                   </td>
                   <td id="check-role">
                     <input
                       id="delete"
                       type="checkbox"
-                      onChange={handleInputRoleChange}
-                      value={inputRoleAccess.delete}
+                      value={inputRoleAccess[page].delete}
+                      onChange={(e) => {
+                        handleInputRoleChange(e, page);
+                      }}
                     />
                   </td>
                 </tr>
-              
+              ))}
             </tbody>
           </table>
         </div>

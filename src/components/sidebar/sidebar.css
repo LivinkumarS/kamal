@@ -19,9 +19,22 @@
   animation: ani 0.7s ease-in-out forwards;
 }
 
-.sidebar-container > .sitelogo > img {
+.sidebar-container > .small-sitelogo > img {
   max-width: 50px;
   padding: 0;
+}
+.small-sitelogo {
+  position: relative;
+  width: 100%;
+  text-align: start;
+}
+.small-x-logo {
+  width: 20px;
+  height: 20px;
+  fill: black;
+  position: absolute;
+  top: 1px;
+  right: 1px;
 }
 .sidebar-container > nav {
   display: flex;

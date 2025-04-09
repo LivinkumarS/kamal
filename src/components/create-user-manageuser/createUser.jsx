@@ -22,7 +22,8 @@ export default function createUser({ showCreateUser, setshowCreateUser }) {
   };
   console.log(createUserForm);
 
-  function handleCreateUserSubmit() {
+  function handleCreateUserSubmit(e) {
+    e.preventDefault();
     setcreateUserForm({
       first_name: "",
       last_name: "",
@@ -35,7 +36,7 @@ export default function createUser({ showCreateUser, setshowCreateUser }) {
       available_branches: "",
       tms_user_id: "",
     });
-    setcreateUserForm(false);
+    setshowCreateUser(false);
   }
 
   return (

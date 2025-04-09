@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./manageUsers.css";
 import CreateUser from "../create-user-manageuser/createUser";
+import { toast } from "react-toastify";
 
 export default function manageUsers() {
   const [manageAPIdata, setmanageAPIdata] = useState({});
@@ -149,6 +150,19 @@ export default function manageUsers() {
     }
   };
 
+  // delete list
+
+  function deleteTask(ind) {
+    const okDel = window.confirm("Are you sure you want to delete this task?");
+    if (okDel) {
+      setmanageAPIdata((prev) => ({
+        ...prev,
+        tableData: prev.tableData.filter((_, index) => index !== ind),
+      }));
+      toast.success("Task deleted!");
+    }
+  }
+
   return (
     <>
       {showCreateUser && (
@@ -196,47 +210,60 @@ export default function manageUsers() {
               </tr>
             </thead>
             <tbody className="manage-tbody">
-              {currentData.map((ele, ind) => (
-                <tr key={ind}>
-                  <td>
-                    <abbr title={ele.Email}>
-                      {ele.Email.length < 18
-                        ? ele.Email
-                        : ele.Email.slice(0, 18) + "..."}
-                    </abbr>
-                  </td>
-                  <td id="managa-width-firstname">
-                    <abbr title={ele.FirstName}>
-                      {ele.FirstName.length < 16
-                        ? ele.FirstName
-                        : ele.FirstName.slice(0, 16) + "..."}
-                    </abbr>
-                  </td>
-                  <td id="managa-width-lastname">
-                    <abbr title={ele.LastName}>
-                      {ele.LastName.length < 16
-                        ? ele.LastName
-                        : ele.LastName.slice(0, 16) + "..."}
-                    </abbr>
-                  </td>
-                  <td id="managa-width-role">
-                    <abbr title={ele.Role}>
-                      {ele.Role.length < 20
-                        ? ele.Role
-                        : ele.Role.slice(0, 20) + "..."}
-                    </abbr>
-                  </td>
-                  <td id="manage-width-action">
-                    <svg
-                      className="dot-logo-manage"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 128 512"
-                    >
-                      <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
-                    </svg>
-                  </td>
-                </tr>
-              ))}
+              {currentData.length > 0 ? (
+                currentData.map((ele, ind) => (
+                  <tr key={ind}>
+                    <td>
+                      <abbr title={ele.Email}>
+                        {ele.Email.length < 18
+                          ? ele.Email
+                          : ele.Email.slice(0, 18) + "..."}
+                      </abbr>
+                    </td>
+                    <td id="managa-width-firstname">
+                      <abbr title={ele.FirstName}>
+                        {ele.FirstName.length < 16
+                          ? ele.FirstName
+                          : ele.FirstName.slice(0, 16) + "..."}
+                      </abbr>
+                    </td>
+                    <td id="managa-width-lastname">
+                      <abbr title={ele.LastName}>
+                        {ele.LastName.length < 16
+                          ? ele.LastName
+                          : ele.LastName.slice(0, 16) + "..."}
+                      </abbr>
+                    </td>
+                    <td id="managa-width-role">
+                      <abbr title={ele.Role}>
+                        {ele.Role.length < 20
+                          ? ele.Role
+                          : ele.Role.slice(0, 20) + "..."}
+                      </abbr>
+                    </td>
+                    <td id="manage-width-action">
+                      <svg
+                        className="dot-logo-manage"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 128 512"
+                      >
+                        <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
+                      </svg>
+                      <nav className="manageuser-dot-container">
+                        <div
+                          onClick={() => {
+                            deleteTask(ind);
+                          }}
+                        >
+                          Delete
+                        </div>
+                      </nav>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>No Data Found</tr>
+              )}
             </tbody>
           </table>
         </div>

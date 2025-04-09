@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./departmentRole.css";
 import CreateDepartmentRole from "../create-department-role/createDepartmentRole";
 import CreateNewRole from "../create-newrole/createNewRole";
+import { toast } from "react-toastify";
 
 export default function departmentRole() {
   const [departmentAPI, setdepartmentAPI] = useState({});
@@ -106,11 +107,29 @@ export default function departmentRole() {
     setEditDepartmentRole(true);
   };
 
+  // delete functionality
+  function deleteTask(ind) {
+    const okDel = window.confirm("Are you sure you want to delete this task?");
+
+    if (okDel) {
+      setdepartmentAPI((prev) => ({
+        ...prev,
+        departmentTableData: prev.departmentTableData.filter(
+          (_, index) => index !== ind
+        ),
+      }));
+      toast.success("Task deleted!");
+    }
+  }
+
   return (
     <>
       {showNewRole ? (
         <div className="createNewRole-btn">
-          <CreateNewRole setshowNewRole={setshowNewRole} />
+          <CreateNewRole
+            setshowDepartmentRole={setshowDepartmentRole}
+            setshowNewRole={setshowNewRole}
+          />
         </div>
       ) : (
         <>
@@ -175,30 +194,46 @@ export default function departmentRole() {
                   </tr>
                 </thead>
                 <tbody className="department-tbody">
-                  {currentData.map((ele, ind) => (
-                    <tr key={ind}>
-                      <td>{ele.code}</td>
-                      <td
-                        onClick={() => {
-                          showEditDepartmentRole(ele.code);
-                        }}
-                      >
-                        {ele.department_name}
-                      </td>
-                      <td id="department-width-description">
-                        {ele.description}
-                      </td>
-                      <td id="department-width-action">
-                        <svg
-                          className="dot-logo-department"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 128 512"
-                        >
-                          <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
-                        </svg>
-                      </td>
+                  {currentData.length > 0 ? (
+                    currentData.map((ele, ind) => (
+                      <tr key={ind}>
+                        <td>{ele.code}</td>
+                        <td>{ele.department_name}</td>
+                        <td id="department-width-description">
+                          {ele.description}
+                        </td>
+                        <td id="department-width-action">
+                          <svg
+                            className="dot-logo-department"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 128 512"
+                          >
+                            <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
+                          </svg>
+                          <nav className="department-dot-container">
+                            <div
+                              onClick={() => {
+                                showEditDepartmentRole(ele.code);
+                              }}
+                            >
+                              Edit
+                            </div>
+                            <div
+                              onClick={() => {
+                                deleteTask(ind);
+                              }}
+                            >
+                              Delete
+                            </div>
+                          </nav>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <p>No Data Fond</p>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
