@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./createDepartmentRole.css";
+import "./createDepartmentrole.css";
 import { toast } from "react-toastify";
 
 export default function createDepartmentRole({
