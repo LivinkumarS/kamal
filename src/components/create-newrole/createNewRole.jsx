@@ -1,52 +1,117 @@
 import React, { useState, useEffect } from "react";
 import "./createNewRole.css";
 
-export default function CreateNewRole({ setshowNewRole }) {
+export default function CreateNewRole({
+  setshowNewRole,
+  editRole,
+  editRoleOnly,
+  seteditRole,
+  seteditRoleOnly,
+}) {
   const [inputRoleAccess, setinputRoleAccess] = useState({
-    dashboard: {
-      fullAccess: false,
-      view: false,
-      create: false,
-      edit: false,
-      delete: false,
-    },
-    task: {
-      fullAccess: false,
-      view: false,
-      create: false,
-      edit: false,
-      delete: false,
-    },
-    projectTracker: {
-      fullAccess: false,
-      view: false,
-      create: false,
-      edit: false,
-      delete: false,
-    },
-    onboarding: {
-      fullAccess: false,
-      view: false,
-      create: false,
-      edit: false,
-      delete: false,
-    },
-    attendance: {
-      fullAccess: false,
-      view: false,
-      create: false,
-      edit: false,
-      delete: false,
+    role: "",
+    description: "",
+    access: {
+      dashboard: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      task: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      projectTracker: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      onboarding: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
+      attendance: {
+        fullAccess: false,
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+      },
     },
   });
 
-  console.log(inputRoleAccess);
+  useEffect(() => {
+    if (editRoleOnly && Object.keys(editRole).length > 0) {
+      setinputRoleAccess(editRole);
+    }
+  }, [editRole]);
 
   const handleInputRoleChange = (e, pageName) => {
     setinputRoleAccess((prev) => {
       return {
         ...prev,
-        [pageName]: { ...prev[pageName], [e.target.id]: e.target.checked },
+        access: {
+          ...prev.access,
+          [pageName]: {
+            ...prev.access[pageName],
+            [e.target.id]: e.target.checked,
+          },
+        },
+      };
+    });
+  };
+
+  const handleResetinputbox = () => {
+    setinputRoleAccess((prev) => {
+      return {
+        ...prev,
+        access: {
+          dashboard: {
+            fullAccess: false,
+            view: false,
+            create: false,
+            edit: false,
+            delete: false,
+          },
+          task: {
+            fullAccess: false,
+            view: false,
+            create: false,
+            edit: false,
+            delete: false,
+          },
+          projectTracker: {
+            fullAccess: false,
+            view: false,
+            create: false,
+            edit: false,
+            delete: false,
+          },
+          onboarding: {
+            fullAccess: false,
+            view: false,
+            create: false,
+            edit: false,
+            delete: false,
+          },
+          attendance: {
+            fullAccess: false,
+            view: false,
+            create: false,
+            edit: false,
+            delete: false,
+          },
+        },
       };
     });
   };
@@ -54,7 +119,7 @@ export default function CreateNewRole({ setshowNewRole }) {
   return (
     <div className="create-newrole-cointainer">
       <div className="create-role-head">
-        <p>New Roles</p>
+        <p>{editRoleOnly ? "Edit" : "Create"} Roles</p>
         <svg
           className="x-logo-create-role"
           xmlns="http://www.w3.org/2000/svg"
@@ -75,8 +140,12 @@ export default function CreateNewRole({ setshowNewRole }) {
               name="role_name"
               type="text"
               placeholder="Enter Role"
-              value={inputRoleAccess.role_name}
-              onChange={handleInputRoleChange}
+              value={inputRoleAccess.role}
+              onChange={(e) => {
+                setinputRoleAccess((prev) => {
+                  return { ...prev, role: e.target.value };
+                });
+              }}
               required
             />
           </div>
@@ -90,7 +159,11 @@ export default function CreateNewRole({ setshowNewRole }) {
               type="text"
               placeholder="Enter Text"
               value={inputRoleAccess.description}
-              onChange={handleInputRoleChange}
+              onChange={(e) => {
+                setinputRoleAccess((prev) => {
+                  return { ...prev, description: e.target.value };
+                });
+              }}
               required
             />
           </div>
@@ -98,7 +171,9 @@ export default function CreateNewRole({ setshowNewRole }) {
         <div className="create-role-content">
           <div className="role-permission-title">
             <p>Permission</p>
-            <nav>Reset</nav>
+            <button type="reset" onClick={handleResetinputbox}>
+              Reset
+            </button>
           </div>
         </div>
         <div className="create-role-table">
@@ -135,7 +210,7 @@ export default function CreateNewRole({ setshowNewRole }) {
                     <input
                       id="fullAccess"
                       type="checkbox"
-                      value={inputRoleAccess[page].fullAccess}
+                      checked={inputRoleAccess.access[page].fullAccess}
                       onChange={(e) => {
                         handleInputRoleChange(e, page);
                       }}
@@ -145,7 +220,7 @@ export default function CreateNewRole({ setshowNewRole }) {
                     <input
                       id="view"
                       type="checkbox"
-                      value={inputRoleAccess[page].view}
+                      checked={inputRoleAccess.access[page].view}
                       onChange={(e) => {
                         handleInputRoleChange(e, page);
                       }}
@@ -155,7 +230,7 @@ export default function CreateNewRole({ setshowNewRole }) {
                     <input
                       id="create"
                       type="checkbox"
-                      value={inputRoleAccess[page].create}
+                      checked={inputRoleAccess.access[page].create}
                       onChange={(e) => {
                         handleInputRoleChange(e, page);
                       }}
@@ -165,7 +240,7 @@ export default function CreateNewRole({ setshowNewRole }) {
                     <input
                       id="edit"
                       type="checkbox"
-                      value={inputRoleAccess[page].edit}
+                      checked={inputRoleAccess.access[page].edit}
                       onChange={(e) => {
                         handleInputRoleChange(e, page);
                       }}
@@ -175,7 +250,7 @@ export default function CreateNewRole({ setshowNewRole }) {
                     <input
                       id="delete"
                       type="checkbox"
-                      value={inputRoleAccess[page].delete}
+                      checked={inputRoleAccess.access[page].delete}
                       onChange={(e) => {
                         handleInputRoleChange(e, page);
                       }}
@@ -193,6 +268,8 @@ export default function CreateNewRole({ setshowNewRole }) {
               onClick={(e) => {
                 e.preventDefault();
                 setshowNewRole(false);
+                seteditRoleOnly(false);
+                seteditRole({});
               }}
             >
               Cancel

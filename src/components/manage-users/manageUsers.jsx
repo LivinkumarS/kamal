@@ -10,110 +10,129 @@ export default function manageUsers() {
   const rowsPerPage = 10; // Show 10 rows per page
 
   const [showCreateUser, setshowCreateUser] = useState(false);
+  const [editCreateUser, seteditCreateUser] = useState(false);
+  const [edituser, setedituser] = useState({});
 
   const manageFromAPI = {
     tableData: [
       {
-        Email: "Kmamahhhhhhhhhhhzxcvvh@gmail.com",
-        FirstName: "kamalsslivinkishoreharishnaveen",
-        LastName: "Rajsssssss",
-        Role: "UI des",
+        code: "12",
+        email: "Kmamahhhhhhhhhhhzxcvvh@gmail.com",
+        first_name: "kamalsslivinkishoreharishnaveen",
+        last_name: "Rajsssssss",
+        role: "Super Admin",
       },
       {
-        Email: "Kmamil.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "13",
+        email: "Kmamil.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "15",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "14",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "16",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "17",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "18",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "1",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "2",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "3",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "4",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "155",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "122",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "123",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "128",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "129",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
       {
-        Email: "Kmama@gmail.com",
-        FirstName: "kamal",
-        LastName: "Raj",
-        Role: "UI",
+        code: "1225",
+        email: "Kmama@gmail.com",
+        first_name: "kamal",
+        last_name: "Raj",
+        role: "Super Admin",
       },
     ],
   };
@@ -163,6 +182,15 @@ export default function manageUsers() {
     }
   }
 
+  const showEditUser = (code) => {
+    setedituser(
+      currentData.find((ele) => {
+        return ele.code === code;
+      })
+    );
+    seteditCreateUser(true);
+  };
+
   return (
     <>
       {showCreateUser && (
@@ -170,6 +198,20 @@ export default function manageUsers() {
           <CreateUser
             showCreateUser={showCreateUser}
             setshowCreateUser={setshowCreateUser}
+            editCreateUser={editCreateUser}
+            edituser={edituser}
+            setedituser={setedituser}
+          />
+        </div>
+      )}
+      {editCreateUser && (
+        <div className="createuser-btn">
+          <CreateUser
+            showCreateUser={showCreateUser}
+            setshowCreateUser={seteditCreateUser}
+            editCreateUser={editCreateUser}
+            edituser={edituser}
+            setedituser={setedituser}
           />
         </div>
       )}
@@ -202,7 +244,7 @@ export default function manageUsers() {
           <table>
             <thead className="manage-thead">
               <tr>
-                <th>Email</th>
+                <th>email</th>
                 <th id="managa-width-firstname">First Name</th>
                 <th id="managa-width-lastname">Last Name</th>
                 <th id="managa-width-role">Role</th>
@@ -214,31 +256,31 @@ export default function manageUsers() {
                 currentData.map((ele, ind) => (
                   <tr key={ind}>
                     <td>
-                      <abbr title={ele.Email}>
-                        {ele.Email.length < 18
-                          ? ele.Email
-                          : ele.Email.slice(0, 18) + "..."}
+                      <abbr title={ele.email}>
+                        {ele.email.length < 18
+                          ? ele.email
+                          : ele.email.slice(0, 18) + "..."}
                       </abbr>
                     </td>
                     <td id="managa-width-firstname">
-                      <abbr title={ele.FirstName}>
-                        {ele.FirstName.length < 16
-                          ? ele.FirstName
-                          : ele.FirstName.slice(0, 16) + "..."}
+                      <abbr title={ele.first_name}>
+                        {ele.first_name.length < 16
+                          ? ele.first_name
+                          : ele.first_name.slice(0, 16) + "..."}
                       </abbr>
                     </td>
                     <td id="managa-width-lastname">
-                      <abbr title={ele.LastName}>
-                        {ele.LastName.length < 16
-                          ? ele.LastName
-                          : ele.LastName.slice(0, 16) + "..."}
+                      <abbr title={ele.last_name}>
+                        {ele.last_name.length < 16
+                          ? ele.last_name
+                          : ele.last_name.slice(0, 16) + "..."}
                       </abbr>
                     </td>
                     <td id="managa-width-role">
-                      <abbr title={ele.Role}>
-                        {ele.Role.length < 20
-                          ? ele.Role
-                          : ele.Role.slice(0, 20) + "..."}
+                      <abbr title={ele.role}>
+                        {ele.role.length < 20
+                          ? ele.role
+                          : ele.role.slice(0, 20) + "..."}
                       </abbr>
                     </td>
                     <td id="manage-width-action">
@@ -250,6 +292,13 @@ export default function manageUsers() {
                         <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
                       </svg>
                       <nav className="manageuser-dot-container">
+                        <div
+                          onClick={() => {
+                            showEditUser(ele.code);
+                          }}
+                        >
+                          Edit
+                        </div>
                         <div
                           onClick={() => {
                             deleteTask(ind);

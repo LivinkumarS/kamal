@@ -103,6 +103,7 @@ export default function dashboard() {
       <div className="charts-container">
         {/* Pie Chart */}
         <div className="chart">
+          <h2>Task</h2>
           <ResponsiveContainer width="100%" height={350}>
             <PieChart>
               <Pie
@@ -129,6 +130,7 @@ export default function dashboard() {
 
         {/* Bar Chart */}
         <div className="chart">
+          <h2>Attendance</h2>
           <ResponsiveContainer height={350}>
             <BarChart
               data={attendanceData}

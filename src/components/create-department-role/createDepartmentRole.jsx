@@ -6,7 +6,9 @@ export default function createDepartmentRole({
   setshowNewRole,
   editDepartmentRole,
   editDept,
+  seteditRoleOnly,
   setEditDept,
+  seteditRole,
 }) {
   const [createDepartmentForm, setcreateDepartmentForm] = useState({
     department_name: "",
@@ -26,7 +28,7 @@ export default function createDepartmentRole({
           " Lorem ipsum, dolor sit amet consectetur adipisicing elit Voluptates ipsum eius enim quia eveniet ab expedita officiis maxime accusantium, rem fugit voluptate ipsa saepe liber esse alias exercitationem aliquid consequuntur. Lorem ipsum, dolor sit amet consectetur adipisicing elit Voluptates ipsum eius enim quia eveniet ab expedita officiis maxime accusantium, rem fugi",
         access: {
           dashboard: {
-            fullAccess: false,
+            fullAccess: true,
             view: false,
             create: false,
             edit: false,
@@ -46,7 +48,7 @@ export default function createDepartmentRole({
             edit: false,
             delete: false,
           },
-          oboarding: {
+          onboarding: {
             fullAccess: false,
             view: false,
             create: false,
@@ -88,7 +90,7 @@ export default function createDepartmentRole({
             edit: false,
             delete: false,
           },
-          oboarding: {
+          onboarding: {
             fullAccess: false,
             view: false,
             create: false,
@@ -130,7 +132,7 @@ export default function createDepartmentRole({
             edit: false,
             delete: false,
           },
-          oboarding: {
+          onboarding: {
             fullAccess: false,
             view: false,
             create: false,
@@ -291,6 +293,7 @@ export default function createDepartmentRole({
                     <tr>
                       <th id="display-rolename-width">Role Name</th>
                       <th id="display-description-width">Description</th>
+                      <th id="display-action-width">Action</th>
                     </tr>
                   </thead>
                   <tbody className="display-role-tablebody">
@@ -300,6 +303,33 @@ export default function createDepartmentRole({
                           <td id="display-rolename-width">{ele.role}</td>
                           <td id="display-description-width">
                             {ele.description}
+                          </td>
+                          <td id="display-action-width">
+                            <svg
+                              className="dot-logo-department"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 128 512"
+                            >
+                              <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
+                            </svg>
+                            <nav className="departmentrole-dot-container">
+                              <div
+                                onClick={() => {
+                                  seteditRole(ele);
+                                  seteditRoleOnly(true);
+                                  setshowNewRole(true);
+                                }}
+                              >
+                                Edit
+                              </div>
+                              <div
+                              // onClick={() => {
+                              //   deleteTask(ind);
+                              // }}
+                              >
+                                Delete
+                              </div>
+                            </nav>
                           </td>
                         </tr>
                       ))

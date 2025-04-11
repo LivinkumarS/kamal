@@ -329,14 +329,18 @@ export default function onboard() {
           </thead>
 
           <tbody>
-            {employees.map((ele, ind) => (
-              <OnboardTableRow
-                ele={ele}
-                ind={ind}
-                key={ind}
-                handleDeleteCandidate={handleDeleteCandidate}
-              />
-            ))}
+            {employees.length > 0 ? (
+              employees.map((ele, ind) => (
+                <OnboardTableRow
+                  ele={ele}
+                  ind={ind}
+                  key={ind}
+                  handleDeleteCandidate={handleDeleteCandidate}
+                />
+              ))
+            ) : (
+              <p>No Data Found</p>
+            )}
           </tbody>
         </table>
       </nav>

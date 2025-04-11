@@ -3,6 +3,7 @@ import "./departmentRole.css";
 import CreateDepartmentRole from "../create-department-role/createDepartmentRole";
 import CreateNewRole from "../create-newrole/createNewRole";
 import { toast } from "react-toastify";
+import { use } from "react";
 
 export default function departmentRole() {
   const [departmentAPI, setdepartmentAPI] = useState({});
@@ -11,6 +12,8 @@ export default function departmentRole() {
   const departmentRowsPerPage = 5;
 
   const [showNewRole, setshowNewRole] = useState(false);
+  const [editRoleOnly, seteditRoleOnly] = useState(false);
+  const [editRole, seteditRole] = useState({});
 
   const [showDepartmentRole, setshowDepartmentRole] = useState(false);
   const [editDepartmentRole, setEditDepartmentRole] = useState(false);
@@ -127,8 +130,11 @@ export default function departmentRole() {
       {showNewRole ? (
         <div className="createNewRole-btn">
           <CreateNewRole
-            setshowDepartmentRole={setshowDepartmentRole}
+            editRoleOnly={editRoleOnly}
             setshowNewRole={setshowNewRole}
+            editRole={editRole}
+            seteditRole={seteditRole}
+            seteditRoleOnly={seteditRoleOnly}
           />
         </div>
       ) : (
@@ -136,6 +142,8 @@ export default function departmentRole() {
           {showDepartmentRole && (
             <div className="create-department-role-btn">
               <CreateDepartmentRole
+                seteditRole={seteditRole}
+                seteditRoleOnly={seteditRoleOnly}
                 editDept={editDept}
                 editDepartmentRole={editDepartmentRole}
                 setEditDept={setEditDept}
@@ -147,6 +155,8 @@ export default function departmentRole() {
           {editDepartmentRole && (
             <div className="create-department-role-btn">
               <CreateDepartmentRole
+                seteditRole={seteditRole}
+                seteditRoleOnly={seteditRoleOnly}
                 editDept={editDept}
                 editDepartmentRole={editDepartmentRole}
                 setEditDept={setEditDept}
@@ -157,7 +167,7 @@ export default function departmentRole() {
           )}
           <div
             className={`department-role-container ${
-              showDepartmentRole && "blur-department"
+              (showDepartmentRole || editDepartmentRole) && "blur-department"
             }`}
           >
             <p>Department & Roles</p>

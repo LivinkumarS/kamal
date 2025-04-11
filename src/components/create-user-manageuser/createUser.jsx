@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./createUser.css";
 
-export default function createUser({ showCreateUser, setshowCreateUser }) {
+export default function createUser({
+  showCreateUser,
+  setshowCreateUser,
+  editCreateUser,
+  edituser,
+  setedituser,
+}) {
   const [createUserForm, setcreateUserForm] = useState({
     first_name: "",
     last_name: "",
@@ -9,11 +15,16 @@ export default function createUser({ showCreateUser, setshowCreateUser }) {
     contact_number: "",
     branch: "",
     department: "",
-    roles: "",
+    role: "",
     reporting_to: "",
     available_branches: "",
     employee_id: "",
   });
+  useEffect(() => {
+    setcreateUserForm((prev) => {
+      return { ...prev, ...edituser };
+    });
+  }, [edituser]);
 
   const handleCreateUserChange = (e) => {
     setcreateUserForm((prev) => {
@@ -31,7 +42,7 @@ export default function createUser({ showCreateUser, setshowCreateUser }) {
       contact_number: "",
       branch: "",
       department: "",
-      roles: "",
+      role: "",
       reporting_to: "",
       available_branches: "",
       tms_user_id: "",
@@ -45,12 +56,15 @@ export default function createUser({ showCreateUser, setshowCreateUser }) {
         className="x-logo-createuser"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 384 512"
-        onClick={() => setshowCreateUser(false)}
+        onClick={() => {
+          setshowCreateUser(false);
+          setedituser({});
+        }}
       >
         <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
       </svg>
       <div className="createuser-head">
-        <p>Create New Branch Users</p>
+        <p>{editCreateUser ? "Edit" : "Create New"} Branch Users</p>
       </div>
       <div className="createuser-body">
         <form onSubmit={handleCreateUserSubmit}>
@@ -152,23 +166,23 @@ export default function createUser({ showCreateUser, setshowCreateUser }) {
           </div>
           <div className="createuser-content">
             <div className="createuser-box">
-              <label htmlFor="roles">
-                roles<sup>*</sup>
+              <label htmlFor="role">
+                role<sup>*</sup>
               </label>
               <select
-                id="roles"
-                value={createUserForm.roles}
+                id="role"
+                value={createUserForm.role}
                 onChange={handleCreateUserChange}
-                name="roles"
+                name="role"
                 required
               >
                 <option value="" style={{ color: "hsl(0, 0%, 80%)" }}>
                   Select Role
                 </option>
-                <option value="super_admin">Super Admin</option>
-                <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
-                <option value="user_employee">User Employee</option>
+                <option value="Super Admin">Super Admin</option>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="User Employee">User Employee</option>
               </select>
             </div>
             <div className="createuser-box">
