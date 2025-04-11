@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./createDepartmentRole.css";
+import { toast } from "react-toastify";
 
 export default function createDepartmentRole({
   setshowDepartmentRole,
@@ -170,6 +171,20 @@ export default function createDepartmentRole({
     });
   };
 
+  function deleteTask(ind) {
+    const okDel = window.confirm("Are you sure you want to delete this task?");
+
+    if (okDel) {
+      setrolesDescriptionAPI((prev) => ({
+        ...prev,
+        rolesDescription: prev.rolesDescription.filter(
+          (_, index) => index !== ind
+        ),
+      }));
+      toast.success("Task deleted!");
+    }
+  }
+
   function handleNewDepartmentSubmit(e) {
     e.preventDefault();
     setcreateDepartmentForm({
@@ -323,9 +338,9 @@ export default function createDepartmentRole({
                                 Edit
                               </div>
                               <div
-                              // onClick={() => {
-                              //   deleteTask(ind);
-                              // }}
+                                onClick={() => {
+                                  deleteTask(ind);
+                                }}
                               >
                                 Delete
                               </div>

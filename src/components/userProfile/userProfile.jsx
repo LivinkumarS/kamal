@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./userProfile.css";
 import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function userProfile() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [userDetails, setUserDetails] = useState(user);
+  const BackFromProfile = useNavigate();
 
   const inputRef = useRef(0);
 
@@ -20,7 +22,7 @@ export default function userProfile() {
         };
       });
 
-      toast.success("Profile Picture Uploaded Successflly");
+      toast.success("Profile Picture Uploaded Successflly ");
     }
   };
 
@@ -37,6 +39,8 @@ export default function userProfile() {
     e.preventDefault();
 
     console.log(userDetails);
+
+    BackFromProfile(-1);
   }
 
   return (
