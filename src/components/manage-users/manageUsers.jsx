@@ -148,6 +148,7 @@ export default function manageUsers() {
 
   // Calculate total pages
   const totalPages = Math.ceil(tableData.length / rowsPerPage);
+  console.log(totalPages);
 
   // Get data for current page
   const currentData = tableData.slice(
@@ -215,7 +216,11 @@ export default function manageUsers() {
           />
         </div>
       )}
-      <div className={`manageusers-container ${showCreateUser && "blur"}`}>
+      <div
+        className={`manageusers-container ${
+          (showCreateUser || editCreateUser) && "blur"
+        }`}
+      >
         <p>Manage Users</p>
         <div className="manage-header">
           <p className="manage-headleft">

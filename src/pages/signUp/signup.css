@@ -148,6 +148,23 @@ input[type="checkbox"] {
   font-size: 16px;
   letter-spacing: 1px;
 }
+.increment-decrement-signup {
+  appearance: none; /* Removes default UI in all browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Hide number input arrows in Edge, Firefox, and WebKit browsers */
+.increment-decrement-signup::-webkit-outer-spin-button,
+.increment-decrement-signup::-webkit-inner-spin-button {
+  display: none;
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.increment-decrement-signup[type="text"]::-ms-clear {
+  display: none; /* Hide clear button in Edge */
+}
 
 @media screen and (max-width: 800px) {
   .signup-page {

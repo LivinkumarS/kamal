@@ -98,6 +98,7 @@ export default function addNewCandidate() {
 
   function handleSubmit() {
     //befor enpty it to be uploadet to backend link
+    e.preventDefault();
     setFormData({
       basics: "",
       hra: "",

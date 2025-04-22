@@ -1,0 +1,34 @@
+.newProduct-container {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  position: relative;
+  overflow: scroll;
+  background: rgba(253, 253, 253, 1);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.newProduct-container::-webkit-scrollbar {
+  display: none;
+}
+.newProduct-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(35, 78, 112, 1);
+}
+.createNewProduct-cointainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+.photo-cointainer {
+  width: 33%;
+}
+.createNewProduct-right {
+  width: 66%;
+}
+.image-src {
+  width: 100%;
+  height: 100%;
+}

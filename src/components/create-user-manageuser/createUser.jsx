@@ -45,7 +45,7 @@ export default function createUser({
       role: "",
       reporting_to: "",
       available_branches: "",
-      tms_user_id: "",
+      employee_id: "",
     });
     setshowCreateUser(false);
   }

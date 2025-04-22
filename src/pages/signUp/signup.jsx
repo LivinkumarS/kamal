@@ -71,7 +71,6 @@ export default function signup() {
                 }}
               />
             </div>
-
             <div
               className={`username-cointainer-up ${
                 focusphone ? "user-border" : " "
@@ -80,7 +79,7 @@ export default function signup() {
               onBlur={() => setfocusPhone(false)}
             >
               <input
-                className="inputdata"
+                className="inputdata increment-decrement-signup"
                 placeholder="Phone Number"
                 type="number"
                 value={phone}

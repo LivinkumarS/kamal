@@ -13,6 +13,9 @@ import { logout } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
 import ProjectBugsPage from "../project-bugs-page/projectBugsPage";
 import Dashboard from "../dashboard/dashboard";
+import NewEnquiry from "../new-enquiry/newEnquiry";
+import EnquiryList from "../enquiry-list/enquiryList";
+import Products from "../products/products";
 
 export default function body({
   expanded,
@@ -134,6 +137,12 @@ export default function body({
           <ManageUsers />
         ) : currentPage == "departmentRole" ? (
           <DepartmentRole />
+        ) : currentPage == "products" ? (
+          <Products />
+        ) : currentPage == "newEnquiry" ? (
+          <NewEnquiry />
+        ) : currentPage == "enquiryList" ? (
+          <EnquiryList />
         ) : currentPage == "task" ? (
           <Task />
         ) : currentPage == "attendance" ? (
