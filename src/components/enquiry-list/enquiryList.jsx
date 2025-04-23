@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./enquiryList.css";
 import NewEnquiry from "../new-enquiry/newEnquiry";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function enquiryList() {
   const [APIenquirylist, setAPIenquirylist] = useState({});
@@ -10,20 +11,25 @@ export default function enquiryList() {
   const [currentpageEnquirylist, setcurrentpageEnquirylist] = useState(1);
   const rowsPerPageEnquirylist = 10;
 
+  const [EditNewEnquiry, setEditNewEnquiry] = useState(false);
+  const [EditNewEnquiryData, setEditNewEnquiryData] = useState({});
+
   const enquirylistFromAPI = {
     enquirylist: [
       {
         id: "1",
         enquiry_id: "ENQ001",
-        coustomer_name: "Ram",
-        email: "example@gmail.com",
+        first_name: "Ram",
+        last_name: "raj",
+        email: "example@gmailkamalalan.com",
         phone_number: "1234667895",
         status: "New",
       },
       {
         id: "2",
         enquiry_id: "ENQ002",
-        coustomer_name: "Vijay",
+        first_name: "Vijay",
+        last_name: "raj",
         email: "example@gmail.com",
         phone_number: "1234667895",
         status: "New",
@@ -31,7 +37,8 @@ export default function enquiryList() {
       {
         id: "3",
         enquiry_id: "ENQ003",
-        coustomer_name: "AK",
+        first_name: "AK",
+        last_name: "raj",
         email: "example@gmail.com",
         phone_number: "1234667895",
         status: "New",
@@ -39,7 +46,8 @@ export default function enquiryList() {
       {
         id: "4",
         enquiry_id: "ENQ004",
-        coustomer_name: "Rajani",
+        first_name: "Rajani",
+        last_name: "raj",
         email: "example@gmail.com",
         phone_number: "1234667895",
         status: "New",
@@ -72,9 +80,36 @@ export default function enquiryList() {
       setcurrentpageEnquirylist((prev) => prev - 1);
     }
   };
+  //
+  function deleteEnquiryList(ind) {
+    const okDel = window.confirm("Are you sure you want to delete this task?");
+    if (okDel) {
+      setAPIenquirylist((prev) => ({
+        ...prev,
+        enquirylist: prev.enquirylist.filter((_, index) => index !== ind),
+      }));
+      toast.success("Task deleted!");
+    }
+  }
 
+  const showEditNewProjest = (id) => {
+    setEditNewEnquiryData(
+      currentData.find((ele) => {
+        return ele.id === id;
+      })
+    );
+    setEditNewEnquiry(true);
+  };
   return (
     <>
+      {EditNewEnquiry && (
+        <NewEnquiry
+          EditNewEnquiry={EditNewEnquiry}
+          EditNewEnquiryData={EditNewEnquiryData}
+          setEditNewEnquiry={setEditNewEnquiry}
+          setEditNewEnquiryData={setEditNewEnquiryData}
+        />
+      )}
       <div className="enquiryList-cointainer">
         <p className="enquiryList-title">Enquiry List</p>
         <div className="enquiryList-header">
@@ -105,7 +140,8 @@ export default function enquiryList() {
             <thead className="enquirylist-thead">
               <tr>
                 <th id="id-enquirylist-width">Enquiry ID</th>
-                <th id="coustomer-enquirylist-width">Coustomer Name</th>
+                <th id="coustomer-enquirylist-width">First Name</th>
+                <th id="coustomer-enquirylist-width">Last Name</th>
                 <th id="email-enquirylist-width">Email</th>
                 <th id="phone-enquirylist-width">Phone Number</th>
                 <th>Stauts</th>
@@ -117,9 +153,8 @@ export default function enquiryList() {
                 currentData.map((ele, ind) => (
                   <tr key={ind}>
                     <td id="id-enquirylist-width">{ele.enquiry_id}</td>
-                    <td id="coustomer-enquirylist-width">
-                      {ele.coustomer_name}
-                    </td>
+                    <td id="coustomer-enquirylist-width">{ele.first_name}</td>
+                    <td id="coustomer-enquirylist-width">{ele.last_name}</td>
                     <td id="email-enquirylist-width">{ele.email}</td>
                     <td id="phone-enquirylist-width">{ele.phone_number}</td>
                     <td>{ele.status}</td>
@@ -132,8 +167,20 @@ export default function enquiryList() {
                         <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
                       </svg>
                       <nav className="enquirylist-dot-container">
-                        <div>Edit</div>
-                        <div>Delete</div>
+                        <div
+                          onClick={() => {
+                            showEditNewProjest(ele.id);
+                          }}
+                        >
+                          Edit
+                        </div>
+                        <div
+                          onClick={() => {
+                            deleteEnquiryList(ind);
+                          }}
+                        >
+                          Delete
+                        </div>
                       </nav>
                     </td>
                   </tr>

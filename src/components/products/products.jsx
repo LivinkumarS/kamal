@@ -19,6 +19,7 @@ export default function products() {
         type: "Goods",
         category: "Apparel",
         states: "Active",
+        stock_level: "120",
         price: "400",
       },
       {
@@ -27,6 +28,7 @@ export default function products() {
         type: "Goods",
         category: "Apparel",
         states: "Active",
+        stock_level: "120",
         price: "400",
       },
       {
@@ -35,6 +37,7 @@ export default function products() {
         type: "Goods",
         category: "Apparel",
         states: "Inactive",
+        stock_level: "120",
         price: "400",
       },
       {
@@ -43,6 +46,7 @@ export default function products() {
         type: "Goods",
         category: "Apparel",
         states: "Inactive",
+        stock_level: "120",
         price: "400",
       },
       {
@@ -51,6 +55,7 @@ export default function products() {
         type: "Goods",
         category: "Apparel",
         states: "Inactive",
+        stock_level: "120",
         price: "400",
       },
     ],
@@ -114,19 +119,19 @@ export default function products() {
           <div className="product-search-category">
             <div className="product-input-box">
               <lable>Category</lable>
-              <input />
+              <input type="text" />
             </div>
             <div className="product-input-box">
               <lable>Brand</lable>
-              <input />
+              <input type="text" />
             </div>
             <div className="product-input-box">
               <lable>Status</lable>
-              <input />
+              <input type="text" />
             </div>
             <div className="product-input-box">
               <lable>Product Type</lable>
-              <input />
+              <input type="text" />
             </div>
           </div>
           <div className="product-table-cointainer">
@@ -138,6 +143,7 @@ export default function products() {
                   <th>Type</th>
                   <th>Category</th>
                   <th>Status</th>
+                  <th>Stock Level</th>
                   <th>Price</th>
                   <th>Action</th>
                 </tr>
@@ -153,6 +159,7 @@ export default function products() {
                       <td>
                         <div className="productStatus-active">{ele.states}</div>
                       </td>
+                      <td>{ele.stock_level}</td>
                       <td>{ele.price}</td>
                       <td className="product-action-cointainer">
                         <svg

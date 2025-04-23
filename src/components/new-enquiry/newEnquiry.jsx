@@ -4,11 +4,10 @@ import "./newEnquiry.css";
 import { toast } from "react-toastify";
 
 export default function newEnquiry({
-  setshowNewEnquiry,
-  seteditNewEnquiryPage,
-  editNewEnquiry,
-  editNewEnquiryPage,
+  EditNewEnquiry,
+  EditNewEnquiryData,
   setEditNewEnquiry,
+  setEditNewEnquiryData,
 }) {
   const [showAddItem, setshowAddItem] = useState(false);
   const [editAddItem, seteditAddItem] = useState(false);
@@ -91,6 +90,12 @@ export default function newEnquiry({
     });
   };
 
+  useEffect(() => {
+    setnewEnquiry((prev) => {
+      return { ...prev, ...EditNewEnquiryData };
+    });
+  }, [EditNewEnquiryData]);
+
   function handleNewEnquerySubmit(e) {
     e.preventDefault();
     setnewEnquiry({
@@ -114,6 +119,7 @@ export default function newEnquiry({
       enquiry_status: "",
       priority: "",
     });
+    setEditNewEnquiry(false);
   }
 
   //delete
@@ -165,7 +171,9 @@ export default function newEnquiry({
         }`}
       >
         <form onSubmit={handleNewEnquerySubmit} className="newEnquiry-form">
-          <p className="newEnquiry-title">Create New Enquiry</p>
+          <p className="newEnquiry-title">
+            {EditNewEnquiry ? "Edit" : "Create New"} Enquiry
+          </p>
           <div className="newEnquiry-form-container">
             <div className="newEnquiry-colom-box">
               <div className="newEnquiry-box">

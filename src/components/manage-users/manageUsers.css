@@ -263,6 +263,7 @@
 @media (max-width: 430px) {
   .table-bottem {
     flex-direction: column;
+    padding: 20px 10px;
   }
   .num-entries {
     width: 100%;
@@ -277,9 +278,6 @@
     transform: translate(-50%, -50%);
     width: 80%;
     height: 75%;
-  }
-  .table-bottem {
-    padding: 20px 10px;
   }
 }
 
