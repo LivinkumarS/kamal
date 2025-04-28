@@ -5,7 +5,7 @@ export default function categoryInput({
   newProductData,
   newProductcustom,
   id,
-  categoryApi,
+  customApi,
   handleCustomChange,
 }) {
   const [custom, setCustom] = useState(false);
@@ -21,15 +21,15 @@ export default function categoryInput({
         <input
           id={id}
           type="text"
-          placeholder="Enter custom category"
+          placeholder="Enter Custom Input"
           value={newProductcustom[id]}
           onChange={handleNewProjectCustomData}
         />
       ) : (
         <select id={id} value={newProductData[id]} onChange={changeCustom}>
-          <option value="">Select Category</option>
+          <option value="">Select Option</option>
           <option value="custom">+ Custom</option>
-          {categoryApi.map((ele, ind) => (
+          {customApi.map((ele, ind) => (
             <option key={ind} value={ele}>
               {ele}
             </option>
