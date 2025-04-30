@@ -10,7 +10,7 @@
 .newProduct-container::-webkit-scrollbar {
   display: none;
 }
-.circle-x-logo {
+.circle-x-logo-newproduct {
   width: 15px;
   height: 15px;
   fill: rgba(255, 77, 79, 1);

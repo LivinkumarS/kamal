@@ -75,7 +75,7 @@ export default function createNewProduct({
     size: "",
     color: "",
     supplier: "",
-    related_products: "",
+    related_products: [],
   });
 
   const [newProductData, setnewProductData] = useState({
@@ -140,7 +140,7 @@ export default function createNewProduct({
     if (value !== "Custom") {
       setnewProductCustom((prev) => ({
         ...prev,
-        [`custom_${id}`]: "", 
+        [`custom_${id}`]: "",
       }));
     }
   };
@@ -431,7 +431,7 @@ export default function createNewProduct({
               }}
             >
               <svg
-                className="circle-x-logo"
+                className="circle-x-logo-newproduct"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >
@@ -759,12 +759,11 @@ export default function createNewProduct({
                 <p>Related Products</p>
               </label>
               <CustomCheckboxInput
-                handleCustomChange={handleCustomChange}
-                newProductData={newProductData}
+                setnewProductData={setnewProductData}
                 handleNewProjectCustomData={handleNewProjectCustomData}
                 newProductcustom={newProductcustom}
                 id={"related_products"}
-                customApi={dropDownData.related_productsApi}
+                customApi={related_productsApi}
               />
             </div>
             <div className="newProduct-box">
@@ -774,6 +773,7 @@ export default function createNewProduct({
               </label>
               <CategoryInput
                 handleCustomChange={handleCustomChange}
+                newProductData={newProductData}
                 handleNewProjectCustomData={handleNewProjectCustomData}
                 newProductcustom={newProductcustom}
                 id={"supplier"}

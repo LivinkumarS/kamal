@@ -1,0 +1,107 @@
+.productImport-container {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  overflow: scroll;
+  background: rgba(253, 253, 253, 1);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.productImport-container::-webkit-scrollbar {
+  display: none;
+}
+.productImport-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.productImport-head > p {
+  font-size: 22px;
+  font-weight: 600;
+  color: rgba(35, 78, 112, 1);
+}
+.productImport-head > nav {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  gap: 5px;
+  flex-direction: row;
+}
+.productImport-head > nav > P {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(255, 77, 79, 1);
+}
+.circle-x-logo-import {
+  width: 15px;
+  height: 15px;
+  fill: rgba(255, 77, 79, 1);
+}
+.import-download-logo {
+  width: 17px !important;
+  height: 17px !important;
+  fill: #fff;
+}
+.import-download-blue-logo {
+  fill: rgba(35, 78, 112, 1);
+  width: 17px !important;
+  height: 17px !important;
+}
+.import-tickbox-logo {
+  fill: rgba(0, 184, 0, 1);
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* downloadTemplate-container */
+.productImport-downloadTemplate-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+.productImport-downloadTemplate-container > div > p {
+  font-size: 15px;
+  font-weight: 400;
+  fill: rgba(42, 42, 42, 1);
+}
+.productImport-downloadTemplate-container > div {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+.productImport-downloadTemplate-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(35, 78, 112, 1);
+}
+.productImport-download-btn-container {
+  margin: auto;
+  cursor: pointer;
+  border-radius: 12px;
+  background-color: rgba(35, 78, 112, 1);
+  padding: 10px 15px;
+  width: fit-content;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+/* uploadfile */
+
+.productImport-upload-container {
+  width: 100%;
+}
+.productImport-upload-container > p {
+  font-size: 18px;
+  font-weight: 500;
+}
+.productImport-filo-logo {
+  width: 27px;
+  height: 30px;
+  fill: rgba(92, 209, 255, 1);
+}

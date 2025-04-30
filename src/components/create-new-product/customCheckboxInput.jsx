@@ -2,23 +2,28 @@ import React, { useState, useEffect } from "react";
 
 export default function customCheckboxInput({
   handleNewProjectCustomData,
-  newProductData,
   newProductcustom,
   id,
   customApi,
-  handleCustomChange,
+  setnewProductData,
 }) {
   const [custom, setCustom] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (option) => {
     setSelectedOptions((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
     );
   };
+
+  useEffect(() => {
+    setnewProductData((prev) => {
+      return { ...prev, [id]: selectedOptions };
+    });
+  }, [selectedOptions]);
 
   return (
     <>
@@ -32,21 +37,22 @@ export default function customCheckboxInput({
         />
       ) : (
         <div className="dropdown-container">
-          <button className="dropdown-button" onClick={() => setOpen(!open)}>
+          <div className="dropdown-button" onClick={() => setOpen(!open)}>
             Select Fruits
-          </button>
+          </div>
 
           {open && (
             <div className="dropdown-menu">
               <p
                 onClick={() => {
                   setCustom(true);
+                  setSelectedOptions([]);
                 }}
               >
-                + Custom
+                custom
               </p>
-              {customApi.map((option, ind) => (
-                <label key={ind} className="dropdown-option">
+              {customApi.map((option) => (
+                <label key={option} className="dropdown-option">
                   <input
                     type="checkbox"
                     value={option}
@@ -58,10 +64,6 @@ export default function customCheckboxInput({
               ))}
             </div>
           )}
-
-          <p className="selected-text">
-            Selected: {selectedOptions.join(", ")}
-          </p>
         </div>
       )}
     </>
