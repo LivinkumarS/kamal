@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./createNewProduct.css";
 import CategoryInput from "./customInput";
+import CustomCheckboxInput from "./customCheckboxInput";
 import { toast } from "react-toastify";
+import NewproductCategory from "../newproductCategory/newproductCategory";
 import NewproductTaxCode from "../newproduct-tax-code/newproductTaxCode";
+import NewproductUOM from "../newproduct-uom/newproductUOM";
+import NewproductWarehouse from "../newproductWarehouse/newproductWarehouse";
+import NewproductSupplier from "../newproductSupplier/newproductSupplier";
+import NewproductSize from "../newproductSize/newproductSize";
+import NewproductColor from "../newproductColor/newproductColor";
 
 export default function createNewProduct({
   setshowNewProduct,
@@ -18,12 +25,32 @@ export default function createNewProduct({
   const [sizeApi, setsizeApi] = useState([]);
   const [colorApi, setcolorApi] = useState([]);
   const [supplierApi, setsupplierApi] = useState([]);
+  const [related_productsApi, setrelated_productsApi] = useState([]);
 
   // Add new custom box
+
+  //tax-code
   const [newproduct_tax_code, setnewproduct_tax_code] = useState(false);
   const [newproduct_edit_tax_code, setnewproduct_edit_tax_code] =
     useState(false);
-  const [editTaxData, setEditTaxData] = useState({});
+  //uon
+  const [newProductUOM, setnewProductUOM] = useState(false);
+  const [editNewproductUOM, seteditNewproductUOM] = useState(false);
+  //warehouse
+  const [newproductWarehouse, setnewproductWarehouse] = useState(false);
+  const [editnewproductWarehouse, setEditnewproductWarehouse] = useState(false);
+  //supplier
+  const [newproductSupplier, setnewproductSupplier] = useState(false);
+  const [editnewproductSupplier, setEditnewproductSupplier] = useState(false);
+  //size
+  const [newproductSize, setnewproductSize] = useState(false);
+  const [editnewproductSize, setEditnewproductSize] = useState(false);
+  //color
+  const [newproductColor, setnewproductColor] = useState(false);
+  const [editnewproductColor, setEditnewproductColor] = useState(false);
+  //category
+  const [newproductCategory, setnewproductCategory] = useState(false);
+  const [editnewproductCategory, setEditnewproductCategory] = useState(false);
 
   const [newProductImage, setnewProductImage] = useState(true);
   const [imageURL, setImageURL] = useState("");
@@ -48,6 +75,7 @@ export default function createNewProduct({
     size: "",
     color: "",
     supplier: "",
+    related_products: "",
   });
 
   const [newProductData, setnewProductData] = useState({
@@ -71,6 +99,8 @@ export default function createNewProduct({
     supplier: "",
     status: "",
     product_usage: "",
+    related_products: [],
+    sub_category: "",
   });
 
   const dropDownData = {
@@ -81,6 +111,7 @@ export default function createNewProduct({
     sizeApi: ["small", "large", "medium"],
     colorApi: ["black", "yellow", "red"],
     supplierApi: ["abc.pvt.LTD", "qwe.pvt.LTD"],
+    related_productsApi: ["Earbuds", "Bluetooth", "Speaker"],
   };
   useEffect(() => {
     setApiCustomdata(dropDownData);
@@ -94,6 +125,7 @@ export default function createNewProduct({
       setsizeApi(ApiCustomdata.sizeApi);
       setcolorApi(ApiCustomdata.colorApi);
       setsupplierApi(ApiCustomdata.supplierApi);
+      setrelated_productsApi(ApiCustomdata.related_productsApi);
     }
   }, [ApiCustomdata]);
 
@@ -105,11 +137,10 @@ export default function createNewProduct({
       [id]: value,
     }));
 
-    // Only reset if new dropdown value is NOT "Custom"
     if (value !== "Custom") {
       setnewProductCustom((prev) => ({
         ...prev,
-        [`custom_${id}`]: "", // Clear only the relevant field
+        [`custom_${id}`]: "", 
       }));
     }
   };
@@ -158,6 +189,8 @@ export default function createNewProduct({
       supplier: "",
       status: "",
       product_usage: "",
+      related_products: "",
+      sub_category: "",
     });
     setnewProductCustom({
       category: "",
@@ -167,6 +200,7 @@ export default function createNewProduct({
       size: "",
       color: "",
       supplier: "",
+      related_products: "",
     });
     setImageURL([]);
     setshowNewProduct(false);
@@ -207,38 +241,183 @@ export default function createNewProduct({
     setImageURL([]);
     setshowNewProduct(false);
   }
+  console.log(newProductData);
+  console.log(newProductcustom);
 
   return (
     <>
+      {newproductCategory && (
+        <div className="product-bg-autoheight-btn">
+          <NewproductCategory
+            newproductCategory={newproductCategory}
+            setnewproductCategory={setnewproductCategory}
+            editnewproductCategory={editnewproductCategory}
+            setEditnewproductCategory={setEditnewproductCategory}
+            editDropDown={dropDownData.categoryApi}
+          />
+        </div>
+      )}
+      {editnewproductCategory && (
+        <div className="product-bg-autoheight-btn">
+          <NewproductCategory
+            newproductCategory={newproductCategory}
+            setnewproductCategory={setnewproductCategory}
+            editnewproductCategory={editnewproductCategory}
+            setEditnewproductCategory={setEditnewproductCategory}
+            editDropDown={dropDownData.categoryApi}
+          />
+        </div>
+      )}
       {newproduct_tax_code && (
-        <div className="product-tax-code-btn">
+        <div className="product-bg-btn">
           <NewproductTaxCode
             newproduct_tax_code={newproduct_tax_code}
             setnewproduct_tax_code={setnewproduct_tax_code}
             setnewproduct_edit_tax_code={setnewproduct_edit_tax_code}
             newproduct_edit_tax_code={newproduct_edit_tax_code}
-            editTaxData={editTaxData}
-            setEditTaxData={setEditTaxData}
             editDropDown={dropDownData.tax_codeApi}
           />
         </div>
       )}
       {newproduct_edit_tax_code && (
-        <div className="product-tax-code-btn">
+        <div className="product-bg-btn">
           <NewproductTaxCode
             newproduct_tax_code={newproduct_tax_code}
             setnewproduct_tax_code={setnewproduct_tax_code}
             setnewproduct_edit_tax_code={setnewproduct_edit_tax_code}
             newproduct_edit_tax_code={newproduct_edit_tax_code}
-            editTaxData={editTaxData}
-            setEditTaxData={setEditTaxData}
             editDropDown={dropDownData.tax_codeApi}
           />
         </div>
       )}
+      {newProductUOM && (
+        <div className="product-bg-btn">
+          <NewproductUOM
+            newProductUOM={newProductUOM}
+            setnewProductUOM={setnewProductUOM}
+            editNewproductUOM={editNewproductUOM}
+            seteditNewproductUOM={seteditNewproductUOM}
+            editDropDown={dropDownData.uomApi}
+          />
+        </div>
+      )}
+      {editNewproductUOM && (
+        <div className="product-bg-btn">
+          <NewproductUOM
+            newProductUOM={newProductUOM}
+            setnewProductUOM={setnewProductUOM}
+            editNewproductUOM={editNewproductUOM}
+            seteditNewproductUOM={seteditNewproductUOM}
+            editDropDown={dropDownData.uomApi}
+          />
+        </div>
+      )}
+      {newproductWarehouse && (
+        <div className="product-bg-btn">
+          <NewproductWarehouse
+            newproductWarehouse={newproductWarehouse}
+            setnewproductWarehouse={setnewproductWarehouse}
+            editnewproductWarehouse={editnewproductWarehouse}
+            setEditnewproductWarehouse={setEditnewproductWarehouse}
+            editDropDown={dropDownData.warehouseApi}
+          />
+        </div>
+      )}
+      {editnewproductWarehouse && (
+        <div className="product-bg-btn">
+          <NewproductWarehouse
+            newproductWarehouse={newproductWarehouse}
+            setnewproductWarehouse={setnewproductWarehouse}
+            editnewproductWarehouse={editnewproductWarehouse}
+            setEditnewproductWarehouse={setEditnewproductWarehouse}
+            editDropDown={dropDownData.warehouseApi}
+          />
+        </div>
+      )}
+      {newproductSupplier && (
+        <div className="product-bg-btn">
+          <NewproductSupplier
+            newproductSupplier={newproductSupplier}
+            setnewproductSupplier={setnewproductSupplier}
+            editnewproductSupplier={editnewproductSupplier}
+            setEditnewproductSupplier={setEditnewproductSupplier}
+            editDropDown={dropDownData.supplierApi}
+          />
+        </div>
+      )}
+      {editnewproductSupplier && (
+        <div className="product-bg-btn">
+          <NewproductSupplier
+            newproductSupplier={newproductSupplier}
+            setnewproductSupplier={setnewproductSupplier}
+            editnewproductSupplier={editnewproductSupplier}
+            setEditnewproductSupplier={setEditnewproductSupplier}
+            editDropDown={dropDownData.supplierApi}
+          />
+        </div>
+      )}
+      {newproductSize && (
+        <div className="product-bg-autoheight-btn">
+          <NewproductSize
+            newproductSize={newproductSize}
+            setnewproductSize={setnewproductSize}
+            editnewproductSize={editnewproductSize}
+            setEditnewproductSize={setEditnewproductSize}
+            editDropDown={dropDownData.sizeApi}
+          />
+        </div>
+      )}
+      {editnewproductSize && (
+        <div className="product-bg-autoheight-btn">
+          <NewproductSize
+            newproductSize={newproductSize}
+            setnewproductSize={setnewproductSize}
+            editnewproductSize={editnewproductSize}
+            setEditnewproductSize={setEditnewproductSize}
+            editDropDown={dropDownData.sizeApi}
+          />
+        </div>
+      )}
+      {newproductColor && (
+        <div className="product-bg-autoheight-btn">
+          <NewproductColor
+            newproductColor={newproductColor}
+            setnewproductColor={setnewproductColor}
+            editnewproductColor={editnewproductColor}
+            setEditnewproductColor={setEditnewproductColor}
+            editDropDown={dropDownData.colorApi}
+          />
+        </div>
+      )}
+      {editnewproductColor && (
+        <div className="product-bg-autoheight-btn">
+          <NewproductColor
+            newproductColor={newproductColor}
+            setnewproductColor={setnewproductColor}
+            editnewproductColor={editnewproductColor}
+            setEditnewproductColor={setEditnewproductColor}
+            editDropDown={dropDownData.colorApi}
+          />
+        </div>
+      )}
+
       <div
         className={`newProduct-container ${
-          (newproduct_tax_code || newproduct_edit_tax_code) && "product-bg-blur"
+          (newproduct_tax_code ||
+            newproduct_edit_tax_code ||
+            editNewproductUOM ||
+            newProductUOM ||
+            editnewproductWarehouse ||
+            newproductWarehouse ||
+            newproductSupplier ||
+            editnewproductSupplier ||
+            newproductSize ||
+            editnewproductSize ||
+            newproductColor ||
+            editnewproductColor ||
+            newproductCategory ||
+            editnewproductCategory) &&
+          "product-bg-blur"
         }`}
       >
         <form onSubmit={handleNewProductSubmit}>
@@ -344,13 +523,16 @@ export default function createNewProduct({
                 </select>
               </div>
               <div className="createNewProduct-box">
-                <label htmlFor="product_id">Product ID/Code</label>
+                <label htmlFor="product_id">
+                  Product ID {"(Auto Generate)"}
+                </label>
                 <input
                   id="product_id"
                   type="text"
                   value={newProductData.product_id}
                   onChange={handleNewProjectDataChange}
-                  placeholder="eg:PRO-10021"
+                  placeholder="Auto Generate"
+                  disabled
                 />
               </div>
 
@@ -368,11 +550,13 @@ export default function createNewProduct({
           </div>
           <div className="newProduct-title">
             <div>Create New Product</div>
-            <nav>+ Add New Category</nav>
           </div>
           <div className="NewProduct-input-cointainer">
             <div className="newProduct-box">
-              <label htmlFor="category">Category</label>
+              <label htmlFor="category">
+                <p>Category</p>
+                <nav onClick={() => setnewproductCategory(true)}>+ Add New</nav>
+              </label>
               <CategoryInput
                 handleCustomChange={handleCustomChange}
                 newProductData={newProductData}
@@ -384,8 +568,14 @@ export default function createNewProduct({
             </div>
 
             <div className="newProduct-box">
-              <label>Sub Category</label>
-              <input />
+              <label htmlFor="sub_category">Sub Category</label>
+              <input
+                type="text"
+                id="sub_category"
+                value={newProductData.sub_category}
+                onChange={handleNewProjectDataChange}
+                placeholder="e.g., Laptop"
+              />
             </div>
           </div>
           <div className="newProduct-title">
@@ -449,7 +639,7 @@ export default function createNewProduct({
             <div className="newProduct-box">
               <label htmlFor="uom">
                 <p>UOM {"(Unit Of Measurement)"}</p>
-                <nav>+ Add New</nav>
+                <nav onClick={() => setnewProductUOM(true)}>+ Add New</nav>
               </label>
               <CategoryInput
                 handleCustomChange={handleCustomChange}
@@ -490,7 +680,9 @@ export default function createNewProduct({
             <div className="newProduct-box">
               <label htmlFor="warehouse">
                 <p>Warehouse</p>
-                <nav>+ Add New</nav>
+                <nav onClick={() => setnewproductWarehouse(true)}>
+                  + Add New
+                </nav>
               </label>
               <CategoryInput
                 handleCustomChange={handleCustomChange}
@@ -509,7 +701,7 @@ export default function createNewProduct({
             <div className="newProduct-box">
               <label htmlFor="size">
                 <p>Size</p>
-                <nav>+ Add New</nav>
+                <nav onClick={() => setnewproductSize(true)}>+ Add New</nav>
               </label>
               <CategoryInput
                 handleCustomChange={handleCustomChange}
@@ -523,7 +715,7 @@ export default function createNewProduct({
             <div className="newProduct-box">
               <label htmlFor="color">
                 <p>Color</p>
-                <nav>+ Add New</nav>
+                <nav onClick={() => setnewproductColor(true)}>+ Add New</nav>
               </label>
               <CategoryInput
                 handleCustomChange={handleCustomChange}
@@ -559,24 +751,29 @@ export default function createNewProduct({
             </div>
           </div>
           <div className="newProduct-title">
-            <div>Related Products $ Supplier Info</div>
+            <div>Related Products & Supplier Info</div>
           </div>
           <div className="NewProduct-input-cointainer">
             <div className="newProduct-box">
               <label htmlFor="size">
-                <p>Size</p>
-                <nav>+ Add New</nav>
+                <p>Related Products</p>
               </label>
-              <input />
+              <CustomCheckboxInput
+                handleCustomChange={handleCustomChange}
+                newProductData={newProductData}
+                handleNewProjectCustomData={handleNewProjectCustomData}
+                newProductcustom={newProductcustom}
+                id={"related_products"}
+                customApi={dropDownData.related_productsApi}
+              />
             </div>
             <div className="newProduct-box">
               <label htmlFor="supplier">
                 <p>Supplier</p>
-                <nav>+ Add New</nav>
+                <nav onClick={() => setnewproductSupplier(true)}>+ Add New</nav>
               </label>
               <CategoryInput
                 handleCustomChange={handleCustomChange}
-                newProductData={newProductData}
                 handleNewProjectCustomData={handleNewProjectCustomData}
                 newProductcustom={newProductcustom}
                 id={"supplier"}

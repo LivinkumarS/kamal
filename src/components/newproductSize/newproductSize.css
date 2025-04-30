@@ -1,4 +1,4 @@
-.tax-code-cointainer {
+.size-container {
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -9,16 +9,10 @@
   scroll-behavior: smooth;
   scrollbar-color: lightgray;
 }
-.tax-code-cointainer::-webkit-scrollbar {
+.size-container::-webkit-scrollbar {
   display: none;
 }
-.left-logo-tax-code {
-  width: 20px;
-  height: 20px;
-  fill: rgba(35, 78, 112, 1);
-  cursor: pointer;
-}
-.tax-code-head {
+.size-head {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -26,7 +20,7 @@
   width: 100%;
   gap: 15px;
 }
-.tax-code-headleft {
+.size-headleft {
   display: flex;
   flex-direction: row;
   width: max-content;
@@ -34,7 +28,12 @@
   align-items: center;
   gap: 15px;
 }
-.tax-code-headright {
+.size-headleft > p {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(35, 78, 112, 1);
+}
+.size-headright {
   display: flex;
   flex-direction: row;
   width: max-content;
@@ -42,12 +41,13 @@
   align-items: center;
   gap: 15px;
 }
-.tax-code-headleft > p {
-  font-size: 20px;
-  font-weight: 700;
-  color: rgba(35, 78, 112, 1);
+.left-logo-size {
+  width: 20px;
+  height: 20px;
+  fill: rgba(35, 78, 112, 1);
+  cursor: pointer;
 }
-.add-tax-code-1 {
+.add-size-1 {
   background-color: rgba(35, 78, 112, 1);
   border-radius: 50px;
   font-size: 14px;
@@ -56,7 +56,7 @@
   padding: 8px 14px;
   cursor: pointer;
 }
-.add-tax-code-2 {
+.add-size-2 {
   border: 2px solid rgba(35, 78, 112, 1);
   box-sizing: border-box;
   padding: 8px 14px;
@@ -67,7 +67,8 @@
   font-weight: 500;
   cursor: pointer;
 }
-.tax-code-form > form {
+/* se */
+.size-form > form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +76,7 @@
   gap: 15px;
   margin-top: 20px;
 }
-.tax-code-box {
+.size-box {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -83,8 +84,8 @@
   align-items: start;
   gap: 3px;
 }
-.tax-code-box > input,
-.tax-code-box > select {
+.size-box > input,
+.size-box > select {
   width: 100%;
   border: 2px solid rgba(226, 226, 226, 1);
   background-color: rgba(249, 249, 249, 1);
@@ -94,28 +95,28 @@
   font-size: 14px;
   font-weight: 400;
 }
-.tax-code-box > input:focus,
-.tax-code-box > select:focus {
+.size-box > input:focus,
+.size-box > select:focus {
   background-color: white;
   border: 2px solid rgba(35, 78, 112, 1);
 }
-.tax-code-box > input::placeholder,
-.tax-code-box > select::placeholder {
+.size-box > input::placeholder,
+.size-box > select::placeholder {
   color: rgba(176, 176, 176, 1);
 }
-.tax-code-box > label {
+.size-box > label {
   font-size: 14px;
   font-weight: 500;
   color: rgba(42, 42, 42, 1);
 }
-.tax-code-submit-container {
+.size-submit-container {
   width: 100%;
   display: flex;
   justify-content: end;
   gap: 15px;
   position: relative;
 }
-.tax-code-submit-container > nav {
+.size-submit-container > nav {
   padding: 7px 25px;
   border-radius: 6px;
   border: 2px solid rgba(35, 78, 112, 1);
@@ -126,7 +127,7 @@
   cursor: pointer;
   text-align: center;
 }
-.tax-code-submit-container > button {
+.size-submit-container > button {
   padding: 7px 25px;
   border-radius: 6px;
   border: 2px solid rgba(35, 78, 112, 1);
@@ -136,7 +137,7 @@
   background: rgba(35, 78, 112, 1);
   cursor: pointer;
 }
-.tax-code-submit-container > div {
+.size-submit-container > div {
   padding: 7px 25px;
   border-radius: 6px;
   border: 2px solid rgba(255, 77, 79, 1);
@@ -150,49 +151,30 @@
   left: 0;
 }
 
-/* increment decrement */
-.increment-decrement-tax-code {
-  appearance: none; /* Removes default UI in all browsers */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-/* Hide number input arrows in Edge, Firefox, and WebKit browsers */
-.increment-decrement-tax-code::-webkit-outer-spin-button,
-.increment-decrement-tax-code::-webkit-inner-spin-button {
-  display: none;
-  margin: 0;
-  -webkit-appearance: none;
-}
-
-.increment-decrement-tax-code[type="text"]::-ms-clear {
-  display: none; /* Hide clear button in Edge */
-}
-
 @media (max-width: 1000px) {
-  .tax-code-head {
+  .size-head {
     flex-direction: column;
   }
-  .tax-code-headleft {
+  .size-headleft {
     width: 100%;
   }
-  .tax-code-headright {
+  .size-headright {
     width: 100%;
   }
 }
 @media (max-width: 700px) {
-  .tax-code-submit-container > div {
+  .size-submit-container > div {
     position: static;
   }
-  .tax-code-submit-container {
+  .size-submit-container {
     position: static;
   }
-  .tax-code-submit-container {
+  .size-submit-container {
     flex-direction: column;
   }
 }
 @media (max-width: 600px) {
-  .tax-code-headright {
+  .size-headright {
     flex-direction: column;
     align-items: end;
   }

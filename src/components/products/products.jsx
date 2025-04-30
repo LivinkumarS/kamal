@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./products.css";
+import { toast } from "react-toastify";
 import CreateNewProduct from "../create-new-product/createNewProduct";
 
 export default function products() {
   const [ApiProduct, setApiProduct] = useState({});
   const [product, setproduct] = useState([]);
+
+  const [searchCategory, setsearchCategory] = useState([]);
+  const [searchBrand, setsearchBrand] = useState([]);
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedProductType, setSelectedProductType] = useState("");
 
   const [productCurrentPage, setproductCurrentPage] = useState(1);
   const productRowsPerPage = 10;
@@ -66,6 +75,8 @@ export default function products() {
         price: "400",
       },
     ],
+    searchCategory: ["Electronis", "Apparel"],
+    searchBrand: ["Apple", "Samsumg"],
   };
   useEffect(() => {
     setApiProduct(productFromAPI);
@@ -73,6 +84,8 @@ export default function products() {
   useEffect(() => {
     if (Object.keys(ApiProduct).length > 0) {
       setproduct(ApiProduct.product);
+      setsearchCategory(ApiProduct.searchCategory);
+      setsearchBrand(ApiProduct.searchBrand);
     }
   }, [ApiProduct]);
 
@@ -118,6 +131,13 @@ export default function products() {
     );
   };
 
+  function resetSearchBox() {
+    setSelectedCategory("");
+    setSelectedBrand("");
+    setSelectedStatus("");
+    setSelectedProductType("");
+  }
+
   return (
     <>
       {showNewProduct ? (
@@ -144,37 +164,86 @@ export default function products() {
             <div className="product-container">
               <div className="product-header">
                 <p>Product Master</p>{" "}
-                <button onClick={() => setshowNewProduct(true)}>
-                  + Add New Product
-                </button>
+                <nav>
+                  <button onClick={() => setshowNewProduct(true)}>
+                    + Add New Product
+                  </button>
+                  <button>Import</button>
+                </nav>
               </div>
               <div className="product-search-box">
-                <svg
-                  className="product-search-logo"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
-                </svg>
-                <input placeholder="Search by ID number..." />
+                <label htmlFor="searchByID">
+                  <svg
+                    className="product-search-logo"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                  </svg>
+                </label>
+
+                <input id="searchByID" placeholder="Search by ID number..." />
               </div>
-              <p className="product-clearfilter">Clear Filter</p>
+              <p className="product-clearfilter" onClick={resetSearchBox}>
+                Clear Filter
+              </p>
               <div className="product-search-category">
                 <div className="product-input-box">
-                  <lable>Category</lable>
-                  <input type="text" />
+                  <lable htmlForcateogry>Category</lable>
+                  <select
+                    id="category"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {searchCategory.map((ele, ind) => (
+                      <option key={ind} value={ele}>
+                        {ele}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="product-input-box">
-                  <lable>Brand</lable>
-                  <input type="text" />
+                  <lable htmlFor="brand">Brand</lable>
+                  <select
+                    id="brand"
+                    value={selectedBrand}
+                    onChange={(e) => setSelectedBrand(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {searchBrand.map((ele, ind) => (
+                      <option key={ind} value={ele}>
+                        {ele}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="product-input-box">
-                  <lable>Status</lable>
-                  <input type="text" />
+                  <label htmlFor="status">Status</label>
+                  <select
+                    id="status"
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Discontinued">Discontinued</option>
+                  </select>
                 </div>
+
                 <div className="product-input-box">
-                  <lable>Product Type</lable>
-                  <input type="text" />
+                  <label htmlFor="product_type">Product Type</label>
+                  <select
+                    id="product_type"
+                    value={selectedProductType}
+                    onChange={(e) => setSelectedProductType(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="Goods">Goods</option>
+                    <option value="Services">Services</option>
+                    <option value="Combo">Combo</option>
+                  </select>
                 </div>
               </div>
               <div className="product-table-cointainer">

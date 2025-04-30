@@ -1,4 +1,4 @@
-.tax-code-cointainer {
+.warehouse-container {
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -9,16 +9,10 @@
   scroll-behavior: smooth;
   scrollbar-color: lightgray;
 }
-.tax-code-cointainer::-webkit-scrollbar {
+.warehouse-container::-webkit-scrollbar {
   display: none;
 }
-.left-logo-tax-code {
-  width: 20px;
-  height: 20px;
-  fill: rgba(35, 78, 112, 1);
-  cursor: pointer;
-}
-.tax-code-head {
+.warehouse-head {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -26,7 +20,7 @@
   width: 100%;
   gap: 15px;
 }
-.tax-code-headleft {
+.warehouse-headleft {
   display: flex;
   flex-direction: row;
   width: max-content;
@@ -34,7 +28,12 @@
   align-items: center;
   gap: 15px;
 }
-.tax-code-headright {
+.warehouse-headleft > p {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(35, 78, 112, 1);
+}
+.warehouse-headright {
   display: flex;
   flex-direction: row;
   width: max-content;
@@ -42,12 +41,13 @@
   align-items: center;
   gap: 15px;
 }
-.tax-code-headleft > p {
-  font-size: 20px;
-  font-weight: 700;
-  color: rgba(35, 78, 112, 1);
+.left-logo-warehouse {
+  width: 20px;
+  height: 20px;
+  fill: rgba(35, 78, 112, 1);
+  cursor: pointer;
 }
-.add-tax-code-1 {
+.add-warehouse-1 {
   background-color: rgba(35, 78, 112, 1);
   border-radius: 50px;
   font-size: 14px;
@@ -56,7 +56,7 @@
   padding: 8px 14px;
   cursor: pointer;
 }
-.add-tax-code-2 {
+.add-warehouse-2 {
   border: 2px solid rgba(35, 78, 112, 1);
   box-sizing: border-box;
   padding: 8px 14px;
@@ -67,7 +67,8 @@
   font-weight: 500;
   cursor: pointer;
 }
-.tax-code-form > form {
+/* se */
+.warehouse-form > form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +76,7 @@
   gap: 15px;
   margin-top: 20px;
 }
-.tax-code-box {
+.warehouse-box {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -83,8 +84,8 @@
   align-items: start;
   gap: 3px;
 }
-.tax-code-box > input,
-.tax-code-box > select {
+.warehouse-box > input,
+.warehouse-box > select {
   width: 100%;
   border: 2px solid rgba(226, 226, 226, 1);
   background-color: rgba(249, 249, 249, 1);
@@ -94,28 +95,28 @@
   font-size: 14px;
   font-weight: 400;
 }
-.tax-code-box > input:focus,
-.tax-code-box > select:focus {
+.warehouse-box > input:focus,
+.warehouse-box > select:focus {
   background-color: white;
   border: 2px solid rgba(35, 78, 112, 1);
 }
-.tax-code-box > input::placeholder,
-.tax-code-box > select::placeholder {
+.warehouse-box > input::placeholder,
+.warehouse-box > select::placeholder {
   color: rgba(176, 176, 176, 1);
 }
-.tax-code-box > label {
+.warehouse-box > label {
   font-size: 14px;
   font-weight: 500;
   color: rgba(42, 42, 42, 1);
 }
-.tax-code-submit-container {
+.warehouse-submit-container {
   width: 100%;
   display: flex;
   justify-content: end;
   gap: 15px;
   position: relative;
 }
-.tax-code-submit-container > nav {
+.warehouse-submit-container > nav {
   padding: 7px 25px;
   border-radius: 6px;
   border: 2px solid rgba(35, 78, 112, 1);
@@ -126,7 +127,7 @@
   cursor: pointer;
   text-align: center;
 }
-.tax-code-submit-container > button {
+.warehouse-submit-container > button {
   padding: 7px 25px;
   border-radius: 6px;
   border: 2px solid rgba(35, 78, 112, 1);
@@ -136,7 +137,7 @@
   background: rgba(35, 78, 112, 1);
   cursor: pointer;
 }
-.tax-code-submit-container > div {
+.warehouse-submit-container > div {
   padding: 7px 25px;
   border-radius: 6px;
   border: 2px solid rgba(255, 77, 79, 1);
@@ -151,48 +152,48 @@
 }
 
 /* increment decrement */
-.increment-decrement-tax-code {
+.increment-decrement-warehouse {
   appearance: none; /* Removes default UI in all browsers */
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
 /* Hide number input arrows in Edge, Firefox, and WebKit browsers */
-.increment-decrement-tax-code::-webkit-outer-spin-button,
-.increment-decrement-tax-code::-webkit-inner-spin-button {
+.increment-decrement-warehouse::-webkit-outer-spin-button,
+.increment-decrement-warehouse::-webkit-inner-spin-button {
   display: none;
   margin: 0;
   -webkit-appearance: none;
 }
 
-.increment-decrement-tax-code[type="text"]::-ms-clear {
+.increment-decrement-warehouse[type="text"]::-ms-clear {
   display: none; /* Hide clear button in Edge */
 }
 
 @media (max-width: 1000px) {
-  .tax-code-head {
+  .warehouse-head {
     flex-direction: column;
   }
-  .tax-code-headleft {
+  .warehouse-headleft {
     width: 100%;
   }
-  .tax-code-headright {
+  .warehouse-headright {
     width: 100%;
   }
 }
 @media (max-width: 700px) {
-  .tax-code-submit-container > div {
+  .warehouse-submit-container > div {
     position: static;
   }
-  .tax-code-submit-container {
+  .warehouse-submit-container {
     position: static;
   }
-  .tax-code-submit-container {
+  .warehouse-submit-container {
     flex-direction: column;
   }
 }
 @media (max-width: 600px) {
-  .tax-code-headright {
+  .warehouse-headright {
     flex-direction: column;
     align-items: end;
   }

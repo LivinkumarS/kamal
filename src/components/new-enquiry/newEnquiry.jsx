@@ -178,15 +178,15 @@ export default function newEnquiry({
             <div className="newEnquiry-colom-box">
               <div className="newEnquiry-box">
                 <label htmlFor="enquiry_id">
-                  Enquiry Id<sup>*</sup>
+                  Enquiry Id {"(Auto Generate)"}
                 </label>
                 <input
                   id="enquiry_id"
                   type="text"
-                  placeholder="Enter ID"
+                  placeholder="Auto Generate"
                   value={newEnquiry.enquiry_id}
                   onChange={handleNewEnquiryChange}
-                  required
+                  disabled
                 />
               </div>
 
@@ -628,11 +628,7 @@ export default function newEnquiry({
           <div className="newEnquiry-submut-container">
             <input className="newEnquiry-reset" type="reset" />
 
-            <button
-              className="newEnquiry-submit"
-              onClick={handleNewEnquerySubmit}
-              type="submit"
-            >
+            <button className="newEnquiry-submit" type="submit">
               Submit
             </button>
           </div>

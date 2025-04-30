@@ -6,8 +6,7 @@ export default function newproductTaxCode({
   setnewproduct_tax_code,
   setnewproduct_edit_tax_code,
   newproduct_edit_tax_code,
-  editTaxData,
-  setEditTaxData,
+
   editDropDown,
 }) {
   const [taxCodeData, settaxCodeData] = useState({
@@ -31,18 +30,6 @@ export default function newproductTaxCode({
 
     setnewproduct_tax_code(false);
     setnewproduct_edit_tax_code(false);
-  }
-  // delete list
-
-  function deleteTask(ind) {
-    const okDel = window.confirm("Are you sure you want to delete this task?");
-    if (okDel) {
-      setmanageAPIdata((prev) => ({
-        ...prev,
-        tableData: prev.tableData.filter((_, index) => index !== ind),
-      }));
-      toast.success("Task deleted!");
-    }
   }
 
   return (
@@ -109,6 +96,7 @@ export default function newproductTaxCode({
                   id="tax_name"
                   value={taxCodeData.tax_name}
                   onChange={handleTaxDataChange}
+                  required
                 >
                   <option value="">Select Option</option>
                   {editDropDown.map((ele, ind) => (
@@ -152,7 +140,7 @@ export default function newproductTaxCode({
                 Canael
               </nav>
               <button type="submit">Create</button>
-              <div>Remove</div>
+              {newproduct_edit_tax_code && <div>Remove</div>}
             </div>
           </form>
         </div>
