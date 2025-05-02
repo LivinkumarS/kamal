@@ -36,13 +36,18 @@ export default function customCheckboxInput({
           onChange={handleNewProjectCustomData}
         />
       ) : (
-        <div className="dropdown-container">
-          <div className="dropdown-button" onClick={() => setOpen(!open)}>
-            Select Fruits
+        <div className="newproduct-ckeckbox-dropdown-container">
+          <div
+            className="newproduct-ckeckbox-dropdown-button"
+            onClick={() => setOpen(!open)}
+          >
+            {selectedOptions.length > 0
+              ? selectedOptions.join(", ")
+              : "Select Product"}
           </div>
 
           {open && (
-            <div className="dropdown-menu">
+            <div className="newproduct-ckeckbox-dropdown-menu">
               <p
                 onClick={() => {
                   setCustom(true);
@@ -52,7 +57,10 @@ export default function customCheckboxInput({
                 custom
               </p>
               {customApi.map((option) => (
-                <label key={option} className="dropdown-option">
+                <label
+                  key={option}
+                  className="newproduct-ckeckbox-dropdown-option"
+                >
                   <input
                     type="checkbox"
                     value={option}

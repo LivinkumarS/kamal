@@ -1,76 +1,244 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./productImport.css";
 
-export default function productImport({ setshowProductImport }) {
+export default function ProductImport({ setshowProductImport }) {
+  const inpRef = useRef(null);
+  const [files, setFiles] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
+
+  console.log(files);
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    setIsDragging(false);
+    setFiles((prevFiles) => {
+      const existingNames = new Set(prevFiles.map((f) => f.name));
+      const newUniqueFiles = droppedFiles.filter(
+        (f) => !existingNames.has(f.name)
+      );
+      return [...prevFiles, ...newUniqueFiles];
+    });
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleReset = () => {
+    setFiles([]);
+  };
+
+  const fileChange = (e) => {
+    setFiles(Array.from(e.target.files));
+    setIsDragging(false);
+  };
+
   return (
     <>
-      <div className="productImport-container">
-        <div className="productImport-head">
-          <p>Import Products from CSV/Excel</p>
-          <nav onClick={() => setshowProductImport(false)}>
-            <svg
-              className="circle-x-logo-import"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
-            </svg>
-            <p>Close</p>
-          </nav>
-        </div>
-        <div className="productImport-downloadTemplate-container">
-          <nav className="productImport-downloadTemplate-title">
-            1. Download Template :
-          </nav>
-          <button className="productImport-download-btn-container">
-            <svg
-              className="import-download-logo"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
-            </svg>
-            <p>Download Sample Template {"(CSV/XLSX)"}</p>
-          </button>
-          <div>
-            <svg
-              className="import-tickbox-logo"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-            >
-              <path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
-            </svg>
-            <p> Ensure all mandatory fields are filled.</p>
+      <div
+        className="productImport-container"
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <form>
+          <div className="productImport-head">
+            <p>Import Products from CSV/Excel</p>
+            <nav onClick={() => setshowProductImport(false)}>
+              <svg
+                className="circle-x-logo-import"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+              </svg>
+              <p>Close</p>
+            </nav>
           </div>
-          <div>
-            <svg
-              className="import-download-blue-logo"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
+
+          <div className="productImport-downloadTemplate-container">
+            <nav className="productImport-downloadTemplate-title">
+              1. Download Template :
+            </nav>
+            <a
+              href="/sample_products.csv"
+              download
+              className="productImport-download-btn-container"
             >
-              <path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
-            </svg>
-            <p>
-              After importing, review and update product data for completeness
-              and accuracy.
-            </p>
+              <svg
+                className="import-download-logo"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v242.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64v-32c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+              </svg>
+              <span>Download Sample Template (CSV/XLSX)</span>
+            </a>
+
+            <div>
+              <svg
+                className="import-tickbox-logo"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+              >
+                <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64h320c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
+              </svg>
+              <p>Ensure all mandatory fields are filled.</p>
+            </div>
+
+            <div>
+              <svg
+                className="import-download-blue-logo"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v242.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64v-32c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+              </svg>
+              <p>
+                After importing, review and update product data for completeness
+                and accuracy.
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="productImport-upload-container">
-          <p>2. Upload File :</p>
-          <div className="productImport-uploadbox-container">
-            <svg
-              className="productImport-filo-logo"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 576 512"
-            >
-              <path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 128-168 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l168 0 0 112c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zM384 336l0-48 110.1 0-39-39c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l80 80c9.4 9.4 9.4 24.6 0 33.9l-80 80c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l39-39L384 336zm0-208l-128 0L256 0 384 128z" />
-            </svg>
-            <p>Choose or Drag and drop your file here</p>
-            <nav>Supported formats</nav>
-            <div>.csv , .xlsx</div>
+
+          <div className="productImport-upload-container">
+            <input
+              type="file"
+              hidden
+              multiple
+              ref={inpRef}
+              onChange={fileChange}
+              accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            />
+            <p>2. Upload File :</p>
+            <nav className="productImport-uploadbox-container">
+              <nav>
+                <button
+                  className="productImport-reser-img-btn"
+                  type="button"
+                  onClick={handleReset}
+                >
+                  Reset
+                </button>
+              </nav>
+              <div
+                className="productImport-uploadbox"
+                onClick={() => inpRef.current.click()}
+                style={
+                  isDragging
+                    ? { backgroundColor: "seagreen", opacity: ".5" }
+                    : {}
+                }
+              >
+                <svg
+                  className="productImport-filo-logo"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                >
+                  <path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0v128h128L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24v-102.1l-31 31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31V408z" />
+                </svg>
+                <p>Choose or Drag and drop your file here</p>
+
+                {files.length > 0 && (
+                  <p style={{ fontSize: "10px", textAlign: "center" }}>
+                    {files.map((file, ind) => {
+                      return <span key={ind}>{file.name}, </span>;
+                    })}
+                  </p>
+                )}
+
+                <nav>
+                  Supported formats<div>.csv , .xlsx</div>
+                </nav>
+              </div>
+            </nav>
           </div>
-        </div>
+
+          <div className="productImport-validation-container">
+            <div className="productImport-validation-tit">
+              <svg
+                className="import-validation-logo"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
+              </svg>
+              <p>Validation</p>
+            </div>
+            <nav>
+              <table>
+                <thead className="productImport-validation-head">
+                  <tr>
+                    <th>Valid Rows</th>
+                    <th>Invalid Rows</th>
+                    <th>Skipped</th>
+                  </tr>
+                </thead>
+                <tbody className="productImport-validation-body">
+                  <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </nav>
+          </div>
+          <div className="productImport-info-container">
+            <nav className="productImport-info-tit">
+              <svg
+                className="productImport-alert-logo"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480L40 480c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
+              </svg>
+              <p>No file uploaded yet</p>
+            </nav>
+            <div>
+              <nav className="productImport-info-tit">
+                <svg
+                  className="productImport-alert-red-logo"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480L40 480c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
+                </svg>
+                <p>Errors Detected:</p>
+              </nav>
+              <p>1.Missing "UOM" in Row 10, 12, 13</p>
+              <p>1.Missing "UOM" in Row 10, 12, 13</p>
+              <p>1.Missing "UOM" in Row 10, 12, 13</p>
+            </div>
+            <div>
+              <nav className="productImport-info-tit">
+                <svg
+                  className="productImport-skipped-logo"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z" />
+                </svg>
+                <p>Skipped Row:</p>
+              </nav>
+              <p>1.Missing "UOM" in Row 10, 12, 13</p>
+            </div>
+          </div>
+          <div className="productImport-checkbox">
+            <input type="checkbox" required />
+            <p>Import validated rows only</p>
+          </div>
+          <div className="productImport-submit-container">
+            <nav>Cancel</nav>
+            <button>Submit</button>
+          </div>
+        </form>
       </div>
     </>
   );
