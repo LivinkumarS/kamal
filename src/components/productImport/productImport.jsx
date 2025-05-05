@@ -1,44 +1,145 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./productImport.css";
+import * as XLSX from "xlsx";
+import Papa from "papaparse";
+
+const REQUIRED_FIELDS = [
+  "Product ID",
+  "Product Name",
+  "Type",
+  "Category",
+  "Status",
+  "Stock Level",
+  "Price",
+];
 
 export default function ProductImport({ setshowProductImport }) {
-  const inpRef = useRef(null);
   const [files, setFiles] = useState([]);
+  const [processedData, setProcessedData] = useState([]);
+  const [validRowCount, setValidRowCount] = useState(0);
+  const [invalidRowCount, setInvalidRowCount] = useState(0);
+  const [skippedRowCount, setSkippedRowCount] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
-  console.log(files);
+  const inpRef = useRef(null);
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setIsDragging(false);
-    setFiles((prevFiles) => {
-      const existingNames = new Set(prevFiles.map((f) => f.name));
-      const newUniqueFiles = droppedFiles.filter(
-        (f) => !existingNames.has(f.name)
-      );
-      return [...prevFiles, ...newUniqueFiles];
+  const readFile = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+
+      const ext = file.name.split(".").pop().toLowerCase();
+      if (ext === "csv") {
+        reader.readAsText(file);
+      } else {
+        reader.readAsBinaryString(file);
+      }
     });
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
+  const processFiles = async () => {
+    if (files.length === 0) return;
+
+    let allValidRows = [];
+    let totalValid = 0;
+    let totalInvalid = 0;
+    let totalSkipped = 0;
+
+    const seenProductIDs = new Set();
+    const seenProductNames = new Set();
+
+    for (const file of files) {
+      try {
+        const ext = file.name.split(".").pop().toLowerCase();
+        const content = await readFile(file);
+        let rows = [];
+
+        if (ext === "csv") {
+          const result = Papa.parse(content, {
+            header: true,
+            skipEmptyLines: true,
+          });
+          rows = result.data;
+        } else if (ext === "xlsx" || ext === "xls") {
+          const workbook = XLSX.read(content, { type: "binary" });
+          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+          rows = XLSX.utils.sheet_to_json(worksheet);
+        } else {
+          throw new Error("Unsupported file format");
+        }
+
+        for (const row of rows) {
+          const hasAllRequired = REQUIRED_FIELDS.every(
+            (key) => row[key] !== undefined && row[key] !== ""
+          );
+
+          if (!hasAllRequired) {
+            totalInvalid++;
+            continue;
+          }
+
+          const pid = row["Product ID"];
+          const pname = row["Product Name"];
+
+          if (seenProductIDs.has(pid) || seenProductNames.has(pname)) {
+            totalSkipped++;
+            continue;
+          }
+
+          seenProductIDs.add(pid);
+          seenProductNames.add(pname);
+          allValidRows.push(row);
+          totalValid++;
+        }
+      } catch (err) {
+        console.error(`Error processing ${file.name}`, err);
+      }
+    }
+
+    setProcessedData(allValidRows);
+    setValidRowCount(totalValid);
+    setInvalidRowCount(totalInvalid);
+    setSkippedRowCount(totalSkipped);
   };
 
-  const handleDragLeave = () => {
+  useEffect(() => {
+    processFiles();
+  }, [files]);
+
+  const fileChange = (e) => {
+    const selected = Array.from(e.target.files);
+    const existingNames = new Set(files.map((f) => f.name));
+    const newUnique = selected.filter((f) => !existingNames.has(f.name));
+    setFiles((prev) => [...prev, ...newUnique]);
     setIsDragging(false);
   };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const dropped = Array.from(e.dataTransfer.files);
+    setFiles((prev) => [...prev, ...dropped]);
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e) => e.preventDefault();
+  const handleDragLeave = () => setIsDragging(false);
 
   const handleReset = () => {
     setFiles([]);
+    setProcessedData([]);
+    setValidRowCount(0);
+    setInvalidRowCount(0);
+    setSkippedRowCount(0);
+    inpRef.current.value = null;
   };
 
-  const fileChange = (e) => {
-    setFiles(Array.from(e.target.files));
-    setIsDragging(false);
-  };
+  const handleImportFileSubmit = (e) => {
+    e.preventDefault();
 
+    console.log("✅ Final Object List:", processedData);
+  };
   return (
     <>
       <div
@@ -47,7 +148,7 @@ export default function ProductImport({ setshowProductImport }) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <form>
+        <form onSubmit={handleImportFileSubmit}>
           <div className="productImport-head">
             <p>Import Products from CSV/Excel</p>
             <nav onClick={() => setshowProductImport(false)}>
@@ -182,9 +283,9 @@ export default function ProductImport({ setshowProductImport }) {
                 </thead>
                 <tbody className="productImport-validation-body">
                   <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
+                    <td>{validRowCount}</td>
+                    <td>{invalidRowCount}</td>
+                    <td>{skippedRowCount}</td>
                   </tr>
                 </tbody>
               </table>
@@ -235,7 +336,14 @@ export default function ProductImport({ setshowProductImport }) {
             <p>Import validated rows only</p>
           </div>
           <div className="productImport-submit-container">
-            <nav>Cancel</nav>
+            <nav
+              onClick={() => {
+                setshowProductImport(false);
+                setFiles([]);
+              }}
+            >
+              Cancel
+            </nav>
             <button>Submit</button>
           </div>
         </form>

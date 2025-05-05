@@ -16,6 +16,7 @@ import Dashboard from "../dashboard/dashboard";
 import NewEnquiry from "../new-enquiry/newEnquiry";
 import EnquiryList from "../enquiry-list/enquiryList";
 import Products from "../products/products";
+import CustomMaster from "../custom-master/customMaster";
 
 export default function body({
   expanded,
@@ -139,6 +140,8 @@ export default function body({
           <DepartmentRole />
         ) : currentPage == "products" ? (
           <Products />
+        ) : currentPage == "customMaster" ? (
+          <CustomMaster />
         ) : currentPage == "newEnquiry" ? (
           <NewEnquiry />
         ) : currentPage == "enquiryList" ? (
