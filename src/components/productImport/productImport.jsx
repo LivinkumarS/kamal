@@ -4,16 +4,16 @@ import * as XLSX from "xlsx";
 import Papa from "papaparse";
 
 const REQUIRED_FIELDS = [
-  "Product ID",
-  "Product Name",
-  "Type",
-  "Category",
-  "Status",
-  "Stock Level",
-  "Price",
+  "product_id",
+  "product_name",
+  "product_type",
+  "category",
+  "status",
+  "stock_level",
+  "price",
 ];
 
-export default function ProductImport({ setshowProductImport }) {
+export default function ProductImport({ setshowProductImport, setproduct }) {
   const [files, setFiles] = useState([]);
   const [processedData, setProcessedData] = useState([]);
   const [validRowCount, setValidRowCount] = useState(0);
@@ -80,8 +80,8 @@ export default function ProductImport({ setshowProductImport }) {
             continue;
           }
 
-          const pid = row["Product ID"];
-          const pname = row["Product Name"];
+          const pid = row["product_id"];
+          const pname = row["product_name"];
 
           if (seenProductIDs.has(pid) || seenProductNames.has(pname)) {
             totalSkipped++;
@@ -138,7 +138,13 @@ export default function ProductImport({ setshowProductImport }) {
   const handleImportFileSubmit = (e) => {
     e.preventDefault();
 
-    console.log("✅ Final Object List:", processedData);
+    processedData.length > 0
+      ? setproduct((prev) => {
+          return [...prev, ...processedData];
+        })
+      : console.log("No files to be imported!");
+
+    setshowProductImport(false);
   };
   return (
     <>

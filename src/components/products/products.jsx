@@ -163,7 +163,10 @@ export default function products() {
         </div>
       ) : showProductImport ? (
         <div className="createNewProduct-btn">
-          <ProductImport setshowProductImport={setshowProductImport} />
+          <ProductImport
+            setshowProductImport={setshowProductImport}
+            setproduct={setproduct}
+          />
         </div>
       ) : (
         <div className="product-container">
