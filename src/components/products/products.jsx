@@ -192,9 +192,9 @@ export default function products() {
 
             <input id="searchByID" placeholder="Search by ID number..." />
           </div>
-          <p className="product-clearfilter" onClick={resetSearchBox}>
-            Clear Filter
-          </p>
+          <div className="product-clearfilter">
+            <p onClick={resetSearchBox}> Clear Filter</p>
+          </div>
           <div className="product-search-category">
             <div className="product-input-box">
               <lable htmlForcateogry>Category</lable>
@@ -277,7 +277,15 @@ export default function products() {
                       <td>{ele.product_type}</td>
                       <td>{ele.category}</td>
                       <td>
-                        <div className="productStatus-active">{ele.status}</div>
+                        <div
+                          className={
+                            ele.status === "Active"
+                              ? "productStatus-active"
+                              : "productStatus-inactive"
+                          }
+                        >
+                          {ele.status}
+                        </div>
                       </td>
                       <td>{ele.stock_level}</td>
                       <td>{ele.price}</td>
@@ -312,22 +320,24 @@ export default function products() {
               </tbody>
             </table>
           </div>
-          <nav className="table-bottem">
-            <p className="num-entries">Showing {currentData.length} entries</p>
-            <div className="manage-control-box">
+          <nav className="productImport-table-bottem">
+            <p className="productImport-num-entries">
+              Showing {currentData.length} entries
+            </p>
+            <div className="productImport-manage-control-box">
               <button
-                className="manage-btn"
+                className="productImport-manage-btn"
                 onClick={handlePrev}
                 disabled={productCurrentPage === 1}
               >
                 Prev
               </button>
-              <nav className="num-page">
+              <nav className="productImport-num-page">
                 {" "}
                 Page {productCurrentPage} of {totalPages}{" "}
               </nav>
               <button
-                className="manage-btn"
+                className="productImport-manage-btn"
                 onClick={handleNext}
                 disabled={productCurrentPage === totalPages}
               >
