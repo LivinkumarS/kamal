@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "./body.css";
 import Attendance from "../attendance/attendance";
 import Project from "../project/project";
-import ManageUsers from "../manage-users/manageUsers";
-import DepartmentRole from "../department-role/departmentRole";
+import ManageUsers from "../Masters/manage-users/manageUsers";
+import DepartmentRole from "../Masters/department-role/departmentRole";
 import Task from "../task/task";
 import Onboard from "../onboard/onboard";
 import Payslip from "../payslip/payslip";
@@ -15,8 +15,8 @@ import ProjectBugsPage from "../project-bugs-page/projectBugsPage";
 import Dashboard from "../dashboard/dashboard";
 import NewEnquiry from "../new-enquiry/newEnquiry";
 import EnquiryList from "../enquiry-list/enquiryList";
-import Products from "../products/products";
-import CustomMaster from "../custom-master/customMaster";
+import Products from "../Masters/products/products";
+import CustomMaster from "../Masters/custom-master/customMaster";
 import QuotationCRM from "../quotation-crm/quotationCRM";
 
 export default function body({
