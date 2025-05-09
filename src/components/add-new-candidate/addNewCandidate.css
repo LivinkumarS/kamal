@@ -1,9 +1,10 @@
 /* Main Container */
 .Add-New-Candidate {
-  background-color: hsl(220, 60%, 98%);
+  background: hsl(220, 60%, 98%);
   padding: 15px;
   width: 100vw;
   height: 100vh;
+  font-family: "Poppins", sans-serif;
   overflow-y: auto;
 }
 
@@ -36,7 +37,7 @@
 /* Form Sections */
 .general-container {
   width: 100%;
-  background-color: white;
+  background: white;
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
@@ -129,7 +130,7 @@
 .candidate-submit-container {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
 }
 .candidate-submit-btn[type="submit"] {
   padding: 10px 20px;
@@ -183,7 +184,7 @@
 .uploadfile {
   font-size: 14px;
   width: 120px;
-  background-color: #f9f9f9;
+  background: #f9f9f9;
   border: 2px dashed #007bff;
   border-radius: 8px;
   outline: none;
@@ -193,19 +194,19 @@
 
 /* Hover Effect */
 .uploadfile:hover {
-  background-color: rgba(0, 123, 255, 0.1);
+  background: rgba(0, 123, 255, 0.1);
   border-color: #0056b3;
 }
 
 /* When Focused */
 .uploadfile:focus {
   border-color: #28a745;
-  background-color: #e9f7ef;
+  background: #e9f7ef;
 }
 
 /* Selected File Text */
 .uploadfile::file-selector-button {
-  background-color: #007bff;
+  background: #007bff;
   color: white;
   padding: 8px 12px;
   border: none;
@@ -216,7 +217,7 @@
 
 /* File Button Hover */
 .uploadfile::file-selector-button:hover {
-  background-color: #0056b3;
+  background: #0056b3;
 }
 .file-item {
   display: flex;
@@ -277,7 +278,7 @@
 @media (max-width: 390px) {
   .candidate-box {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: start;
     gap: 10px;
   }
   .candidate-box > input,

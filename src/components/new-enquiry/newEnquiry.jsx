@@ -236,6 +236,7 @@ export default function newEnquiry({
                   Email<sup>*</sup>
                 </label>
                 <input
+                  className="newEnquiry-input-width-adj"
                   id="email"
                   type="email"
                   placeholder="Enter Email"
@@ -423,6 +424,7 @@ export default function newEnquiry({
                   How Did You Heard About This?
                 </label>
                 <select
+                  className="newEnquiry-input-width-adj"
                   id="how_heard_this"
                   value={newEnquiry.how_heard_this}
                   onChange={handleNewEnquiryChange}
@@ -484,6 +486,7 @@ export default function newEnquiry({
               <div className="newEnquiry-box">
                 <label htmlFor="priority">Priority</label>
                 <select
+                  className="newEnquiry-input-width-adj"
                   id="priority"
                   value={newEnquiry.priority}
                   onChange={handleNewEnquiryChange}

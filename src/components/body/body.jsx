@@ -17,6 +17,7 @@ import NewEnquiry from "../new-enquiry/newEnquiry";
 import EnquiryList from "../enquiry-list/enquiryList";
 import Products from "../products/products";
 import CustomMaster from "../custom-master/customMaster";
+import QuotationCRM from "../quotation-crm/quotationCRM";
 
 export default function body({
   expanded,
@@ -146,6 +147,8 @@ export default function body({
           <NewEnquiry />
         ) : currentPage == "enquiryList" ? (
           <EnquiryList />
+        ) : currentPage == "quotationCRM" ? (
+          <QuotationCRM />
         ) : currentPage == "task" ? (
           <Task />
         ) : currentPage == "attendance" ? (

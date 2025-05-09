@@ -161,9 +161,7 @@
 }
 
 /* width */
-#email,
-#how_heard_this,
-#priority {
+.newEnquiry-input-width-adj {
   width: 96%;
 }
 .newEnquiry-submut-container {
@@ -239,9 +237,7 @@
   }
 }
 @media (max-width: 600px) {
-  #email,
-  #how_heard_this,
-  #priority {
+  .newEnquiry-input-width-adj {
     width: 93%;
   }
 }
@@ -256,9 +252,7 @@
   .newEnquiry-box {
     width: 100%;
   }
-  #email,
-  #how_heard_this,
-  #priority {
+  .newEnquiry-input-width-adj {
     width: 100%;
   }
 }
