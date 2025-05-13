@@ -197,7 +197,7 @@ export default function products() {
           </div>
           <div className="product-search-category">
             <div className="product-input-box">
-              <lable htmlForcateogry>Category</lable>
+              <label htmlForcateogry>Category</label>
               <select
                 id="category"
                 value={selectedCategory}
@@ -212,7 +212,7 @@ export default function products() {
               </select>
             </div>
             <div className="product-input-box">
-              <lable htmlFor="brand">Brand</lable>
+              <label htmlFor="brand">Brand</label>
               <select
                 id="brand"
                 value={selectedBrand}

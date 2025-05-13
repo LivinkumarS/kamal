@@ -6,8 +6,8 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BugDetailPage from "./components/bug-detail-page/bugDetailPage";
-import AddNewCandidate from "./components/add-new-candidate/addNewCandidate";
+import BugDetailPage from "./components/projectMenu/bug-detail-page/bugDetailPage";
+import AddNewCandidate from "./components/onboardMenu/add-new-candidate/addNewCandidate";
 
 export default function App() {
   return (

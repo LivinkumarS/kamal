@@ -1,23 +1,23 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./body.css";
-import Attendance from "../attendance/attendance";
-import Project from "../project/project";
-import ManageUsers from "../Masters/manage-users/manageUsers";
-import DepartmentRole from "../Masters/department-role/departmentRole";
-import Task from "../task/task";
-import Onboard from "../onboard/onboard";
-import Payslip from "../payslip/payslip";
-import ApplyLeave from "../apply-leave/applyLeave";
+import Attendance from "../../attendance/attendance";
+import Project from "../../projectMenu/project/project";
+import ManageUsers from "../../Masters/manage-users/manageUsers";
+import DepartmentRole from "../../Masters/department-role/departmentRole";
+import Task from "../../taskMenu/task/task";
+import Onboard from "../../onboardMenu/onboard/onboard";
+import Payslip from "../../payslip/payslip";
+import ApplyLeave from "../../apply-leave/applyLeave";
 import UserProfile from "../userProfile/userProfile";
-import { logout } from "../../redux/authSlice";
+import { logout } from "../../../redux/authSlice";
 import { useDispatch } from "react-redux";
-import ProjectBugsPage from "../project-bugs-page/projectBugsPage";
-import Dashboard from "../dashboard/dashboard";
-import NewEnquiry from "../new-enquiry/newEnquiry";
-import EnquiryList from "../enquiry-list/enquiryList";
-import Products from "../Masters/products/products";
-import CustomMaster from "../Masters/custom-master/customMaster";
-import QuotationCRM from "../quotation-crm/quotationCRM";
+import ProjectBugsPage from "../../projectMenu/project-bugs-page/projectBugsPage";
+import Dashboard from "../../dashboard/dashboard";
+import NewEnquiry from "../../CRM/new-enquiry/newEnquiry";
+import EnquiryList from "../../CRM/enquiry-list/enquiryList";
+import Products from "../../Masters/products/products";
+import CustomMaster from "../../Masters/custom-master/customMaster";
+import QuotationCRM from "../../CRM/quotation-crm/quotationCRM";
 
 export default function body({
   expanded,

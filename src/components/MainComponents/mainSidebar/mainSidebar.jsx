@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./mainSidebar.css";
-import siteSmallLogo from "../../assets/Dashboard/small-sitelogo.png";
-import siteLogo from "../../assets/Dashboard/sitelogo.png";
+import siteSmallLogo from "../../../assets/Dashboard/small-sitelogo.png";
+import siteLogo from "../../../assets/Dashboard/sitelogo.png";
 
 export default function mainSidebar({
   expanded,

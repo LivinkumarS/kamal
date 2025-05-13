@@ -1,6 +1,6 @@
 import React from "react";
 import "./sidebar.css";
-import smallSiteLogo from "../../assets/Dashboard/small-sitelogo.png";
+import smallSiteLogo from "../../../assets/Dashboard/small-sitelogo.png";
 
 export default function sidebar({
   currentPage,

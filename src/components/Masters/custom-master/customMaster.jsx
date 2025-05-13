@@ -279,7 +279,7 @@ export default function customMaster() {
               </select>
             </div>
             <div className="customMaster-input-box">
-              <lable htmlFor="customer_type">Customer Type</lable>
+              <label htmlFor="customer_type">Customer Type</label>
               <select
                 id="customer_type"
                 value={selectCustomer}

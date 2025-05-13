@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import MainSidebar from "../../components/mainSidebar/mainSidebar";
-import Body from "../../components/body/body";
+import MainSidebar from "../../components/MainComponents/mainSidebar/mainSidebar";
+import Body from "../../components/MainComponents/body/body";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./userDashboard.css";
-import Sidebar from "../../components/sidebar/sidebar";
+import Sidebar from "../../components/MainComponents/sidebar/sidebar";
 
 export default function userDashboard() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
