@@ -1,25 +1,35 @@
 import React, { useEffect, useState } from "react";
 
 export default function QuotationList({
-  product_ids,
+  descriptions,
   quotation_table_data,
   unique_key,
   setQuotationList_data,
 }) {
-  const [product_id, setproduct_id] = useState("");
+  const [description, setdescription] = useState("");
+  const [descriptionInp, setdescriptionInp] = useState("");
+  const [showOptions, setshowOptions] = useState(false);
+
+  const [filteredOptions, setfilteredOptions] = useState([]);
 
   const [uomOptions, setuomOptions] = useState([]);
   const [taxOptions, settaxOptions] = useState([]);
 
   const [product_details, setproduct_details] = useState({
     unique_key: unique_key,
+    product_id: "--",
     description: "--",
-    uom: "",
+    uom: "--",
     unit_price: 0,
     discount: 0,
-    tax: "",
+    tax: "--",
     quantity: 0,
+    expected_delivery: "",
   });
+
+  useEffect(() => {
+    setfilteredOptions(descriptions);
+  }, [descriptions]);
 
   useEffect(() => {
     setQuotationList_data((prev) => {
@@ -33,7 +43,7 @@ export default function QuotationList({
   }, [product_details]);
 
   useEffect(() => {
-    if (product_id === "") {
+    if (description === "") {
       setproduct_details((prev) => {
         return { ...prev, description: "--", unit_price: 0, discount: 0 };
       });
@@ -41,54 +51,84 @@ export default function QuotationList({
     }
     setproduct_details((prev) => {
       const data = quotation_table_data.find(
-        (ele) => ele.product_id === product_id
+        (ele) => ele.description === description
       );
 
-      if (product_id !== "")
+      if (description !== "") {
+        setdescriptionInp(data.description);
         return {
           ...prev,
-          description: data.product_data.description,
-          unit_price: data.product_data.unit_price,
-          discount: data.product_data.discount,
+          description: data.description,
+          unit_price: data.unit_price,
+          discount: data.discount,
+          product_id: data.product_id,
         };
-      else return { ...prev };
+      } else return { ...prev };
     });
 
     setuomOptions(
-      product_id !== ""
-        ? quotation_table_data.find((ele) => ele.product_id === product_id)
-            .product_data.uom
+      description !== ""
+        ? quotation_table_data.find((ele) => ele.description === description)
+            .uom
         : []
     );
 
     settaxOptions(
-      product_id !== ""
-        ? quotation_table_data.find((ele) => ele.product_id === product_id)
-            .product_data.tax
+      description !== ""
+        ? quotation_table_data.find((ele) => ele.description === description)
+            .tax
         : []
     );
-  }, [product_id]);
+  }, [description]);
+
+  useEffect(() => {
+      if (descriptionInp === "") {
+        setfilteredOptions(descriptions);
+      return;
+    }
+
+    setfilteredOptions(
+      descriptions.filter((ele) => {
+        return ele.toLowerCase().includes(descriptionInp.toLowerCase());
+      })
+    );
+  }, [descriptionInp]);
 
   return (
     <tr>
-      <td>
-        <select
-          id="sales_rep"
-          value={product_id}
+      <td style={{position: "relative"}}>
+        <input
+          type="text"
+          value={descriptionInp}
           onChange={(e) => {
-            setproduct_id(e.target.value);
+            setdescriptionInp(e.target.value);
           }}
-          required
-        >
-          <option value="">Select Product ID</option>
-          {product_ids.map((ele, ind) => (
-            <option key={ind} value={ele}>
-              {ele}
-            </option>
-          ))}
-        </select>
+          onFocus={() => {
+            setshowOptions(true);
+          }}
+          // onBlur={() => setshowOptions(false)}
+        />
+
+        {showOptions && (
+          <div className="newQuotation-option-menu">
+            {filteredOptions.map((ele, ind) => (
+              <button
+                key={ind}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setdescription(ele);
+                  setshowOptions(false);
+                }}
+              >
+                {ele}
+              </button>
+            ))}
+          </div>
+        )}
       </td>
-      <td>{product_details.description}</td>
+
+      <td>{product_details.product_id}</td>
+
       <td>
         <input
           type="number"
@@ -98,21 +138,22 @@ export default function QuotationList({
               return { ...prev, quantity: e.target.value };
             });
           }}
+          required
         />
       </td>
       <td>
-        <select id="sales_rep" required 
-              onChange={(e) => {
-                setproduct_details((prev) => {
-                  return { ...prev, uom: e.target.value };
-                });
-              }} value={product_details.uom}>
-          <option value="">Select Salesperson</option>
+        <select
+          required
+          onChange={(e) => {
+            setproduct_details((prev) => {
+              return { ...prev, uom: e.target.value };
+            });
+          }}
+          value={product_details.uom}
+        >
+          <option value="">Select UOM</option>
           {uomOptions.map((ele, ind) => (
-            <option
-              key={ind}
-              value={ele}
-            >
+            <option key={ind} value={ele}>
               {ele}
             </option>
           ))}
@@ -127,6 +168,7 @@ export default function QuotationList({
               return { ...prev, unit_price: e.target.value };
             });
           }}
+          required
         />
       </td>
       <td>
@@ -138,28 +180,38 @@ export default function QuotationList({
               return { ...prev, discount: e.target.value };
             });
           }}
+          required
         />
       </td>
       <td>
-        <select id="sales_rep" required 
-              onChange={(e) => {
-                setproduct_details((prev) => {
-                  return { ...prev, tax: e.target.value };
-                });
-              }} value={product_details.tax}>
-          <option value="">Select Salesperson</option>
+        <select
+          required
+          onChange={(e) => {
+            setproduct_details((prev) => {
+              return { ...prev, tax: e.target.value };
+            });
+          }}
+          value={product_details.tax}
+        >
+          <option value="">Select Tax</option>
           {taxOptions.map((ele, ind) => (
-            <option
-              key={ind}
-              value={ele}
-            >
+            <option key={ind} value={ele}>
               {ele}
             </option>
           ))}
         </select>
       </td>
       <td>
-        <input type="date" />
+        <input
+          type="date"
+          value={product_details.expected_delivery}
+          onChange={(e) => {
+            setproduct_details((prev) => {
+              return { ...prev, expected_delivery: e.target.value };
+            });
+          }}
+          required
+        />
       </td>
     </tr>
   );

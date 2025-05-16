@@ -3,6 +3,8 @@ import "./quotationCRM.css";
 import CreateNewQuotation from "../create-new-quotation/createNewQuotation";
 
 export default function quotation() {
+  const [status, setStatus] = useState("");
+
   const [selectStatus, setselectStatus] = useState("");
   const [seleQuotationType, setseleQuotationType] = useState("");
   const [selectSales, setselectSales] = useState("");
@@ -15,7 +17,7 @@ export default function quotation() {
   const [ApiQuotation, setApiQuotation] = useState({});
   const [quotation, setQuotation] = useState([]);
   const [searchSalseRep, setsearchSalseRep] = useState([]);
-
+  console.log(status);
   const quotationFromAPI = {
     quotation: [
       {
@@ -123,6 +125,8 @@ export default function quotation() {
         <CreateNewQuotation
           showNewQuotation={showNewQuotation}
           setshowNewQuotation={setshowNewQuotation}
+          status={status}
+          setStatus={setStatus}
         />
       ) : (
         <div className="quotationCRM-container">

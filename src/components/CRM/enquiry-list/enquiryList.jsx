@@ -80,7 +80,7 @@ export default function enquiryList() {
       setcurrentpageEnquirylist((prev) => prev - 1);
     }
   };
-  //
+  //delete
   function deleteEnquiryList(ind) {
     const okDel = window.confirm("Are you sure you want to delete this task?");
     if (okDel) {
