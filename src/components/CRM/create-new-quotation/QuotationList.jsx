@@ -5,6 +5,10 @@ export default function QuotationList({
   quotation_table_data,
   unique_key,
   setQuotationList_data,
+  productTotal,
+  deleteQuotationProduct,
+  inputDisable,
+  editQuotationData,
 }) {
   const [description, setdescription] = useState("");
   const [descriptionInp, setdescriptionInp] = useState("");
@@ -24,8 +28,13 @@ export default function QuotationList({
     discount: 0,
     tax: "--",
     quantity: 0,
-    expected_delivery: "",
   });
+  //edit
+  useEffect(() => {
+    setproduct_details((prev) => {
+      return { ...prev, ...editQuotationData };
+    });
+  }, [editQuotationData]);
 
   useEffect(() => {
     setfilteredOptions(descriptions);
@@ -82,8 +91,8 @@ export default function QuotationList({
   }, [description]);
 
   useEffect(() => {
-      if (descriptionInp === "") {
-        setfilteredOptions(descriptions);
+    if (descriptionInp === "") {
+      setfilteredOptions(descriptions);
       return;
     }
 
@@ -96,8 +105,10 @@ export default function QuotationList({
 
   return (
     <tr>
-      <td style={{position: "relative"}}>
+      <td>{unique_key + 1}</td>
+      <td style={{ position: "relative" }}>
         <input
+          required
           type="text"
           value={descriptionInp}
           onChange={(e) => {
@@ -106,13 +117,18 @@ export default function QuotationList({
           onFocus={() => {
             setshowOptions(true);
           }}
-          // onBlur={() => setshowOptions(false)}
+          onBlur={() => setshowOptions(false)}
+          disabled={inputDisable}
         />
 
         {showOptions && (
-          <div className="newQuotation-option-menu">
+          <div style={{zIndex:"10"}} className="newQuotation-option-menu">
             {filteredOptions.map((ele, ind) => (
-              <button
+              <option
+
+              style={{ backgroundColor:"white"}}
+
+                value={ele}
                 key={ind}
                 onClick={(e) => {
                   e.preventDefault();
@@ -121,7 +137,7 @@ export default function QuotationList({
                 }}
               >
                 {ele}
-              </button>
+              </option>
             ))}
           </div>
         )}
@@ -139,6 +155,7 @@ export default function QuotationList({
             });
           }}
           required
+          disabled={inputDisable}
         />
       </td>
       <td>
@@ -150,6 +167,7 @@ export default function QuotationList({
             });
           }}
           value={product_details.uom}
+          disabled={inputDisable}
         >
           <option value="">Select UOM</option>
           {uomOptions.map((ele, ind) => (
@@ -169,18 +187,7 @@ export default function QuotationList({
             });
           }}
           required
-        />
-      </td>
-      <td>
-        <input
-          type="number"
-          value={product_details.discount}
-          onChange={(e) => {
-            setproduct_details((prev) => {
-              return { ...prev, discount: e.target.value };
-            });
-          }}
-          required
+          disabled={inputDisable}
         />
       </td>
       <td>
@@ -192,6 +199,7 @@ export default function QuotationList({
             });
           }}
           value={product_details.tax}
+          disabled={inputDisable}
         >
           <option value="">Select Tax</option>
           {taxOptions.map((ele, ind) => (
@@ -203,15 +211,33 @@ export default function QuotationList({
       </td>
       <td>
         <input
-          type="date"
-          value={product_details.expected_delivery}
+          type="number"
+          value={product_details.discount}
           onChange={(e) => {
             setproduct_details((prev) => {
-              return { ...prev, expected_delivery: e.target.value };
+              return { ...prev, discount: e.target.value };
             });
           }}
           required
+          disabled={inputDisable}
         />
+      </td>
+      <td>
+        {" "}
+        <span>₹</span>
+        {productTotal(unique_key)}
+      </td>
+      <td id="newQuotation-table-content-center">
+        <svg
+          onClick={() => deleteQuotationProduct(unique_key)}
+          className={`newQuotation-table-delete-logo ${
+            inputDisable ? "disabled" : ""
+          }`}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 14 16"
+        >
+          <path d="M2.625 16C2.14375 16 1.73192 15.8261 1.3895 15.4782C1.04708 15.1304 0.875583 14.7117 0.875 14.2222V2.66667H0V0.888889H4.375V0H9.625V0.888889H14V2.66667H13.125V14.2222C13.125 14.7111 12.9538 15.1298 12.6114 15.4782C12.269 15.8267 11.8568 16.0006 11.375 16H2.625ZM4.375 12.4444H6.125V4.44444H4.375V12.4444ZM7.875 12.4444H9.625V4.44444H7.875V12.4444Z" />
+        </svg>
       </td>
     </tr>
   );

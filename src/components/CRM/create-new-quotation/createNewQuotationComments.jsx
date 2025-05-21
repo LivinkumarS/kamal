@@ -52,7 +52,6 @@ export default function CreateNewQuotationComments() {
     };
 
     setCommentData((prev) => [...prev, newEntry]);
-    console.log(commentData);
 
     setNewComment("");
   };
@@ -78,7 +77,7 @@ export default function CreateNewQuotationComments() {
       <div className="newQuotation-showarea">
         {commentData.length > 0 &&
           commentData.map((ele, ind) => (
-            <div key={ind} className="newQuotation-message-container">
+            <div key={[-ind]} className="newQuotation-message-container">
               <svg
                 className="newQuotation-comment-profile-logo"
                 xmlns="http://www.w3.org/2000/svg"

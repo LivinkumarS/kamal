@@ -4,10 +4,14 @@ import QuotationList from "./QuotationList";
 import CreateNewQuotationComments from "./createNewQuotationComments";
 import CreateNewQuotationHistory from "./createNewQuotationHistory";
 import CreateNewQuotationAttachment from "./createNewQuotationAttachment";
+import CreateNewQuotationRevision from "./createNewQuotationRevision";
+import CreateNewQuptationRevisionHistory from "./createNewQuptationRevisionHistory";
 import { toast } from "react-toastify";
 
 export default function createNewQuotation({
-  showNewQuotation,
+  showEditNewQuotation,
+  editQuotationData,
+  setEditQuotationData,
   setshowNewQuotation,
   status,
   setStatus,
@@ -26,7 +30,7 @@ export default function createNewQuotation({
     sales_rep: "",
     currency: "",
     payment_terms: "",
-    delivery_terms: "",
+    expected_delivery: "",
   });
 
   const [ApiNewQuotation, setApiNewQuotation] = useState({});
@@ -38,6 +42,24 @@ export default function createNewQuotation({
   //total summery
   const [globalDiscount, setGlobalDiscount] = useState(0);
   const [shippingCharges, setShippingCharges] = useState(0);
+  //button
+  const [saveDraft, setsaveDraft] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  const [Approve, setApprove] = useState(true);
+  const [Reject, setReject] = useState(true);
+  const [SalesOrder, setSalesOrder] = useState(true);
+  const [pdf, setpdf] = useState(true);
+  const [email, setEmail] = useState(true);
+
+  const [inputDisable, setinputDisable] = useState(false);
+
+  const [historybtn, setHistorybtn] = useState(true);
+  const [revisebtn, setRevisebtn] = useState(true);
+
+  const [showHistory, setshowHistory] = useState(false);
+  const [showRevise, setshowRevise] = useState(false);
+
+  const [reviseCount, setreviseCount] = useState(1);
 
   // QuotationList Data
   const [numberOfQuotationList, setnumberOfQuotationList] = useState(1);
@@ -49,37 +71,23 @@ export default function createNewQuotation({
     customer_name: ["Mandy", "Rose", "Sans"],
     sales_rep: ["Sans", "rose", "Mandy"],
     currency: ["USD", "IND", "ERU", "GBP", "SGD"],
+
     descriptions: [
       "E-shirt",
       "M-shirt",
       "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
-      "E-shirt",
-      "M-shirt",
-      "T-shirt",
+      "AlphaWear",
+      "MetroStyle",
+      "TrendTee",
+      "EcoFit",
+      "UrbanMode",
+      "ClassicEdge",
+      "BoldThread",
+      "FlexLine",
+      "NeoFabric",
+      "ZenAttire",
+      "PulseWear",
+      "VibeCloth",
     ],
     quotation_table_data: [
       {
@@ -115,7 +123,15 @@ export default function createNewQuotation({
   };
   // console.log(newQuotationData);
 
-  console.log(QuotationList_data);
+  // console.log(QuotationList_data);
+
+  useEffect(() => {
+    setStatus(editQuotationData.status);
+    setreviseCount(Number(editQuotationData.revise_count));
+    setNewQuotationData((prev) => {
+      return { ...prev, ...editQuotationData };
+    });
+  }, [editQuotationData]);
 
   useEffect(() => {
     setApiNewQuotation(newQuotationFromApi);
@@ -129,24 +145,123 @@ export default function createNewQuotation({
       setquotation_table_data(ApiNewQuotation.quotation_table_data);
     }
   }, [ApiNewQuotation]);
+  useEffect(() => {
+    if (status === "Draft") {
+      setsaveDraft(true);
+      setSubmit(false);
+      setApprove(true);
+      setReject(true);
+      setSalesOrder(true);
+      setpdf(false);
+      setEmail(false);
+      if (reviseCount > 1) {
+        setHistorybtn(false);
+      }
+      setRevisebtn(true);
+    } else if (status === "Send") {
+      setsaveDraft(true);
+      setSubmit(true);
+      setApprove(false);
+      setReject(false);
+      setSalesOrder(true);
+      setpdf(false);
+      setEmail(false);
+      setHistorybtn(true);
+      setRevisebtn(false);
+    } else if (status === "Approved") {
+      setsaveDraft(true);
+      setSubmit(true);
+      setApprove(true);
+      setReject(true);
+      setSalesOrder(false);
+      setpdf(false);
+      setEmail(false);
+    } else if (status === "Rejected") {
+      setsaveDraft(true);
+      setSubmit(true);
+      setApprove(true);
+      setReject(true);
+      setSalesOrder(true);
+      setpdf(false);
+      setEmail(false);
+    } else if (status === "Converted (SO)") {
+      setsaveDraft(true);
+      setSubmit(true);
+      setApprove(true);
+      setReject(true);
+      setSalesOrder(true);
+      setpdf(false);
+      setEmail(false);
+    } else if (status === "Expired") {
+      setsaveDraft(true);
+      setSubmit(true);
+      setApprove(true);
+      setReject(true);
+      setSalesOrder(true);
+      setpdf(false);
+      setEmail(false);
+    }
+  }, [status]);
+  useEffect(() => {
+    if (
+      status === "Send" ||
+      status === "Approved" ||
+      status === "Rejected" ||
+      status === "Converted (SO)" ||
+      status === "Expired"
+    ) {
+      setinputDisable(true);
+    } else {
+      setinputDisable(false);
+    }
+  }, [status]);
+
+  // button submit functionality
   const handleSaveDraftState = (e) => {
     e.preventDefault();
     setStatus("Draft");
+    toast.success("Quotation Item in Save Draft State");
+    console.log(status);
   };
   const handleSubmitState = (e) => {
     e.preventDefault();
     setStatus("Send");
+    toast.success("Quotation Item in send State");
+    console.log(status);
   };
   const handleApprovedState = (e) => {
     e.preventDefault();
     setStatus("Approved");
+    toast.success("Quotation Item in Apporved State");
+    console.log(status);
   };
   const handleRejectedState = (e) => {
     e.preventDefault();
     setStatus("Rejected");
+    toast.success("Quotation Item in Rejected State");
+    console.log(status);
   };
+  const handleSalseState = (e) => {
+    e.preventDefault();
+    setStatus("Converted (SO)");
+    toast.success("Quotation Item in Converted (SO) State");
+    console.log(status);
+  };
+  const handleHistory = (e) => {
+    e.preventDefault();
+    setshowHistory(true);
+  };
+  const handleRevise = (e) => {
+    e.preventDefault();
+    setshowRevise(true);
+    setreviseCount((prevCount) => prevCount + 1);
+  };
+  console.log(reviseCount);
+  console.log(status);
+
   const handleCancelNewQuotation = (e) => {
     e.preventDefault();
+    setEditQuotationData({});
     const okDel = window.confirm(
       "Are you sure you want to Cancel New Quotation?"
     );
@@ -162,7 +277,7 @@ export default function createNewQuotation({
         sales_rep: "",
         currency: "",
         payment_terms: "",
-        delivery_terms: "",
+        expected_delivery: "",
       });
       toast.success("Product Item deleted!");
     }
@@ -237,10 +352,6 @@ export default function createNewQuotation({
     return (rounded_total - unrounded_total).toFixed(2);
   }
 
-  function newQuotationSubmit(e) {
-    e.preventDefault();
-    // console.log("hi");
-  }
   // deleteQuotationProduct
   function deleteQuotationProduct(ind) {
     const okDel = window.confirm(
@@ -256,24 +367,98 @@ export default function createNewQuotation({
 
   return (
     <>
-      <div className="newQuotation-container">
-        <form onSubmit={newQuotationSubmit}>
+      {showRevise && (
+        <div className="newQuotation-revisionBtn">
+          <CreateNewQuotationRevision
+            showRevise={showRevise}
+            setshowRevise={setshowRevise}
+            reviseCount={reviseCount}
+            setreviseCount={setreviseCount}
+            status={status}
+            setStatus={setStatus}
+          />
+        </div>
+      )}
+      {showHistory && (
+        <div className="newQuotation-historyBtn">
+          <CreateNewQuptationRevisionHistory setshowHistory={setshowHistory} />
+        </div>
+      )}
+      <div
+        className={`newQuotation-container ${
+          (showRevise || showHistory) && "newQuotation-blur"
+        }`}
+      >
+        <form onSubmit={handleSubmitState}>
           <div className="newQuotation-tit">
-            <p>Create New Quotation</p>
-            <div
-              onClick={() => {
-                setshowNewQuotation(false);
-              }}
-              className="close-newQuotation-container"
-            >
-              <svg
-                className="circle-x-logo-newQuotation"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
+            <nav>
+              <p>Create New Quotation</p>
+              {status !== "" && (
+                <h3
+                  className={
+                    (status === "Draft" && "newQuotation-status-bg-draft") ||
+                    (status === "Send" && "newQuotation-status-bg-send") ||
+                    (status === "Approved" &&
+                      "newQuotation-status-bg-approved") ||
+                    (status === "Rejected" &&
+                      "newQuotation-status-bg-rejected") ||
+                    (status === "Converted (SO)" &&
+                      "newQuotation-status-bg-converted") ||
+                    (status === "Expired" && "newQuotation-status-bg-expired")
+                  }
+                >
+                  Rev:
+                  {`${
+                    status === "Draft" || status === "Send" ? reviseCount : ""
+                  } (${status})`}
+                </h3>
+              )}
+            </nav>
+            <div>
+              {(status === "Draft" || status === "Send") && (
+                <>
+                  <button
+                    className={
+                      status === "Draft" && reviseCount > 1
+                        ? "newQuotation-active-btn"
+                        : "newQuotation-line-btn"
+                    }
+                    onClick={handleHistory}
+                    disabled={historybtn}
+                  >
+                    Revision History
+                  </button>
+                  <div
+                    className={
+                      status === "Send"
+                        ? "newQuotation-active-btn"
+                        : "newQuotation-line-btn"
+                    }
+                    onClick={handleRevise}
+                    disabled={revisebtn}
+                  >
+                    Revise
+                  </div>
+                </>
+              )}
+
+              <div
+                onClick={() => {
+                  setEditQuotationData({});
+                  setshowNewQuotation(false);
+                  setStatus("");
+                }}
+                className="close-newQuotation-container"
               >
-                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
-              </svg>
-              <nav>Close</nav>
+                <svg
+                  className="circle-x-logo-newQuotation"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+                </svg>
+                <nav>Close</nav>
+              </div>
             </div>
           </div>
           <div className="newQuotation-input-container">
@@ -297,6 +482,7 @@ export default function createNewQuotation({
                 id="quotation_type"
                 value={newQuotationData.quotation_type}
                 onChange={handleNewQuotationDataChange}
+                disabled={inputDisable}
                 required
               >
                 <option value="">Select Quotation Type</option>
@@ -318,6 +504,7 @@ export default function createNewQuotation({
                 type="date"
                 placeholder="Select Date"
                 required
+                disabled={inputDisable}
               />
             </div>
             <div className="newQuotation-input-box">
@@ -331,6 +518,7 @@ export default function createNewQuotation({
                 type="date"
                 placeholder="Select Date"
                 required
+                disabled={inputDisable}
               />
             </div>
           </div>
@@ -344,6 +532,7 @@ export default function createNewQuotation({
                 value={newQuotationData.customer_name}
                 onChange={handleNewQuotationDataChange}
                 required
+                disabled={inputDisable}
               >
                 <option value="">Select Customer</option>
                 {customer_name.map((ele, ind) => (
@@ -363,6 +552,7 @@ export default function createNewQuotation({
                 onChange={handleNewQuotationDataChange}
                 type="text"
                 placeholder="PO-45678"
+                disabled={inputDisable}
               />
             </div>
           </div>
@@ -376,6 +566,7 @@ export default function createNewQuotation({
                 value={newQuotationData.sales_rep}
                 onChange={handleNewQuotationDataChange}
                 required
+                disabled={inputDisable}
               >
                 <option value="">Select Salesperson</option>
                 {sales_rep.map((ele, ind) => (
@@ -394,6 +585,7 @@ export default function createNewQuotation({
                 value={newQuotationData.currency}
                 onChange={handleNewQuotationDataChange}
                 required
+                disabled={inputDisable}
               >
                 <option value="">Select Currency</option>
                 {currency.map((ele, ind) => (
@@ -411,6 +603,7 @@ export default function createNewQuotation({
                 id="payment_terms"
                 value={newQuotationData.payment_terms}
                 onChange={handleNewQuotationDataChange}
+                disabled={inputDisable}
               >
                 <option value="">Select Terms</option>
                 <option value="Net 15">Net 15</option>
@@ -423,13 +616,17 @@ export default function createNewQuotation({
             </div>
 
             <div className="newQuotation-input-box">
-              <label htmlFor="delivery_terms">Delivery Terms</label>
+              <label htmlFor="expected_delivery">
+                Expected Delivery<sup>*</sup>
+              </label>
               <input
-                id="delivery_terms"
-                value={newQuotationData.delivery_terms}
+                id="expected_delivery"
+                value={newQuotationData.expected_delivery}
                 onChange={handleNewQuotationDataChange}
-                type="text"
-                placeholder="Enter Delivery Terms"
+                type="date"
+                placeholder="Select Expected Delivery"
+                required
+                disabled={inputDisable}
               />
             </div>
           </div>
@@ -440,14 +637,16 @@ export default function createNewQuotation({
             <table>
               <thead className="newQuotation-table-head">
                 <tr>
-                  <th>Description</th>
-                  <th>Product ID</th>
+                  <th id="newQuotation-table-smallwidth">#</th>
+                  <th>Product Name</th>
+                  <th id="newQuotation-table-minwidth">Product ID</th>
                   <th>Quantity</th>
                   <th>UOM</th>
                   <th>Unit Price</th>
-                  <th>Discount {"(%)"}</th>
                   <th>Tax {"(%)"}</th>
-                  <th id="newQuotation-table-maxwidth">Expected Delivery</th>
+                  <th>Discount {"(%)"}</th>
+                  <th>Total</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody className="newQuotation-table-body">
@@ -457,9 +656,16 @@ export default function createNewQuotation({
                     descriptions={descriptions}
                     quotation_table_data={quotation_table_data}
                     setQuotationList_data={setQuotationList_data}
+                    inputDisable={inputDisable}
+                    // functions
+                    productTotal={productTotal}
+                    deleteQuotationProduct={deleteQuotationProduct}
+                    //edit
+                    editQuotationData={editQuotationData}
                   />
                 ))}
                 <tr>
+                  <td></td>
                   <td>
                     <button
                       onClick={(e) => {
@@ -472,57 +678,12 @@ export default function createNewQuotation({
                         });
                         setnumberOfQuotationList((prev) => ++prev);
                       }}
+                      disabled={inputDisable}
                     >
                       + Add Item
                     </button>
                   </td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="newQuotation-table-container">
-            <table>
-              <thead className="newQuotation-table-head">
-                <tr>
-                  <th id="newQuotation-table-minwidth">Product ID</th>
-                  <th>Description</th>
-                  <th>Quantity</th>
-                  <th id="newQuotation-table-maxwidth">UOM</th>
-                  <th id="newQuotation-table-minwidth">Unit Price</th>{" "}
-                  <th id="newQuotation-table-maxwidth">Expected Delivery</th>
-                  <th>Total</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody className="newQuotation-table-body">
-                {QuotationList_data.map((ele, ind) => (
-                  <tr key={ind}>
-                    <td>{QuotationList_data[ind].product_id}</td>
-                    <td>{QuotationList_data[ind].description}</td>
-                    <td>{QuotationList_data[ind].quantity}</td>
-                    <td>{QuotationList_data[ind].uom}</td>
-                    <td>
-                      <span>₹</span>
-                      {QuotationList_data[ind].unit_price}
-                    </td>
-                    <td>{QuotationList_data[ind].expected_delivery}</td>
-                    <td>
-                      {" "}
-                      <span>₹</span>
-                      {productTotal(ind)}
-                    </td>
-                    <td id="newQuotation-table-content-center">
-                      <svg
-                        onClick={() => deleteQuotationProduct(ind)}
-                        className="newQuotation-table-delete-logo"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 14 16"
-                      >
-                        <path d="M2.625 16C2.14375 16 1.73192 15.8261 1.3895 15.4782C1.04708 15.1304 0.875583 14.7117 0.875 14.2222V2.66667H0V0.888889H4.375V0H9.625V0.888889H14V2.66667H13.125V14.2222C13.125 14.7111 12.9538 15.1298 12.6114 15.4782C12.269 15.8267 11.8568 16.0006 11.375 16H2.625ZM4.375 12.4444H6.125V4.44444H4.375V12.4444ZM7.875 12.4444H9.625V4.44444H7.875V12.4444Z" />
-                      </svg>
-                    </td>
-                  </tr>
-                ))}
               </tbody>
             </table>
           </div>
@@ -544,6 +705,7 @@ export default function createNewQuotation({
                 onChange={(e) =>
                   setGlobalDiscount(parseFloat(e.target.value) || 0)
                 }
+                disabled={inputDisable}
               />
             </nav>
             <nav>
@@ -562,6 +724,7 @@ export default function createNewQuotation({
                 onChange={(e) =>
                   setShippingCharges(parseFloat(e.target.value) || 0)
                 }
+                disabled={inputDisable}
               />
             </nav>
             <nav>
@@ -635,34 +798,70 @@ export default function createNewQuotation({
               Cancel
             </button>
             <button
-              className="newQuotation-active-btn"
+              className={`newQuotation-active-btn ${
+                saveDraft && "newQuotation-passed-btn"
+              }`}
               onClick={handleSaveDraftState}
+              disabled={saveDraft}
             >
               Save Draft
             </button>
             <button
-              className="newQuotation-active-btn"
-              onClick={handleSubmitState}
+              className={`newQuotation-active-btn ${
+                submit && "newQuotation-passed-btn"
+              }`}
+              disabled={submit}
             >
-              Submit
+              {submit ? "Submitted" : "Submit"}
             </button>
             <button
-              className="newQuotation-active-btn"
+              className={`newQuotation-active-btn ${
+                saveDraft && submit && Approve && Reject
+                  ? "newQuotation-passed-btn"
+                  : Approve
+                  ? "newQuotation-line-btn"
+                  : "newQuotation-active-btn"
+              }`}
               onClick={handleApprovedState}
+              disabled={Approve}
             >
               Approve
             </button>
             <button
-              className="newQuotation-active-btn"
+              className={`newQuotation-active-btn ${
+                saveDraft && submit && Approve && Reject
+                  ? "newQuotation-passed-btn"
+                  : Reject
+                  ? "newQuotation-line-btn"
+                  : "newQuotation-active-btn"
+              }`}
               onClick={handleRejectedState}
+              disabled={Reject}
             >
               Reject
             </button>
-            <button className="newQuotation-active-btn">
+            <button
+              className={` ${
+                saveDraft &&
+                submit &&
+                Approve &&
+                SalesOrder &&
+                status !== "Rejected"
+                  ? "newQuotation-passed-btn"
+                  : SalesOrder
+                  ? "newQuotation-line-btn"
+                  : "newQuotation-active-btn"
+              }`}
+              onClick={handleSalseState}
+              disabled={SalesOrder}
+            >
               Convert to Sales Order
             </button>
             <svg
-              className="newQuotation-pdf-mail-activelogo"
+              disabled={pdf}
+              className={`newQuotation-pdf-mail-activelogo ${
+                pdf && "newQuotation-pdf-mail-futurelogo"
+              }`}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 22 24"
               fill="none"
@@ -674,7 +873,10 @@ export default function createNewQuotation({
               />
             </svg>
             <svg
-              className="newQuotation-pdf-mail-activelogo"
+              disabled={email}
+              className={`newQuotation-pdf-mail-activelogo ${
+                email && "newQuotation-pdf-mail-futurelogo"
+              }`}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 16"
               fill="none"

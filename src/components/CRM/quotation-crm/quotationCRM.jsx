@@ -13,6 +13,8 @@ export default function quotation() {
   const quotationRowPerPage = 10;
 
   const [showNewQuotation, setshowNewQuotation] = useState(false);
+  const [showEditNewQuotation, setshowEditNewQuotation] = useState(false);
+  const [editQuotationData, setEditQuotationData] = useState({});
 
   const [ApiQuotation, setApiQuotation] = useState({});
   const [quotation, setQuotation] = useState([]);
@@ -25,28 +27,45 @@ export default function quotation() {
         quotation_id: "QUO0001",
         quotation_type: "Service",
         customer_name: "Mandy",
-        sales_rep: "Roshan",
-        quotation_date: "07/07/2025",
+        sales_rep: "Sans",
+        quotation_date: "2025-10-10",
         status: "Draft",
+        revise_count: "1",
         grand_total: "50000",
+        product_id: "PRO0005",
+        description: "M-shirt",
+        uom: "Set (5)",
+        unit_price: "5",
+        discount: "5",
+        tax: "18",
+        quantity: "9",
       },
+
       {
         id: "2",
         quotation_id: "QUO0002",
         quotation_type: "Service",
-        customer_name: "Saala",
-        sales_rep: "Roshan",
-        quotation_date: "07/07/2025",
-        status: "Sent",
+        customer_name: "Mandy",
+        sales_rep: "Sans",
+        quotation_date: "2025-10-10",
+        status: "Send",
+        revise_count: "1",
         grand_total: "50000",
+        product_id: "PRO0005",
+        description: "M-shirt",
+        uom: "Set (5)",
+        unit_price: "5",
+        discount: "5",
+        tax: "18",
+        quantity: "9",
       },
       {
         id: "3",
         quotation_id: "QUO0003",
         quotation_type: "Service",
         customer_name: "Sans",
-        sales_rep: "Roshan",
-        quotation_date: "07/07/2025",
+        sales_rep: "Sans",
+        quotation_date: "2025-10-10",
         status: "Rejected",
         grand_total: "50000",
       },
@@ -55,8 +74,8 @@ export default function quotation() {
         quotation_id: "QUO0004",
         quotation_type: "Service",
         customer_name: "Mandy",
-        sales_rep: "Roshan",
-        quotation_date: "07/07/2025",
+        sales_rep: "Sans",
+        quotation_date: "2025-10-10",
         status: "Approved",
         grand_total: "50000",
       },
@@ -65,8 +84,8 @@ export default function quotation() {
         quotation_id: "QUO0005",
         quotation_type: "Service",
         customer_name: "Naveen",
-        sales_rep: "Roshan",
-        quotation_date: "07/07/2025",
+        sales_rep: "Sans",
+        quotation_date: "2025-10-10",
         status: "Expired",
         grand_total: "50000",
       },
@@ -75,9 +94,20 @@ export default function quotation() {
         quotation_id: "QUO0006",
         quotation_type: "Service",
         customer_name: "rahul",
-        sales_rep: "Roshan",
-        quotation_date: "07/07/2025",
+        sales_rep: "Sans",
+        quotation_date: "2025-10-10",
         status: "Expired",
+        grand_total: "50000",
+      },
+      {
+        id: "7",
+        quotation_id: "QUO0007",
+        quotation_type: "Service",
+        customer_name: "Mandy",
+        sales_rep: "Sans",
+        quotation_date: "2025-10-10",
+        status: "Draft",
+        revise_count: "5",
         grand_total: "50000",
       },
     ],
@@ -112,6 +142,13 @@ export default function quotation() {
     }
   };
 
+  const showEditQuotation = (id) => {
+    setEditQuotationData(
+      currentData.find((ele) => {
+        return ele.id === id;
+      })
+    );
+  };
   function resetSearchBox() {
     setselectSales("");
     setseleQuotationType("");
@@ -123,8 +160,19 @@ export default function quotation() {
     <>
       {showNewQuotation ? (
         <CreateNewQuotation
-          showNewQuotation={showNewQuotation}
           setshowNewQuotation={setshowNewQuotation}
+          showEditNewQuotation={showEditNewQuotation}
+          editQuotationData={editQuotationData}
+          setEditQuotationData={setEditQuotationData}
+          status={status}
+          setStatus={setStatus}
+        />
+      ) : showEditNewQuotation ? (
+        <CreateNewQuotation
+          setshowNewQuotation={setshowEditNewQuotation}
+          showEditNewQuotation={showEditNewQuotation}
+          editQuotationData={editQuotationData}
+          setEditQuotationData={setEditQuotationData}
           status={status}
           setStatus={setStatus}
         />
@@ -161,7 +209,7 @@ export default function quotation() {
               >
                 <option value="">All</option>
                 <option value="Draft">Draft</option>
-                <option value="Sent">Sent</option>
+                <option value="Send">Send</option>
                 <option value="Approved">Approved</option>
                 <option value="Rejected">Rejected</option>
                 <option value="Expired">Expired</option>
@@ -233,8 +281,8 @@ export default function quotation() {
                           className={
                             ele.status === "Draft"
                               ? "quotationCRM-status-Draft"
-                              : ele.status === "Sent"
-                              ? "quotationCRM-status-Sent"
+                              : ele.status === "Send"
+                              ? "quotationCRM-status-Send"
                               : ele.status === "Approved"
                               ? "quotationCRM-status-Approved"
                               : ele.status === "Rejected"
@@ -251,7 +299,15 @@ export default function quotation() {
                         {ele.grand_total}
                       </td>
                       <td>
-                        <div className="quotationCRM-table-view">View</div>
+                        <div
+                          className="quotationCRM-table-view"
+                          onClick={() => {
+                            showEditQuotation(ele.id);
+                            setshowEditNewQuotation(true);
+                          }}
+                        >
+                          {ele.status === "Draft" ? "Edit" : "View"}
+                        </div>
                       </td>
                     </tr>
                   ))
