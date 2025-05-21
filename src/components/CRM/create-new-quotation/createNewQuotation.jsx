@@ -67,6 +67,8 @@ export default function createNewQuotation({
     { unique_key: 0 },
   ]);
 
+  
+
   const newQuotationFromApi = {
     customer_name: ["Mandy", "Rose", "Sans"],
     sales_rep: ["Sans", "rose", "Mandy"],

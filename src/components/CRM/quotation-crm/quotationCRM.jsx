@@ -19,7 +19,6 @@ export default function quotation() {
   const [ApiQuotation, setApiQuotation] = useState({});
   const [quotation, setQuotation] = useState([]);
   const [searchSalseRep, setsearchSalseRep] = useState([]);
-  console.log(status);
   const quotationFromAPI = {
     quotation: [
       {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import CreateNewQuotationSearchSelectOption from "./createNewQuotationSearchSelectOption";
 
 export default function QuotationList({
   descriptions,
@@ -11,10 +12,7 @@ export default function QuotationList({
   editQuotationData,
 }) {
   const [description, setdescription] = useState("");
-  const [descriptionInp, setdescriptionInp] = useState("");
-  const [showOptions, setshowOptions] = useState(false);
 
-  const [filteredOptions, setfilteredOptions] = useState([]);
 
   const [uomOptions, setuomOptions] = useState([]);
   const [taxOptions, settaxOptions] = useState([]);
@@ -36,9 +34,8 @@ export default function QuotationList({
     });
   }, [editQuotationData]);
 
-  useEffect(() => {
-    setfilteredOptions(descriptions);
-  }, [descriptions]);
+  console.log(description);
+  
 
   useEffect(() => {
     setQuotationList_data((prev) => {
@@ -64,7 +61,6 @@ export default function QuotationList({
       );
 
       if (description !== "") {
-        setdescriptionInp(data.description);
         return {
           ...prev,
           description: data.description,
@@ -90,57 +86,15 @@ export default function QuotationList({
     );
   }, [description]);
 
-  useEffect(() => {
-    if (descriptionInp === "") {
-      setfilteredOptions(descriptions);
-      return;
-    }
-
-    setfilteredOptions(
-      descriptions.filter((ele) => {
-        return ele.toLowerCase().includes(descriptionInp.toLowerCase());
-      })
-    );
-  }, [descriptionInp]);
-
   return (
     <tr>
       <td>{unique_key + 1}</td>
-      <td style={{ position: "relative" }}>
-        <input
-          required
-          type="text"
-          value={descriptionInp}
-          onChange={(e) => {
-            setdescriptionInp(e.target.value);
-          }}
-          onFocus={() => {
-            setshowOptions(true);
-          }}
-          onBlur={() => setshowOptions(false)}
-          disabled={inputDisable}
+      <td style={{ position: "relative", minWidth: "200px" }}>
+        <CreateNewQuotationSearchSelectOption
+          descriptions={descriptions}
+          description={description}
+          setdescription={setdescription}
         />
-
-        {showOptions && (
-          <div style={{zIndex:"10"}} className="newQuotation-option-menu">
-            {filteredOptions.map((ele, ind) => (
-              <option
-
-              style={{ backgroundColor:"white"}}
-
-                value={ele}
-                key={ind}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setdescription(ele);
-                  setshowOptions(false);
-                }}
-              >
-                {ele}
-              </option>
-            ))}
-          </div>
-        )}
       </td>
 
       <td>{product_details.product_id}</td>
