@@ -254,20 +254,15 @@ export default function createDepartmentRole({
                 <label htmlFor="branch">
                   Branch<sup>*</sup>
                 </label>
-                <select
+                <input
                   id="branch"
+                  name="branch"
+                  type="text"
+                  placeholder="Enter Branch"
                   onChange={handleCreateDepartmentChange}
                   value={createDepartmentForm.branch}
-                  name="branch"
                   required
-                >
-                  <option value="" style={{ color: "hsl(0, 0%, 80%)" }}>
-                    Select Branch
-                  </option>
-                  <option value="Location">Location</option>
-                  <option value="Location 2">Location 2</option>
-                  <option value="Location 3">Location 3</option>
-                </select>
+                />
               </div>
             </div>
             <div className="create-department-content">

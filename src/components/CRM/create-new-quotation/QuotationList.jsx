@@ -13,14 +13,13 @@ export default function QuotationList({
 }) {
   const [description, setdescription] = useState("");
 
-
   const [uomOptions, setuomOptions] = useState([]);
   const [taxOptions, settaxOptions] = useState([]);
 
   const [product_details, setproduct_details] = useState({
     unique_key: unique_key,
-    product_id: "--",
-    description: "--",
+    product_id: "",
+    description: "",
     uom: "--",
     unit_price: 0,
     discount: 0,
@@ -29,13 +28,14 @@ export default function QuotationList({
   });
   //edit
   useEffect(() => {
-    setproduct_details((prev) => {
-      return { ...prev, ...editQuotationData };
-    });
-  }, [editQuotationData]);
+    if (editQuotationData) {
+      setproduct_details((prev) => {
+        return { ...prev, ...editQuotationData };
+      });
 
-  console.log(description);
-  
+      setdescription(editQuotationData.description);
+    }
+  }, [editQuotationData]);
 
   useEffect(() => {
     setQuotationList_data((prev) => {
@@ -63,7 +63,7 @@ export default function QuotationList({
       if (description !== "") {
         return {
           ...prev,
-          description: data.description,
+          description,
           unit_price: data.unit_price,
           discount: data.discount,
           product_id: data.product_id,
@@ -86,6 +86,8 @@ export default function QuotationList({
     );
   }, [description]);
 
+  console.log(description);
+  console.log(product_details);
   return (
     <tr>
       <td>{unique_key + 1}</td>
@@ -94,6 +96,7 @@ export default function QuotationList({
           descriptions={descriptions}
           description={description}
           setdescription={setdescription}
+          inputDisable={inputDisable}
         />
       </td>
 

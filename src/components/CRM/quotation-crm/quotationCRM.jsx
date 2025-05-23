@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./quotationCRM.css";
 import CreateNewQuotation from "../create-new-quotation/createNewQuotation";
+import CreateNewQuotationEdit from "../create-new-quotation/createNewQuotationEdit";
 
 export default function quotation() {
   const [status, setStatus] = useState("");
+
+  console.log(status);
 
   const [selectStatus, setselectStatus] = useState("");
   const [seleQuotationType, setseleQuotationType] = useState("");
@@ -29,7 +32,7 @@ export default function quotation() {
         sales_rep: "Sans",
         quotation_date: "2025-10-10",
         status: "Draft",
-        revise_count: "1",
+        revise_count: 1,
         grand_total: "50000",
         product_id: "PRO0005",
         description: "M-shirt",
@@ -48,15 +51,28 @@ export default function quotation() {
         sales_rep: "Sans",
         quotation_date: "2025-10-10",
         status: "Send",
-        revise_count: "1",
+        revise_count: 2,
         grand_total: "50000",
-        product_id: "PRO0005",
-        description: "M-shirt",
-        uom: "Set (5)",
-        unit_price: "5",
-        discount: "5",
-        tax: "18",
-        quantity: "9",
+        products: [
+          {
+            product_id: "PRO0005",
+            description: "M-shirt",
+            uom: "Set (5)",
+            unit_price: "5",
+            discount: "5",
+            tax: "18",
+            quantity: "9",
+          },
+          {
+            product_id: "PRO0005",
+            description: "M-shirt",
+            uom: "Set (5)",
+            unit_price: "5",
+            discount: "5",
+            tax: "18",
+            quantity: "9",
+          },
+        ],
       },
       {
         id: "3",
@@ -106,7 +122,7 @@ export default function quotation() {
         sales_rep: "Sans",
         quotation_date: "2025-10-10",
         status: "Draft",
-        revise_count: "5",
+        revise_count: 5,
         grand_total: "50000",
       },
     ],
@@ -167,7 +183,7 @@ export default function quotation() {
           setStatus={setStatus}
         />
       ) : showEditNewQuotation ? (
-        <CreateNewQuotation
+        <CreateNewQuotationEdit
           setshowNewQuotation={setshowEditNewQuotation}
           showEditNewQuotation={showEditNewQuotation}
           editQuotationData={editQuotationData}

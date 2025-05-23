@@ -8,8 +8,7 @@ export default function CreateNewQuotationComments() {
   const [commentData, setCommentData] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  console.log(user);
-  
+  // console.log(user);
 
   const commentFromApi = {
     comment_data: [
@@ -54,7 +53,7 @@ export default function CreateNewQuotationComments() {
       comment: newComment,
     };
 
-    setCommentData((prev) => [newEntry,...prev]);
+    setCommentData((prev) => [newEntry, ...prev]);
 
     setNewComment("");
   };

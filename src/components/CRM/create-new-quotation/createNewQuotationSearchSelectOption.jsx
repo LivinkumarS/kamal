@@ -5,12 +5,9 @@ export default function createNewQuotationSearchSelectOption({
   setdescription,
   description,
   descriptions,
+  inputDisable,
 }) {
-  // const options = [
-  //   { value: "chocolate", label: "Chocolate" },
-  //   { value: "strawberry", label: "Strawberry" },
-  //   { value: "vanilla", label: "Vanilla" },
-  // ];
+
 
   const [options, setOptions] = useState([]);
 
@@ -18,7 +15,6 @@ export default function createNewQuotationSearchSelectOption({
 
   useEffect(() => {
     if (selectedOption) {
-      
       setdescription(selectedOption.value);
     }
   }, [selectedOption]);
@@ -39,6 +35,7 @@ export default function createNewQuotationSearchSelectOption({
         defaultValue={description}
         onChange={setSelectedOption}
         options={options}
+        isDisabled={inputDisable}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./createNewQuotation.css";
+import { useSelector } from "react-redux";
 
 export default function createNewQuotationRevision({
   showRevise,
@@ -9,6 +10,7 @@ export default function createNewQuotationRevision({
   status,
   setStatus,
 }) {
+  const { user } = useSelector((state) => state.auth);
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
@@ -74,6 +76,7 @@ export default function createNewQuotationRevision({
               <label htmlFor="created_by">Created by</label>
               <input
                 id="created_by"
+                value={user.name}
                 type="text"
                 placeholder="Created by"
                 disabled

@@ -8,7 +8,10 @@ import CreateNewQuotationRevision from "./createNewQuotationRevision";
 import CreateNewQuptationRevisionHistory from "./createNewQuptationRevisionHistory";
 import { toast } from "react-toastify";
 
-export default function createNewQuotation({
+export default function createNewQuotationEdit({
+  showEditNewQuotation,
+  editQuotationData,
+  setEditQuotationData,
   setshowNewQuotation,
   status,
   setStatus,
@@ -59,6 +62,10 @@ export default function createNewQuotation({
   const [reviseCount, setreviseCount] = useState(1);
 
   // QuotationList Data
+
+  console.log(editQuotationData);
+  
+
   const [numberOfQuotationList, setnumberOfQuotationList] = useState(1);
   const [QuotationList_data, setQuotationList_data] = useState([
     { unique_key: 0 },
@@ -122,7 +129,13 @@ export default function createNewQuotation({
 
   // console.log(QuotationList_data);
 
-
+  useEffect(() => {
+    setStatus(editQuotationData.status);
+    setreviseCount(editQuotationData.revise_count);
+    setNewQuotationData((prev) => {
+      return { ...prev, ...editQuotationData };
+    });
+  }, [editQuotationData]);
 
   useEffect(() => {
     setApiNewQuotation(newQuotationFromApi);
@@ -250,6 +263,7 @@ export default function createNewQuotation({
 
   const handleCancelNewQuotation = (e) => {
     e.preventDefault();
+    setEditQuotationData({});
     const okDel = window.confirm(
       "Are you sure you want to Cancel New Quotation?"
     );
@@ -432,6 +446,7 @@ export default function createNewQuotation({
 
               <div
                 onClick={() => {
+                  setEditQuotationData({});
                   setshowNewQuotation(false);
                   setStatus("");
                 }}
@@ -647,6 +662,8 @@ export default function createNewQuotation({
                     // functions
                     productTotal={productTotal}
                     deleteQuotationProduct={deleteQuotationProduct}
+                    //edit
+                    editQuotationData={editQuotationData}
                   />
                 ))}
                 <tr>

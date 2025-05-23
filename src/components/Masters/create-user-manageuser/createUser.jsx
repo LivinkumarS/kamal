@@ -8,6 +8,19 @@ export default function createUser({
   edituser,
   setedituser,
 }) {
+  const [ApiManageUser, setApiManageUser] = useState({});
+  const [branch, setBranch] = useState([]);
+  const manageUserFormAi = {
+    branch: ["Chennai", "Mumbai"],
+  };
+  useEffect(() => {
+    setApiManageUser(manageUserFormAi);
+  }, []);
+  useEffect(() => {
+    if (Object.keys(ApiManageUser).length > 0) {
+      setBranch(ApiManageUser.branch);
+    }
+  }, [ApiManageUser]);
   const [createUserForm, setcreateUserForm] = useState({
     first_name: "",
     last_name: "",
@@ -131,15 +144,23 @@ export default function createUser({
               <label htmlFor="branch">
                 Branch<sup>*</sup>
               </label>
-              <input
+
+              <select
                 id="branch"
                 name="branch"
-                type="text"
-                placeholder="Implementation Dome Logistics"
                 value={createUserForm.branch}
                 onChange={handleCreateUserChange}
                 required
-              />
+              >
+                <option value="" style={{ color: "hsl(0, 0%, 80%)" }}>
+                  Select Branch
+                </option>
+                {branch.map((ele, ind) => (
+                  <option key={{ ind }} value={ele}>
+                    {ele}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="createuser-box">
               <label htmlFor="department">
@@ -161,6 +182,10 @@ export default function createUser({
                 <option value="Admin">Admin</option>
                 <option value="Technicians">Technicians</option>
                 <option value="HR">HR</option>
+                <option value="Purchase">Purchase</option>
+                <option value="Finance">Finance</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Operations">Operations</option>
               </select>
             </div>
           </div>
