@@ -34,6 +34,7 @@ export default function createNewQuotation({
   const [customer_name, setcustomer_name] = useState([]);
   const [sales_rep, setsales_rep] = useState([]);
   const [currency, setcurrency] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState(""); // default
   const [quotation_table_data, setquotation_table_data] = useState([]);
   const [descriptions, setdescriptions] = useState([]);
   //total summery
@@ -118,11 +119,15 @@ export default function createNewQuotation({
       return { ...prev, [e.target.id]: e.target.value };
     });
   };
-  // console.log(newQuotationData);
-
-  // console.log(QuotationList_data);
-
-
+  //only for currency Symbol change
+  const handleNewQuotationCurrencyChange = (e) => {
+    const selected = e.target.value;
+    setNewQuotationData((prev) => ({
+      ...prev,
+      currency: selected,
+    }));
+    setSelectedCurrency(selected);
+  };
 
   useEffect(() => {
     setApiNewQuotation(newQuotationFromApi);
@@ -244,9 +249,6 @@ export default function createNewQuotation({
     setshowRevise(true);
     setreviseCount((prevCount) => prevCount + 1);
   };
-  console.log(reviseCount);
-  console.log(status);
-  const handleCurrency = (e) => {};
 
   const handleCancelNewQuotation = (e) => {
     e.preventDefault();
@@ -352,6 +354,7 @@ export default function createNewQuotation({
       toast.success("Product Item deleted!");
     }
   }
+  console.log(newQuotationData);
 
   return (
     <>
@@ -570,7 +573,7 @@ export default function createNewQuotation({
               <select
                 id="currency"
                 value={newQuotationData.currency}
-                onChange={handleNewQuotationDataChange}
+                onChange={handleNewQuotationCurrencyChange}
                 required
                 disabled={inputDisable}
               >
@@ -711,7 +714,11 @@ export default function createNewQuotation({
             <nav className="totals-container-bg">
               <h5>Grand Total</h5>
               <p>
-                <span>₹</span>
+                {selectedCurrency === "IND" && <span>₹</span>}
+                {selectedCurrency === "USD" && <span>$</span>}
+                {selectedCurrency === "GBP" && <span>£</span>}
+                {selectedCurrency === "SGD" && <span>S$</span>}
+                {selectedCurrency === "ERU" && <span>€</span>}
                 {roundedGrandTotal()}
               </p>
             </nav>

@@ -18,6 +18,7 @@ import EnquiryList from "../../CRM/enquiry-list/enquiryList";
 import Products from "../../Masters/products/products";
 import CustomMaster from "../../Masters/custom-master/customMaster";
 import QuotationCRM from "../../CRM/quotation-crm/quotationCRM";
+import SalesCRM from "../../CRM/sales-crm/salesCRM";
 
 export default function body({
   expanded,
@@ -149,6 +150,8 @@ export default function body({
           <EnquiryList />
         ) : currentPage == "quotationCRM" ? (
           <QuotationCRM />
+        ) : currentPage == "salesCRM" ? (
+          <SalesCRM />
         ) : currentPage == "task" ? (
           <Task />
         ) : currentPage == "attendance" ? (

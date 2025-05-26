@@ -32,15 +32,16 @@ export default function quotation() {
         sales_rep: "Sans",
         quotation_date: "2025-10-10",
         status: "Draft",
+        currency: "USD",
         revise_count: 1,
         grand_total: "50000",
         product_id: "PRO0005",
         description: "M-shirt",
         uom: "Set (5)",
-        unit_price: "5",
+        unit_price: "130",
         discount: "5",
-        tax: "18",
-        quantity: "9",
+        tax: "12",
+        quantity: "50",
       },
 
       {
@@ -83,6 +84,13 @@ export default function quotation() {
         quotation_date: "2025-10-10",
         status: "Rejected",
         grand_total: "50000",
+        product_id: "PRO0005",
+        description: "M-shirt",
+        uom: "Set (5)",
+        unit_price: "130",
+        discount: "5",
+        tax: "12",
+        quantity: "5",
       },
       {
         id: "4",
@@ -177,7 +185,6 @@ export default function quotation() {
         <CreateNewQuotation
           setshowNewQuotation={setshowNewQuotation}
           showEditNewQuotation={showEditNewQuotation}
-          editQuotationData={editQuotationData}
           setEditQuotationData={setEditQuotationData}
           status={status}
           setStatus={setStatus}
@@ -260,9 +267,9 @@ export default function quotation() {
               </select>
             </div>
           </div>
-          <div className="customMaster-table-cointainer">
+          <div className="quotationCRM-table-cointainer">
             <table>
-              <thead className="customMaster-thead">
+              <thead className="quotationCRM-thead">
                 <tr>
                   <th id="quotationCRM-table-max-width">Quotation ID</th>
                   <th id="quotationCRM-table-max-width">Quotation Type</th>
@@ -274,7 +281,7 @@ export default function quotation() {
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody className="customMaster-tbody">
+              <tbody className="quotationCRM-tbody">
                 {currentData.length > 0 ? (
                   currentData.map((ele, ind) => (
                     <tr key={ind}>

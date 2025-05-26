@@ -119,6 +119,36 @@
   text-decoration: underline;
   cursor: pointer;
 }
+/* table */
+.quotationCRM-table-cointainer {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  scrollbar-color: lightgray;
+}
+.quotationCRM-table-cointainer > table {
+  width: 100%;
+  border: 1px solid hsla(0, 0%, 0%, 0.119);
+  background: #fff;
+  margin-top: 30px;
+  border-radius: 4px;
+}
+.quotationCRM-thead > tr > th {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(35, 78, 112, 1);
+  padding: 15px 20px;
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.119);
+}
+.quotationCRM-tbody > tr > td {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(26, 26, 26, 1);
+  padding: 15px 20px;
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.119);
+}
 /* width */
 #quotationCRM-table-max-width {
   min-width: 190px;

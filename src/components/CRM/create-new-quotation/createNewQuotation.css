@@ -34,10 +34,16 @@
   /* min-height: max-content; */
   max-height: 78%;
   overflow-y: scroll;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
   background: #fff;
   border: 2px solid rgba(35, 78, 112, 0.7);
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(171, 178, 187, 0.3);
+}
+.newQuotation-historyBtn::-webkit-scrollbar {
+  display: none;
 }
 .newQuotation-blur {
   filter: blur(3px);
@@ -646,10 +652,6 @@
 .newQuotation-revHistory-container {
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
-  overflow-x: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: gray transparent;
 }
 .newQuotation-revHistory-container > table {
   width: 100%;

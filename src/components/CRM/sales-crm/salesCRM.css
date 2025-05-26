@@ -1,0 +1,134 @@
+.salesCRM-container {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  overflow: scroll;
+  background: rgba(253, 253, 253, 1);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.salesCRM-container::-webkit-scrollbar {
+  display: none;
+}
+
+.salesCRM-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.salesCRM-header > p {
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(35, 78, 112, 1);
+}
+.salesCRM-header > button {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+  background: #234e70;
+  color: #fff;
+  border-radius: 5px;
+  border: 0px;
+  min-width: 123px;
+}
+
+/* search box */
+.salesCRM-search-box {
+  cursor: pointer;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  gap: 10px;
+  border-radius: 40px;
+  width: 100%;
+  border: 2px solid rgba(217, 217, 217, 1);
+}
+.salesCRM-search-box:focus {
+  border: 2px solid rgba(35, 78, 112, 1);
+}
+.salesCRM-search-box > label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.salesCRM-search-logo {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  fill: rgba(192, 192, 192, 1);
+}
+.salesCRM-search-box > input {
+  width: 95%;
+  border: 0px;
+  background: transparent;
+}
+.salesCRM-search-box > input:focus {
+  outline: none;
+}
+.salesCRM-search-box > input::placeholder {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(176, 176, 176, 1);
+}
+.salesCRM-clearfilter {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(35, 78, 112, 1);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.salesCRM-clearfilter > p {
+  width: max-content;
+  cursor: pointer;
+}
+.salesCRM-search-category {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.salesCRM-input-box {
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  flex-direction: column;
+}
+.salesCRM-input-box > label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(42, 42, 42, 1);
+}
+.salesCRM-input-box > input,
+.salesCRM-input-box > select {
+  border: 2px solid rgba(35, 78, 112, 1);
+  border-radius: 10px;
+  color: rgba(1, 19, 52, 1);
+  font-size: 14px;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 1);
+  padding: 7px 15px;
+}
+/* table */
+.salesCRM-table-cointainer {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  scrollbar-color: lightgray;
+}
+.salesCRM-table-cointainer > table {
+  width: 100%;
+  border: 1px solid hsla(0, 0%, 0%, 0.119);
+  background: #fff;
+  margin-top: 30px;
+  border-radius: 4px;
+}

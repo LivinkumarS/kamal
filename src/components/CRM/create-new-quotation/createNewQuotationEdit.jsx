@@ -9,7 +9,6 @@ import CreateNewQuptationRevisionHistory from "./createNewQuptationRevisionHisto
 import { toast } from "react-toastify";
 
 export default function createNewQuotationEdit({
-  showEditNewQuotation,
   editQuotationData,
   setEditQuotationData,
   setshowNewQuotation,
@@ -19,6 +18,7 @@ export default function createNewQuotationEdit({
   const [comment, setComment] = useState(true);
   const [history, sethistory] = useState(false);
   const [attachment, setattachment] = useState(false);
+
   //new quotationdata
   const [newQuotationData, setNewQuotationData] = useState({
     quotation_id: "",
@@ -43,13 +43,17 @@ export default function createNewQuotationEdit({
   const [globalDiscount, setGlobalDiscount] = useState(0);
   const [shippingCharges, setShippingCharges] = useState(0);
   //button
-  const [saveDraft, setsaveDraft] = useState(false);
-  const [submit, setSubmit] = useState(false);
-  const [Approve, setApprove] = useState(true);
-  const [Reject, setReject] = useState(true);
-  const [SalesOrder, setSalesOrder] = useState(true);
-  const [pdf, setpdf] = useState(true);
-  const [email, setEmail] = useState(true);
+  const [buttonState, setButtonState] = useState({
+    saveDraft: false,
+    submit: false,
+    approve: true,
+    reject: true,
+    salesOrder: true,
+    pdf: true,
+    email: true,
+    historyBtn: true,
+    reviseBtn: true,
+  });
 
   const [inputDisable, setinputDisable] = useState(false);
 
@@ -62,9 +66,6 @@ export default function createNewQuotationEdit({
   const [reviseCount, setreviseCount] = useState(1);
 
   // QuotationList Data
-
-  console.log(editQuotationData);
-  
 
   const [numberOfQuotationList, setnumberOfQuotationList] = useState(1);
   const [QuotationList_data, setQuotationList_data] = useState([
@@ -125,9 +126,14 @@ export default function createNewQuotationEdit({
       return { ...prev, [e.target.id]: e.target.value };
     });
   };
-  // console.log(newQuotationData);
-
-  // console.log(QuotationList_data);
+  //only for currency Symbol change
+  const handleNewQuotationCurrencyChange = (e) => {
+    const selected = e.target.value;
+    setNewQuotationData((prev) => ({
+      ...prev,
+      currency: selected,
+    }));
+  };
 
   useEffect(() => {
     setStatus(editQuotationData.status);
@@ -151,74 +157,65 @@ export default function createNewQuotationEdit({
   }, [ApiNewQuotation]);
 
   useEffect(() => {
-    if (status === "Draft") {
-      setsaveDraft(false);
-      setSubmit(false);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-      if (reviseCount > 1) {
-        setHistorybtn(false);
-      }
-      setRevisebtn(true);
-    } else if (status === "Send") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(false);
-      setReject(false);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-      setHistorybtn(true);
-      setRevisebtn(false);
-    } else if (status === "Approved") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(false);
-      setpdf(false);
-      setEmail(false);
-    } else if (status === "Rejected") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-    } else if (status === "Converted (SO)") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-    } else if (status === "Expired") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
+    const defaultState = {
+      saveDraft: true,
+      submit: true,
+      approve: true,
+      reject: true,
+      salesOrder: true,
+      pdf: false,
+      email: false,
+      historyBtn: true,
+      reviseBtn: false,
+    };
+
+    switch (status) {
+      case "Draft":
+        setButtonState({
+          saveDraft: false,
+          submit: false,
+          approve: true,
+          reject: true,
+          salesOrder: true,
+          pdf: false,
+          email: false,
+          historyBtn: reviseCount > 1 ? false : true,
+          reviseBtn: true,
+        });
+        break;
+
+      case "Send":
+        setButtonState({
+          ...defaultState,
+          approve: false,
+          reject: false,
+        });
+        break;
+
+      case "Approved":
+        setButtonState({
+          ...defaultState,
+          salesOrder: false,
+        });
+        break;
+
+      case "Rejected":
+      case "Converted (SO)":
+      case "Expired":
+        setButtonState(defaultState);
+        break;
+
+      default:
+        break;
     }
-  }, [status]);
+  }, [status, reviseCount]);
+
   useEffect(() => {
-    if (
-      status === "Send" ||
-      status === "Approved" ||
-      status === "Rejected" ||
-      status === "Converted (SO)" ||
-      status === "Expired"
-    ) {
-      setinputDisable(true);
-    } else {
-      setinputDisable(false);
-    }
+    setinputDisable(
+      ["Send", "Approved", "Rejected", "Converted (SO)", "Expired"].includes(
+        status
+      )
+    );
   }, [status]);
 
   // button submit functionality
@@ -257,9 +254,6 @@ export default function createNewQuotationEdit({
     setshowRevise(true);
     setreviseCount((prevCount) => prevCount + 1);
   };
-  console.log(reviseCount);
-  console.log(status);
-  const handleCurrency = (e) => {};
 
   const handleCancelNewQuotation = (e) => {
     e.preventDefault();
@@ -366,6 +360,7 @@ export default function createNewQuotationEdit({
       toast.success("Product Item deleted!");
     }
   }
+  console.log(newQuotationData);
 
   return (
     <>
@@ -585,7 +580,7 @@ export default function createNewQuotationEdit({
               <select
                 id="currency"
                 value={newQuotationData.currency}
-                onChange={handleNewQuotationDataChange}
+                onChange={handleNewQuotationCurrencyChange}
                 required
                 disabled={inputDisable}
               >
@@ -728,7 +723,11 @@ export default function createNewQuotationEdit({
             <nav className="totals-container-bg">
               <h5>Grand Total</h5>
               <p>
-                <span>₹</span>
+                {newQuotationData.currency === "IND" && <span>₹</span>}
+                {newQuotationData.currency === "USD" && <span>$</span>}
+                {newQuotationData.currency === "GBP" && <span>£</span>}
+                {newQuotationData.currency === "SGD" && <span>S$</span>}
+                {newQuotationData.currency === "ERU" && <span>€</span>}
                 {roundedGrandTotal()}
               </p>
             </nav>
@@ -793,74 +792,74 @@ export default function createNewQuotationEdit({
             </button>
             <button
               className={`newQuotation-active-btn ${
-                saveDraft && "newQuotation-passed-btn"
+                buttonState.saveDraft && "newQuotation-passed-btn"
               }`}
               onClick={handleSaveDraftState}
-              disabled={saveDraft}
+              disabled={buttonState.saveDraft}
             >
               Save Draft
             </button>
             <button
               className={`newQuotation-active-btn ${
-                submit && "newQuotation-passed-btn"
+                buttonState.submit && "newQuotation-passed-btn"
               }`}
-              disabled={submit}
+              disabled={buttonState.submit}
             >
-              {submit ? "Submitted" : "Submit"}
+              {buttonState.submit ? "Submitted" : "Submit"}
             </button>
             <button
               className={`newQuotation-active-btn ${
-                saveDraft && submit && Approve && Reject
+                buttonState.saveDraft && buttonState.submit && buttonState.approve && buttonState.reject
                   ? "newQuotation-passed-btn"
-                  : Approve
+                  : buttonState.approve
                   ? "newQuotation-line-btn"
                   : "newQuotation-active-btn"
               }`}
               onClick={handleApprovedState}
-              disabled={Approve}
+              disabled={buttonState.approve}
             >
-              {saveDraft && submit && Approve && !SalesOrder
+              {buttonState.saveDraft && buttonState.submit && buttonState.approve && !buttonState.salesOrder
                 ? "Approved"
                 : "Approve"}
             </button>
             <button
               className={`newQuotation-active-btn ${
-                saveDraft && submit && Approve && Reject
+                buttonState.saveDraft && buttonState.submit && buttonState.approve && buttonState.reject
                   ? "newQuotation-passed-btn"
-                  : Reject
+                  : buttonState.reject
                   ? "newQuotation-line-btn"
                   : "newQuotation-active-btn"
               }`}
               onClick={handleRejectedState}
-              disabled={Reject}
+              disabled={buttonState.reject}
             >
-              {saveDraft && submit && Reject && SalesOrder
+              {buttonState.saveDraft && buttonState.submit && buttonState.reject && buttonState.salesOrder
                 ? "Rejected"
                 : "Reject"}
             </button>
             <button
               className={` ${
-                saveDraft &&
-                submit &&
-                Approve &&
-                SalesOrder &&
-                status !== "Rejected"
+                buttonState.saveDraft &&
+                buttonState.submit &&
+                buttonState.approve &&
+                buttonState.salesOrder &&
+                buttonState.status !== "Rejected"
                   ? "newQuotation-passed-btn"
-                  : SalesOrder
+                  : buttonState.salesOrder
                   ? "newQuotation-line-btn"
                   : "newQuotation-active-btn"
               }`}
               onClick={handleSalseState}
-              disabled={SalesOrder}
+              disabled={buttonState.salesOrder}
             >
               {status === "Converted (SO)"
                 ? "Converted (SO)"
                 : "Convert to (SO)"}
             </button>
             <svg
-              disabled={pdf}
+              disabled={buttonState.pdf}
               className={`newQuotation-pdf-mail-activelogo ${
-                pdf && "newQuotation-pdf-mail-futurelogo"
+                buttonState.pdf && "newQuotation-pdf-mail-futurelogo"
               }`}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 22 24"
@@ -873,9 +872,9 @@ export default function createNewQuotationEdit({
               />
             </svg>
             <svg
-              disabled={email}
+              disabled={buttonState.email}
               className={`newQuotation-pdf-mail-activelogo ${
-                email && "newQuotation-pdf-mail-futurelogo"
+                buttonState.email && "newQuotation-pdf-mail-futurelogo"
               }`}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 16"
