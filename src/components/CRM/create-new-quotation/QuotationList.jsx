@@ -10,6 +10,7 @@ export default function QuotationList({
   deleteQuotationProduct,
   inputDisable,
   editQuotationData,
+  selectedCurrency,
 }) {
   const [description, setdescription] = useState("");
 
@@ -45,43 +46,6 @@ export default function QuotationList({
       });
     });
   }, [product_details]);
-
-  //   if (description === "") {
-  //     setproduct_details((prev) => {
-  //       return { ...prev, description: "--", unit_price: 0, discount: 0 };
-  //     });
-  //     return;
-  //   }
-  //   setproduct_details((prev) => {
-  //     const data = quotation_table_data.find(
-  //       (ele) => ele.description === description
-  //     );
-
-  //     if (description !== "") {
-  //       return {
-  //         ...prev,
-  //         description,
-  //         unit_price: data.unit_price,
-  //         discount: data.discount,
-  //         product_id: data.product_id,
-  //       };
-  //     } else return { ...prev };
-  //   });
-
-  //   setuomOptions(
-  //     description !== ""
-  //       ? quotation_table_data.find((ele) => ele.description === description)
-  //           .uom
-  //       : []
-  //   );
-
-  //   settaxOptions(
-  //     description !== ""
-  //       ? quotation_table_data.find((ele) => ele.description === description)
-  //           .tax
-  //       : []
-  //   );
-  // }, [description]);
 
   useEffect(() => {
     if (description === "") {
@@ -210,7 +174,11 @@ export default function QuotationList({
         </td>
         <td>
           {" "}
-          <span>₹</span>
+          {selectedCurrency === "IND" && <span>₹</span>}
+          {selectedCurrency === "USD" && <span>$</span>}
+          {selectedCurrency === "GBP" && <span>£</span>}
+          {selectedCurrency === "SGD" && <span>S$</span>}
+          {selectedCurrency === "ERU" && <span>€</span>}
           {productTotal(unique_key)}
         </td>
         <td id="newQuotation-table-content-center">

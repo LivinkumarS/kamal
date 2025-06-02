@@ -46,6 +46,7 @@ export default function CreateNewQuotationSearchSelectOption({
         onChange={setSelectedOption}
         options={options}
         isDisabled={inputDisable}
+        required
         placeholder="Select product"
       />
     </div>

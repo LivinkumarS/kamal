@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BugDetailPage from "./components/projectMenu/bug-detail-page/bugDetailPage";
 import AddNewCandidate from "./components/onboardMenu/add-new-candidate/addNewCandidate";
+import CreateNewSales from "./components/CRM/create-new-sales/createNewSales";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           path="/edit-candidate/:candidateId"
           element={<AddNewCandidate />}
         />
+        <Route path="/new-sales" element={<CreateNewSales />} />
       </Routes>
     </BrowserRouter>
   );

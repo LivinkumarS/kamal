@@ -57,8 +57,8 @@ export default function createNewQuotationEdit({
 
   const [inputDisable, setinputDisable] = useState(false);
 
-  const [historybtn, setHistorybtn] = useState(true);
-  const [revisebtn, setRevisebtn] = useState(true);
+  // const [historybtn, setHistorybtn] = useState(true);
+  // const [revisebtn, setRevisebtn] = useState(true);
 
   const [showHistory, setshowHistory] = useState(false);
   const [showRevise, setshowRevise] = useState(false);
@@ -421,21 +421,21 @@ export default function createNewQuotationEdit({
                         : "newQuotation-line-btn"
                     }
                     onClick={handleHistory}
-                    disabled={historybtn}
+                    disabled={buttonState.historyBtn}
                   >
                     Revision History
                   </button>
-                  <div
+                  <button
                     className={
                       status === "Send"
                         ? "newQuotation-active-btn"
                         : "newQuotation-line-btn"
                     }
                     onClick={handleRevise}
-                    disabled={revisebtn}
+                    disabled={buttonState.reviseBtn}
                   >
                     Revise
-                  </div>
+                  </button>
                 </>
               )}
 
@@ -685,7 +685,7 @@ export default function createNewQuotationEdit({
             </table>
           </div>
           <nav className="newQuotation-subtit">Tax & Totals</nav>
-          <div className="totals-container">
+          <div className="newQuotation-totals-container">
             <nav>
               <h5>Subtotal</h5>
               <p> {calculateSubtotal()}</p>
@@ -706,7 +706,14 @@ export default function createNewQuotationEdit({
               <p> {calculateTaxSummery()}</p>
             </nav>
             <nav>
-              <h5>Shipping Charges{"(₹)"}</h5>
+              <h5>
+                Shipping Charges{" "}
+                {newQuotationData.currency === "IND" && <span>{`(₹)`}</span>}
+                {newQuotationData.currency === "USD" && <span>{`($)`}</span>}
+                {newQuotationData.currency === "GBP" && <span>{`(£)`}</span>}
+                {newQuotationData.currency === "SGD" && <span>{`(S$)`}</span>}
+                {newQuotationData.currency === "ERU" && <span>{`(€)`}</span>}
+              </h5>
               <input
                 type="number"
                 value={shippingCharges}
@@ -720,7 +727,7 @@ export default function createNewQuotationEdit({
               <h5>Rounding Adjustment</h5>
               <p>{roundedvalue()}</p>
             </nav>
-            <nav className="totals-container-bg">
+            <nav className="newQuotation-totals-container-bg">
               <h5>Grand Total</h5>
               <p>
                 {newQuotationData.currency === "IND" && <span>₹</span>}
@@ -809,7 +816,10 @@ export default function createNewQuotationEdit({
             </button>
             <button
               className={`newQuotation-active-btn ${
-                buttonState.saveDraft && buttonState.submit && buttonState.approve && buttonState.reject
+                buttonState.saveDraft &&
+                buttonState.submit &&
+                buttonState.approve &&
+                buttonState.reject
                   ? "newQuotation-passed-btn"
                   : buttonState.approve
                   ? "newQuotation-line-btn"
@@ -818,13 +828,16 @@ export default function createNewQuotationEdit({
               onClick={handleApprovedState}
               disabled={buttonState.approve}
             >
-              {buttonState.saveDraft && buttonState.submit && buttonState.approve && !buttonState.salesOrder
+              {status === "Approved" || status === "Converted (SO)"
                 ? "Approved"
                 : "Approve"}
             </button>
             <button
               className={`newQuotation-active-btn ${
-                buttonState.saveDraft && buttonState.submit && buttonState.approve && buttonState.reject
+                buttonState.saveDraft &&
+                buttonState.submit &&
+                buttonState.approve &&
+                buttonState.reject
                   ? "newQuotation-passed-btn"
                   : buttonState.reject
                   ? "newQuotation-line-btn"
@@ -833,9 +846,7 @@ export default function createNewQuotationEdit({
               onClick={handleRejectedState}
               disabled={buttonState.reject}
             >
-              {buttonState.saveDraft && buttonState.submit && buttonState.reject && buttonState.salesOrder
-                ? "Rejected"
-                : "Reject"}
+              {status === "Rejected" ? "Rejected" : "Reject"}
             </button>
             <button
               className={` ${
@@ -843,7 +854,7 @@ export default function createNewQuotationEdit({
                 buttonState.submit &&
                 buttonState.approve &&
                 buttonState.salesOrder &&
-                buttonState.status !== "Rejected"
+                status !== "Rejected"
                   ? "newQuotation-passed-btn"
                   : buttonState.salesOrder
                   ? "newQuotation-line-btn"

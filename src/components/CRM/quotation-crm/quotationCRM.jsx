@@ -334,7 +334,7 @@ export default function quotation() {
                     </tr>
                   ))
                 ) : (
-                  <p>No Data Found</p>
+                  <tr><td>No Data Found</td></tr>
                 )}
               </tbody>
             </table>

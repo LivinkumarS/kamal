@@ -41,18 +41,19 @@ export default function createNewQuotation({
   const [globalDiscount, setGlobalDiscount] = useState(0);
   const [shippingCharges, setShippingCharges] = useState(0);
   //button
-  const [saveDraft, setsaveDraft] = useState(false);
-  const [submit, setSubmit] = useState(false);
-  const [Approve, setApprove] = useState(true);
-  const [Reject, setReject] = useState(true);
-  const [SalesOrder, setSalesOrder] = useState(true);
-  const [pdf, setpdf] = useState(true);
-  const [email, setEmail] = useState(true);
+  const [buttonState, setButtonState] = useState({
+    saveDraft: false,
+    submit: false,
+    approve: true,
+    reject: true,
+    salesOrder: true,
+    pdf: true,
+    email: true,
+    historyBtn: true,
+    reviseBtn: true,
+  });
 
   const [inputDisable, setinputDisable] = useState(false);
-
-  const [historybtn, setHistorybtn] = useState(true);
-  const [revisebtn, setRevisebtn] = useState(true);
 
   const [showHistory, setshowHistory] = useState(false);
   const [showRevise, setshowRevise] = useState(false);
@@ -66,7 +67,32 @@ export default function createNewQuotation({
   ]);
 
   const newQuotationFromApi = {
-    customer_name: ["Mandy", "Rose", "Sans"],
+    customer_name: [
+      "Mandy",
+      "Rose",
+      "Sans",
+      "Mandy",
+      "Rose",
+      "Sans",
+      "Mandy",
+      "Rose",
+      "Sans",
+      "Mandy",
+      "Rose",
+      "Sans",
+      "Mandy",
+      "Rose",
+      "Sans",
+      "Mandy",
+      "Rose",
+      "Sans",
+      "Mandy",
+      "Rose",
+      "Sans",
+      "Mandy",
+      "Rose",
+      "Sans",
+    ],
     sales_rep: ["Sans", "rose", "Mandy"],
     currency: ["USD", "IND", "ERU", "GBP", "SGD"],
 
@@ -143,62 +169,58 @@ export default function createNewQuotation({
   }, [ApiNewQuotation]);
 
   useEffect(() => {
-    if (status === "Draft") {
-      setsaveDraft(false);
-      setSubmit(false);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-      if (reviseCount > 1) {
-        setHistorybtn(false);
-      }
-      setRevisebtn(true);
-    } else if (status === "Send") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(false);
-      setReject(false);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-      setHistorybtn(true);
-      setRevisebtn(false);
-    } else if (status === "Approved") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(false);
-      setpdf(false);
-      setEmail(false);
-    } else if (status === "Rejected") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-    } else if (status === "Converted (SO)") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
-    } else if (status === "Expired") {
-      setsaveDraft(true);
-      setSubmit(true);
-      setApprove(true);
-      setReject(true);
-      setSalesOrder(true);
-      setpdf(false);
-      setEmail(false);
+    const defaultState = {
+      saveDraft: true,
+      submit: true,
+      approve: true,
+      reject: true,
+      salesOrder: true,
+      pdf: false,
+      email: false,
+      historyBtn: true,
+      reviseBtn: false,
+    };
+
+    switch (status) {
+      case "Draft":
+        setButtonState({
+          saveDraft: false,
+          submit: false,
+          approve: true,
+          reject: true,
+          salesOrder: true,
+          pdf: false,
+          email: false,
+          historyBtn: reviseCount > 1 ? false : true,
+          reviseBtn: true,
+        });
+        break;
+
+      case "Send":
+        setButtonState({
+          ...defaultState,
+          approve: false,
+          reject: false,
+        });
+        break;
+
+      case "Approved":
+        setButtonState({
+          ...defaultState,
+          salesOrder: false,
+        });
+        break;
+
+      case "Rejected":
+      case "Converted (SO)":
+      case "Expired":
+        setButtonState(defaultState);
+        break;
+
+      default:
+        break;
     }
-  }, [status]);
+  }, [status, reviseCount]);
   useEffect(() => {
     if (
       status === "Send" ||
@@ -415,21 +437,21 @@ export default function createNewQuotation({
                         : "newQuotation-line-btn"
                     }
                     onClick={handleHistory}
-                    disabled={historybtn}
+                    disabled={buttonState.historyBtn}
                   >
                     Revision History
                   </button>
-                  <div
+                  <button
                     className={
                       status === "Send"
                         ? "newQuotation-active-btn"
                         : "newQuotation-line-btn"
                     }
                     onClick={handleRevise}
-                    disabled={revisebtn}
+                    disabled={buttonState.reviseBtn}
                   >
                     Revise
-                  </div>
+                  </button>
                 </>
               )}
 
@@ -642,6 +664,7 @@ export default function createNewQuotation({
               <tbody className="newQuotation-table-body">
                 {[...Array(numberOfQuotationList)].map((ele, ind) => (
                   <QuotationList
+                    key={ind}
                     unique_key={ind}
                     descriptions={descriptions}
                     quotation_table_data={quotation_table_data}
@@ -650,6 +673,8 @@ export default function createNewQuotation({
                     // functions
                     productTotal={productTotal}
                     deleteQuotationProduct={deleteQuotationProduct}
+                    //currency
+                    selectedCurrency={selectedCurrency}
                   />
                 ))}
                 <tr>
@@ -676,7 +701,7 @@ export default function createNewQuotation({
             </table>
           </div>
           <nav className="newQuotation-subtit">Tax & Totals</nav>
-          <div className="totals-container">
+          <div className="newQuotation-totals-container">
             <nav>
               <h5>Subtotal</h5>
               <p> {calculateSubtotal()}</p>
@@ -697,7 +722,14 @@ export default function createNewQuotation({
               <p> {calculateTaxSummery()}</p>
             </nav>
             <nav>
-              <h5>Shipping Charges{"(₹)"}</h5>
+              <h5>
+                Shipping Charges{" "}
+                {selectedCurrency === "IND" && <span>{`(₹)`}</span>}
+                {selectedCurrency === "USD" && <span>{`($)`}</span>}
+                {selectedCurrency === "GBP" && <span>{`(£)`}</span>}
+                {selectedCurrency === "SGD" && <span>{`(S$)`}</span>}
+                {selectedCurrency === "ERU" && <span>{`(€)`}</span>}
+              </h5>
               <input
                 type="number"
                 value={shippingCharges}
@@ -711,7 +743,7 @@ export default function createNewQuotation({
               <h5>Rounding Adjustment</h5>
               <p>{roundedvalue()}</p>
             </nav>
-            <nav className="totals-container-bg">
+            <nav className="newQuotation-totals-container-bg">
               <h5>Grand Total</h5>
               <p>
                 {selectedCurrency === "IND" && <span>₹</span>}
@@ -783,89 +815,93 @@ export default function createNewQuotation({
             </button>
             <button
               className={`newQuotation-active-btn ${
-                saveDraft && "newQuotation-passed-btn"
+                buttonState.saveDraft && "newQuotation-passed-btn"
               }`}
               onClick={handleSaveDraftState}
-              disabled={saveDraft}
+              disabled={buttonState.saveDraft}
             >
               Save Draft
             </button>
             <button
               className={`newQuotation-active-btn ${
-                submit && "newQuotation-passed-btn"
+                buttonState.submit && "newQuotation-passed-btn"
               }`}
-              disabled={submit}
+              disabled={buttonState.submit}
             >
-              {submit ? "Submitted" : "Submit"}
+              {buttonState.submit ? "Submitted" : "Submit"}
             </button>
             <button
               className={`newQuotation-active-btn ${
-                saveDraft && submit && Approve && Reject
+                buttonState.saveDraft &&
+                buttonState.submit &&
+                buttonState.approve &&
+                buttonState.reject
                   ? "newQuotation-passed-btn"
-                  : Approve
+                  : buttonState.approve
                   ? "newQuotation-line-btn"
                   : "newQuotation-active-btn"
               }`}
               onClick={handleApprovedState}
-              disabled={Approve}
+              disabled={buttonState.approve}
             >
-              {saveDraft && submit && Approve && !SalesOrder
+              {status === "Approved" || status === "Converted (SO)"
                 ? "Approved"
                 : "Approve"}
             </button>
             <button
               className={`newQuotation-active-btn ${
-                saveDraft && submit && Approve && Reject
+                buttonState.saveDraft &&
+                buttonState.submit &&
+                buttonState.approve &&
+                buttonState.reject
                   ? "newQuotation-passed-btn"
-                  : Reject
+                  : buttonState.reject
                   ? "newQuotation-line-btn"
                   : "newQuotation-active-btn"
               }`}
               onClick={handleRejectedState}
-              disabled={Reject}
+              disabled={buttonState.reject}
             >
-              {saveDraft && submit && Reject && SalesOrder
-                ? "Rejected"
-                : "Reject"}
+              {status === "Rejected" ? "Rejected" : "Reject"}
             </button>
             <button
               className={` ${
-                saveDraft &&
-                submit &&
-                Approve &&
-                SalesOrder &&
+                buttonState.saveDraft &&
+                buttonState.submit &&
+                buttonState.approve &&
+                buttonState.salesOrder &&
                 status !== "Rejected"
                   ? "newQuotation-passed-btn"
-                  : SalesOrder
+                  : buttonState.salesOrder
                   ? "newQuotation-line-btn"
                   : "newQuotation-active-btn"
               }`}
               onClick={handleSalseState}
-              disabled={SalesOrder}
+              disabled={buttonState.salesOrder}
             >
               {status === "Converted (SO)"
                 ? "Converted (SO)"
                 : "Convert to (SO)"}
             </button>
             <svg
-              disabled={pdf}
+              disabled={buttonState.pdf}
               className={`newQuotation-pdf-mail-activelogo ${
-                pdf && "newQuotation-pdf-mail-futurelogo"
+                buttonState.pdf && "newQuotation-pdf-mail-futurelogo"
               }`}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 22 24"
               fill="none"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M0.600098 2.4C0.600098 1.76348 0.852954 1.15303 1.30304 0.702944C1.75313 0.252856 2.36358 0 3.0001 0L16.1313 0L21.4001 5.2688V21.6C21.4001 22.2365 21.1472 22.847 20.6972 23.2971C20.2471 23.7471 19.6366 24 19.0001 24H3.0001C2.36358 24 1.75313 23.7471 1.30304 23.2971C0.852954 22.847 0.600098 22.2365 0.600098 21.6V2.4ZM4.6001 9.6H2.2001V17.6H3.8001V14.4H4.6001C5.23662 14.4 5.84707 14.1471 6.29715 13.6971C6.74724 13.247 7.0001 12.6365 7.0001 12C7.0001 11.3635 6.74724 10.753 6.29715 10.3029C5.84707 9.85286 5.23662 9.6 4.6001 9.6ZM11.0001 9.6H8.6001V17.6H11.0001C11.6366 17.6 12.2471 17.3471 12.6972 16.8971C13.1472 16.447 13.4001 15.8365 13.4001 15.2V12C13.4001 11.3635 13.1472 10.753 12.6972 10.3029C12.2471 9.85286 11.6366 9.6 11.0001 9.6ZM15.0001 17.6V9.6H19.8001V11.2H16.6001V12.8H18.2001V14.4H16.6001V17.6H15.0001Z"
               />
             </svg>
             <svg
-              disabled={email}
+              disabled={buttonState.email}
               className={`newQuotation-pdf-mail-activelogo ${
-                email && "newQuotation-pdf-mail-futurelogo"
+                buttonState.email && "newQuotation-pdf-mail-futurelogo"
               }`}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 16"

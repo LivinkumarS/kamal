@@ -19,6 +19,7 @@ import Products from "../../Masters/products/products";
 import CustomMaster from "../../Masters/custom-master/customMaster";
 import QuotationCRM from "../../CRM/quotation-crm/quotationCRM";
 import SalesCRM from "../../CRM/sales-crm/salesCRM";
+import CreateNewSales from "../../CRM/create-new-sales/createNewSales";
 
 export default function body({
   expanded,
@@ -31,6 +32,9 @@ export default function body({
   const [projectId, setProjectId] = useState(0);
   const [showUserDetails, setShowUserDetails] = useState(false);
   const profileRef = useRef(null);
+
+  // state vales
+  const [salesStatus, setSalesStatus] = useState("");
 
   const dispatch = useDispatch();
 
@@ -151,7 +155,17 @@ export default function body({
         ) : currentPage == "quotationCRM" ? (
           <QuotationCRM />
         ) : currentPage == "salesCRM" ? (
-          <SalesCRM />
+          <SalesCRM
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            salesStatus={salesStatus}
+            setSalesStatus={setSalesStatus}
+          />
+        ) : currentPage == "createNewSales" ? (
+          <CreateNewSales
+            salesStatus={salesStatus}
+            setSalesStatus={setSalesStatus}
+          />
         ) : currentPage == "task" ? (
           <Task />
         ) : currentPage == "attendance" ? (
