@@ -10,7 +10,7 @@ export default function QuotationList({
   deleteQuotationProduct,
   inputDisable,
   editQuotationData,
-  selectedCurrency,
+  newQuotationData,
 }) {
   const [description, setdescription] = useState("");
 
@@ -174,11 +174,11 @@ export default function QuotationList({
         </td>
         <td>
           {" "}
-          {selectedCurrency === "IND" && <span>₹</span>}
-          {selectedCurrency === "USD" && <span>$</span>}
-          {selectedCurrency === "GBP" && <span>£</span>}
-          {selectedCurrency === "SGD" && <span>S$</span>}
-          {selectedCurrency === "ERU" && <span>€</span>}
+          {newQuotationData.currency === "IND" && <span>₹</span>}
+          {newQuotationData.currency === "USD" && <span>$</span>}
+          {newQuotationData.currency === "GBP" && <span>£</span>}
+          {newQuotationData.currency === "SGD" && <span>S$</span>}
+          {newQuotationData.currency === "ERU" && <span>€</span>}
           {productTotal(unique_key)}
         </td>
         <td id="newQuotation-table-content-center">

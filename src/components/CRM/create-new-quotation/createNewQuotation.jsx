@@ -34,7 +34,6 @@ export default function createNewQuotation({
   const [customer_name, setcustomer_name] = useState([]);
   const [sales_rep, setsales_rep] = useState([]);
   const [currency, setcurrency] = useState([]);
-  const [selectedCurrency, setSelectedCurrency] = useState(""); // default
   const [quotation_table_data, setquotation_table_data] = useState([]);
   const [descriptions, setdescriptions] = useState([]);
   //total summery
@@ -152,7 +151,6 @@ export default function createNewQuotation({
       ...prev,
       currency: selected,
     }));
-    setSelectedCurrency(selected);
   };
 
   useEffect(() => {
@@ -674,7 +672,7 @@ export default function createNewQuotation({
                     productTotal={productTotal}
                     deleteQuotationProduct={deleteQuotationProduct}
                     //currency
-                    selectedCurrency={selectedCurrency}
+                    newQuotationData={newQuotationData}
                   />
                 ))}
                 <tr>
@@ -724,11 +722,11 @@ export default function createNewQuotation({
             <nav>
               <h5>
                 Shipping Charges{" "}
-                {selectedCurrency === "IND" && <span>{`(₹)`}</span>}
-                {selectedCurrency === "USD" && <span>{`($)`}</span>}
-                {selectedCurrency === "GBP" && <span>{`(£)`}</span>}
-                {selectedCurrency === "SGD" && <span>{`(S$)`}</span>}
-                {selectedCurrency === "ERU" && <span>{`(€)`}</span>}
+                {newQuotationData.currency === "IND" && <span>{`(₹)`}</span>}
+                {newQuotationData.currency === "USD" && <span>{`($)`}</span>}
+                {newQuotationData.currency === "GBP" && <span>{`(£)`}</span>}
+                {newQuotationData.currency === "SGD" && <span>{`(S$)`}</span>}
+                {newQuotationData.currency === "ERU" && <span>{`(€)`}</span>}
               </h5>
               <input
                 type="number"
@@ -746,11 +744,11 @@ export default function createNewQuotation({
             <nav className="newQuotation-totals-container-bg">
               <h5>Grand Total</h5>
               <p>
-                {selectedCurrency === "IND" && <span>₹</span>}
-                {selectedCurrency === "USD" && <span>$</span>}
-                {selectedCurrency === "GBP" && <span>£</span>}
-                {selectedCurrency === "SGD" && <span>S$</span>}
-                {selectedCurrency === "ERU" && <span>€</span>}
+                {newQuotationData.currency === "IND" && <span>₹</span>}
+                {newQuotationData.currency === "USD" && <span>$</span>}
+                {newQuotationData.currency === "GBP" && <span>£</span>}
+                {newQuotationData.currency === "SGD" && <span>S$</span>}
+                {newQuotationData.currency === "ERU" && <span>€</span>}
                 {roundedGrandTotal()}
               </p>
             </nav>
@@ -803,7 +801,9 @@ export default function createNewQuotation({
             <div className="newQuotation-hub-body">
               {comment && <CreateNewQuotationComments />}
               {history && <CreateNewQuotationHistory />}
-              {attachment && <CreateNewQuotationAttachment />}
+              {attachment && (
+                <CreateNewQuotationAttachment inputDisable={inputDisable} />
+              )}
             </div>
           </div>
           <div className="newQuotation-btn-container">

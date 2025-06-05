@@ -8,6 +8,7 @@ export default function SalesListItems({
   deleteSalesProduct,
   productTotal,
   salesData,
+  btnAccess,
 }) {
   const [uomOptions, setuomOptions] = useState([]);
   const [taxOptions, settaxOptions] = useState([]);
@@ -89,6 +90,7 @@ export default function SalesListItems({
             }))
           }
           productOptions={sales_table_data.map((p) => p.product_name)}
+          btnAccess={btnAccess}
         />
       </td>
 
@@ -105,6 +107,7 @@ export default function SalesListItems({
             });
           }}
           required
+          disabled={btnAccess}
         />
       </td>
       <td>
@@ -116,6 +119,7 @@ export default function SalesListItems({
             });
           }}
           required
+          disabled={btnAccess}
         >
           <option value="">Select UOM</option>
           {uomOptions.map((ele, ind) => (
@@ -135,6 +139,7 @@ export default function SalesListItems({
           }}
           value={product_details.unit_price}
           required
+          disabled={btnAccess}
         />
       </td>
       <td>
@@ -146,6 +151,7 @@ export default function SalesListItems({
             });
           }}
           required
+          disabled={btnAccess}
         >
           <option value="">Select Tax</option>
 
@@ -166,6 +172,7 @@ export default function SalesListItems({
             });
           }}
           required
+          disabled={btnAccess}
         />
       </td>
       <td>
@@ -173,13 +180,15 @@ export default function SalesListItems({
         {salesData.currency === "USD" && <span>$</span>}
         {salesData.currency === "GBP" && <span>£</span>}
         {salesData.currency === "SGD" && <span>S$</span>}
-        {salesData.currency === "ERU" && <span>€</span>}
+        {salesData.currency === "EUR" && <span>€</span>}
         {productTotal(unique_key)}
       </td>
       <td id="createNewSales-table-content-center">
         <svg
           onClick={() => deleteSalesProduct(unique_key)}
-          className="newQuotation-table-delete-logo"
+          className={`createNewSales-table-delete-logo ${
+            btnAccess ? "disabled" : ""
+          }`}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 14 16"
         >

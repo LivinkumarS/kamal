@@ -69,6 +69,7 @@ export default function signup() {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
+                required
               />
             </div>
             <div
@@ -86,6 +87,7 @@ export default function signup() {
                 onChange={(e) => {
                   setPhone(e.target.value);
                 }}
+                required
               />
             </div>
 
@@ -100,11 +102,13 @@ export default function signup() {
                 className="inputdata"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
+                required
               >
                 <option value="">Select Job Role</option>
+                <option value="Super Admin">Super Admin</option>
                 <option value="Admin">Admin</option>
-                <option value="HR">HR</option>
-                <option value="Project Manager">Project Manager</option>
+                <option value="Manager">Manager</option>
+                <option value="User Employee">User Employee</option>
               </select>
             </div>
 

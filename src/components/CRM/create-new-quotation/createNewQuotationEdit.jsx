@@ -57,9 +57,6 @@ export default function createNewQuotationEdit({
 
   const [inputDisable, setinputDisable] = useState(false);
 
-  // const [historybtn, setHistorybtn] = useState(true);
-  // const [revisebtn, setRevisebtn] = useState(true);
-
   const [showHistory, setshowHistory] = useState(false);
   const [showRevise, setshowRevise] = useState(false);
 
@@ -649,6 +646,7 @@ export default function createNewQuotationEdit({
               <tbody className="newQuotation-table-body">
                 {[...Array(numberOfQuotationList)].map((ele, ind) => (
                   <QuotationList
+                    key={ind}
                     unique_key={ind}
                     descriptions={descriptions}
                     quotation_table_data={quotation_table_data}
@@ -657,6 +655,8 @@ export default function createNewQuotationEdit({
                     // functions
                     productTotal={productTotal}
                     deleteQuotationProduct={deleteQuotationProduct}
+                    //currency
+                    newQuotationData={newQuotationData}
                     //edit
                     editQuotationData={editQuotationData}
                   />
@@ -787,7 +787,9 @@ export default function createNewQuotationEdit({
             <div className="newQuotation-hub-body">
               {comment && <CreateNewQuotationComments />}
               {history && <CreateNewQuotationHistory />}
-              {attachment && <CreateNewQuotationAttachment />}
+              {attachment && (
+                <CreateNewQuotationAttachment inputDisable={inputDisable} />
+              )}
             </div>
           </div>
           <div className="newQuotation-btn-container">
@@ -877,8 +879,8 @@ export default function createNewQuotationEdit({
               fill="none"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M0.600098 2.4C0.600098 1.76348 0.852954 1.15303 1.30304 0.702944C1.75313 0.252856 2.36358 0 3.0001 0L16.1313 0L21.4001 5.2688V21.6C21.4001 22.2365 21.1472 22.847 20.6972 23.2971C20.2471 23.7471 19.6366 24 19.0001 24H3.0001C2.36358 24 1.75313 23.7471 1.30304 23.2971C0.852954 22.847 0.600098 22.2365 0.600098 21.6V2.4ZM4.6001 9.6H2.2001V17.6H3.8001V14.4H4.6001C5.23662 14.4 5.84707 14.1471 6.29715 13.6971C6.74724 13.247 7.0001 12.6365 7.0001 12C7.0001 11.3635 6.74724 10.753 6.29715 10.3029C5.84707 9.85286 5.23662 9.6 4.6001 9.6ZM11.0001 9.6H8.6001V17.6H11.0001C11.6366 17.6 12.2471 17.3471 12.6972 16.8971C13.1472 16.447 13.4001 15.8365 13.4001 15.2V12C13.4001 11.3635 13.1472 10.753 12.6972 10.3029C12.2471 9.85286 11.6366 9.6 11.0001 9.6ZM15.0001 17.6V9.6H19.8001V11.2H16.6001V12.8H18.2001V14.4H16.6001V17.6H15.0001Z"
               />
             </svg>

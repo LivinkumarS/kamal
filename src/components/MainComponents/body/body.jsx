@@ -33,9 +33,6 @@ export default function body({
   const [showUserDetails, setShowUserDetails] = useState(false);
   const profileRef = useRef(null);
 
-  // state vales
-  const [salesStatus, setSalesStatus] = useState("");
-
   const dispatch = useDispatch();
 
   function handleSignOut() {
@@ -155,17 +152,9 @@ export default function body({
         ) : currentPage == "quotationCRM" ? (
           <QuotationCRM />
         ) : currentPage == "salesCRM" ? (
-          <SalesCRM
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            salesStatus={salesStatus}
-            setSalesStatus={setSalesStatus}
-          />
+          <SalesCRM currentPage={currentPage} setCurrentPage={setCurrentPage} />
         ) : currentPage == "createNewSales" ? (
-          <CreateNewSales
-            salesStatus={salesStatus}
-            setSalesStatus={setSalesStatus}
-          />
+          <CreateNewSales />
         ) : currentPage == "task" ? (
           <Task />
         ) : currentPage == "attendance" ? (

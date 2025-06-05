@@ -5,6 +5,7 @@ export default function CreateNewSalesSearchOption({
   value,
   onChange,
   productOptions,
+  btnAccess,
 }) {
   const [options, setOptions] = useState([]);
 
@@ -25,6 +26,7 @@ export default function CreateNewSalesSearchOption({
         onChange={(selected) => onChange(selected.value)}
         options={options}
         placeholder="Select product"
+        isDisabled={btnAccess}
       />
     </div>
   );

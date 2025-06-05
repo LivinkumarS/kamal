@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./createNewQuotation.css";
 
-export default function CreateNewQuotationAttachment() {
+export default function CreateNewQuotationAttachment({ inputDisable }) {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [backendFiles, setBackendFiles] = useState([
     // Example backend files — you will fetch this from an API
@@ -210,6 +210,7 @@ export default function CreateNewQuotationAttachment() {
                     e.preventDefault();
                     removeBackendFile(index);
                   }}
+                  disabled={inputDisable}
                 >
                   Remove
                 </button>
