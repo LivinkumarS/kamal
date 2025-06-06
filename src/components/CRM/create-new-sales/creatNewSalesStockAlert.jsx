@@ -5,8 +5,12 @@ export default function creatNewSalesStockAlert({
   setStockAlert,
   setSalesStatus,
   purchase_order,
-  hasLowStock,
+  SalesList_data,
 }) {
+  const hasZeroStock = SalesList_data.some(
+    ({ stock_level = 0 }) => Number(stock_level) === 0
+  );
+
   return (
     <>
       <div className="createNewSales-stock-container">
@@ -14,9 +18,9 @@ export default function creatNewSalesStockAlert({
           <span>Stock Alert </span>– Insufficient Stock
         </h3>
         <p>
-          Some products in your sales order have insufficient stock. You can
-          generate a purchase order to refill the stock or proceed with partial
-          delivery for available items.
+          {hasZeroStock
+            ? "Some products in your sales order still have insufficient stock. A purchase order has already been generated. "
+            : " Some products in your sales order still have insufficient stock. A partially purchase order has already been generated. You can proceed with partial delivery for available items."}
         </p>
         <nav>
           <button
@@ -39,9 +43,9 @@ export default function creatNewSalesStockAlert({
           </button>
           <button
             className={
-              hasLowStock
-                ? "createNewSales-active-btn"
-                : "createNewSales-inactive-btn"
+              hasZeroStock
+                ? "createNewSales-inactive-btn"
+                : "createNewSales-active-btn"
             }
             onClick={(e) => {
               e.preventDefault;

@@ -8,8 +8,6 @@ export default function createNewSales() {
   // state vales
   const [salesStatus, setSalesStatus] = useState("");
 
-  console.log(salesStatus);
-
   const prevPage = useNavigate();
   const [ApiSales, setApiSales] = useState({});
   const [prevsalesData, setprevsalesData] = useState([]);
@@ -69,7 +67,7 @@ export default function createNewSales() {
       {
         product_id: "PRO003",
         product_name: "T-shirt",
-        stock_level: "30",
+        stock_level: "0",
         uom: ["Set (5)", "Box (5)"],
         unit_price: "150",
         discount: "5",
@@ -77,7 +75,7 @@ export default function createNewSales() {
       },
     ],
     sales_rep: ["Sans", "rose", "Mandy"],
-    purchase_order: "Purchase Ordered(PP)",
+    purchase_order: "",
   };
 
   const [salesData, setSalesData] = useState({
@@ -115,6 +113,9 @@ export default function createNewSales() {
     generate_delivery_note: true,
     generate_invoice: true,
   });
+
+  console.log(salesStatus);
+  console.log(salesBtn);
 
   //sales product data
 
@@ -172,7 +173,9 @@ export default function createNewSales() {
   //button state
   useEffect(() => {
     if (salesStatus === "" || salesStatus === "Draft") {
-      setSalesBtn({ BtnAccess: false });
+      setSalesBtn((prev) => {
+        return { ...prev, BtnAccess: false };
+      });
       return;
     }
 
@@ -230,7 +233,9 @@ export default function createNewSales() {
         });
         break;
       default:
-        setSalesBtn({ BtnAccess: true });
+        setSalesBtn((prev) => {
+          return { ...prev, BtnAccess: false };
+        });
     }
   }, [salesStatus, purchase_order]);
 
@@ -241,16 +246,20 @@ export default function createNewSales() {
   };
 
   //stock Level
-  const hasLowStock = SalesList_data.some(
-    ({ quantity = 0, stock_level = 0 }) =>
-      Number(stock_level) >= Number(quantity)
-  );
   const handleSubmitState = (e) => {
     e.preventDefault();
 
-    if (hasLowStock) {
-      setSalesStatus(hasLowStock && "Submitted");
-      toast.success(`Sales Item in ${hasLowStock && "Submitted"} State`);
+    if (SalesList_data.length === 0) {
+      toast.error("Add at least one product before submitting");
+      return;
+    }
+    const isStockOK = SalesList_data.every(
+      ({ quantity = 0, stock_level = 0 }) =>
+        Number(stock_level) > 0 && Number(stock_level) >= Number(quantity)
+    );
+    if (isStockOK) {
+      setSalesStatus("Submitted");
+      toast.success("Sales order has been submitted");
     } else {
       setStockAlert(true);
     }
@@ -352,7 +361,6 @@ export default function createNewSales() {
       toast.success("Product Item deleted!");
     }
   }
-  console.log(salesStatus);
 
   return (
     <>
@@ -363,7 +371,7 @@ export default function createNewSales() {
             setSalesStatus={setSalesStatus}
             purchase_order={purchase_order}
             //stock level
-            hasLowStock={hasLowStock}
+            SalesList_data={SalesList_data}
           />
         </div>
       )}
@@ -878,7 +886,7 @@ export default function createNewSales() {
                   : "createNewSales-inactive-btn"
               }
               onClick={handleCancelOrderState}
-              disabled={salesBtn.cancel_order || !salesStatus}
+              disabled={salesBtn.cancel_order}
             >
               {salesStatus === "Cancelled" ? "Cancelled" : "Cancel Order"}
             </button>
