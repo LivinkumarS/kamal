@@ -7,7 +7,7 @@
   padding: 20px 0;
   gap: 15px;
   border-right: 2px solid hwb(0 86% 14%);
-  box-shadow:  1px 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.15);
   overflow: scroll;
   margin-right: 5px;
 }
@@ -124,21 +124,35 @@ nav.activeNav .drop-updown-logo {
   flex-direction: column;
   gap: 15px;
   transform-origin: top;
-  animation: masterListsAni .3s ease-in-out forwards;
+  animation: masterListsAni 0.3s ease-in-out forwards;
+}
+.salesDropdown-list {
+  background: #fff;
+  height: max-content;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transform-origin: top;
+  animation: masterListsAni 0.3s ease-in-out forwards;
 }
 
 @keyframes masterListsAni {
-  0%{
+  0% {
     transform: scaleY(0);
     opacity: 0;
   }
-  100%{
+  100% {
     transform: scaleY(1);
     opacity: 1;
   }
 }
 
 .masters-list.open {
+  transform: scaleY(1);
+  opacity: 1;
+}
+.salesDropdown-list.open {
   transform: scaleY(1);
   opacity: 1;
 }

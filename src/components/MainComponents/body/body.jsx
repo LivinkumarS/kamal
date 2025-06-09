@@ -20,6 +20,8 @@ import CustomMaster from "../../Masters/custom-master/customMaster";
 import QuotationCRM from "../../CRM/quotation-crm/quotationCRM";
 import SalesCRM from "../../CRM/sales-crm/salesCRM";
 import CreateNewSales from "../../CRM/create-new-sales/createNewSales";
+import DeliveryNoteCRM from "../../CRM/deliveryNote-crm/deliveryNoteCRM";
+import InvoiceCRM from "../../CRM/invoice-crm/invoiceCRM";
 
 export default function body({
   expanded,
@@ -29,7 +31,11 @@ export default function body({
   user,
   setCurrentPage,
 }) {
+  //project page
   const [projectId, setProjectId] = useState(0);
+  //sales CRM id
+  const [salesOrderID, setSalesOrderID] = useState(0);
+
   const [showUserDetails, setShowUserDetails] = useState(false);
   const profileRef = useRef(null);
 
@@ -39,9 +45,15 @@ export default function body({
     dispatch(logout());
   }
 
+  //project page
   function openProjectBugsPage(proId) {
     setCurrentPage("projectBugsPage");
     setProjectId(proId);
+  }
+  //sales CRM id
+  function salesRowData(sales_order_id) {
+    setCurrentPage("createNewSales");
+    setSalesOrderID(sales_order_id);
   }
 
   useEffect(() => {
@@ -152,9 +164,18 @@ export default function body({
         ) : currentPage == "quotationCRM" ? (
           <QuotationCRM />
         ) : currentPage == "salesCRM" ? (
-          <SalesCRM currentPage={currentPage} setCurrentPage={setCurrentPage} />
+          <SalesCRM
+            salesRowData={salesRowData}
+            setSalesOrderID={setSalesOrderID}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         ) : currentPage == "createNewSales" ? (
-          <CreateNewSales />
+          <CreateNewSales salesOrderID={salesOrderID} />
+        ) : currentPage == "deliveryNoteCRM" ? (
+          <DeliveryNoteCRM />
+        ) : currentPage == "invoiceCRM" ? (
+          <InvoiceCRM />
         ) : currentPage == "task" ? (
           <Task />
         ) : currentPage == "attendance" ? (

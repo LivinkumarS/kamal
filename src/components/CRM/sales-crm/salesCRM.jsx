@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./salesCRM.css";
+import { useNavigate } from "react-router-dom";
 
-export default function salesCRM({ currentPage, setCurrentPage }) {
+export default function salesCRM({
+  currentPage,
+  setCurrentPage,
+  salesRowData,
+}) {
+  const navigate = useNavigate();
+
   const [salesCurrentPage, setSalesCurrentPage] = useState(1);
   const salesRowPerPage = 10;
 
@@ -222,7 +229,6 @@ export default function salesCRM({ currentPage, setCurrentPage }) {
     const sameCustomer =
       hasMultiple &&
       selectedOrders.every((order) => order.customer_name === firstCustomer);
-    console.log(firstCustomer);
 
     // Delivery  condition: all must be Submitted or Submitted(PA)
     const generateDelivery =
@@ -576,8 +582,15 @@ export default function salesCRM({ currentPage, setCurrentPage }) {
                     <td>{ele.grand_total}</td>
                     <td id="salesCRM-table-action">
                       <nav className="salesCRM-dot-container">
-                        <button disabled={ele.status !== "" ? false : true}>
-                          View details
+                        <button
+                          disabled={ele.status !== "" ? false : true}
+                          onClick={() => {
+                            navigate(
+                              `/?tab=editNewSales/${ele.sales_order_id}`
+                            );
+                          }}
+                        >
+                          {ele.status === "Draft" ? "Edit" : "View"} details
                         </button>
                         <button
                           disabled={

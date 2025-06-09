@@ -3,10 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./createNewSales.css";
 import SalesListItems from "./salesListItems";
 import CreatNewSalesStockAlert from "./creatNewSalesStockAlert";
+import CreateNewSalesHistory from "./createNewSalesHistory";
+import CreateNewSalesComment from "./createNewSalesComment";
 import { toast } from "react-toastify";
-export default function createNewSales() {
+export default function createNewSales({ salesOrderID, setSalesOrderID }) {
   // state vales
   const [salesStatus, setSalesStatus] = useState("");
+
+  //chat,history
+  const [feacher, setFeacher] = useState({
+    showChat: true,
+    showHistory: false,
+  });
+
+  
 
   const prevPage = useNavigate();
   const [ApiSales, setApiSales] = useState({});
@@ -114,9 +124,6 @@ export default function createNewSales() {
     generate_invoice: true,
   });
 
-  console.log(salesStatus);
-  console.log(salesBtn);
-
   //sales product data
 
   const [numOfSalesList, setnumOfSalesList] = useState(1);
@@ -172,42 +179,46 @@ export default function createNewSales() {
 
   //button state
   useEffect(() => {
-    if (salesStatus === "" || salesStatus === "Draft") {
-      setSalesBtn((prev) => {
-        return { ...prev, BtnAccess: false };
-      });
+    if (salesStatus === "") {
+      setSalesBtn((prev) => ({ ...prev, BtnAccess: false }));
       return;
     }
 
     switch (salesStatus) {
       case "Draft":
-        setSalesBtn({
+        setSalesBtn((prev) => ({
+          ...prev,
+          BtnAccess: false,
           cancel: false,
           cancel_order: true,
           save_draft: false,
           submit: false,
-          Generate_po: purchase_order !== "Purchase Ordered" ? false : true,
+          Generate_po: purchase_order === "Purchase Ordered",
           pdf: false,
           email: false,
           generate_delivery_note: true,
           generate_invoice: true,
-        });
+        }));
         break;
+
       case "Submitted(PD)":
-        setSalesBtn({
+        setSalesBtn((prev) => ({
+          ...prev,
           cancel: false,
           cancel_order: false,
           save_draft: true,
           submit: false,
-          Generate_po: purchase_order !== "Purchase Ordered" ? false : true,
+          Generate_po: purchase_order === "Purchase Ordered",
           pdf: false,
           email: false,
           generate_delivery_note: false,
           generate_invoice: true,
-        });
+        }));
         break;
+
       case "Submitted":
-        setSalesBtn({
+        setSalesBtn((prev) => ({
+          ...prev,
           cancel: false,
           cancel_order: false,
           save_draft: true,
@@ -217,10 +228,13 @@ export default function createNewSales() {
           email: false,
           generate_delivery_note: false,
           generate_invoice: false,
-        });
+          BtnAccess: true,
+        }));
         break;
+
       case "Cancelled":
-        setSalesBtn({
+        setSalesBtn((prev) => ({
+          ...prev,
           cancel: false,
           cancel_order: true,
           save_draft: true,
@@ -230,12 +244,11 @@ export default function createNewSales() {
           email: false,
           generate_delivery_note: true,
           generate_invoice: true,
-        });
+        }));
         break;
+
       default:
-        setSalesBtn((prev) => {
-          return { ...prev, BtnAccess: false };
-        });
+        setSalesBtn((prev) => ({ ...prev, BtnAccess: false }));
     }
   }, [salesStatus, purchase_order]);
 
@@ -361,6 +374,9 @@ export default function createNewSales() {
       toast.success("Product Item deleted!");
     }
   }
+
+  console.log(salesBtn.BtnAccess);
+  console.log(salesStatus);
 
   return (
     <>
@@ -876,8 +892,47 @@ export default function createNewSales() {
               </p>
             </nav>
           </div>
+          <div className="createNewSales-hub-container">
+            <div className="createNewSales-hub-head">
+              <p
+                className={
+                  feacher.showChat
+                    ? "createNewSales-hub-head-bg-black"
+                    : "createNewSales-hub-head-tit"
+                }
+                onClick={() => {
+                  setFeacher({
+                    showChat: true,
+                    showHistory: false,
+                  });
+                }}
+              >
+                Comments
+              </p>
+              <p
+                className={
+                  feacher.showHistory
+                    ? "createNewSales-hub-head-bg-black"
+                    : "createNewSales-hub-head-tit"
+                }
+                onClick={() => {
+                  setFeacher({
+                    showChat: false,
+                    showHistory: true,
+                  });
+                }}
+              >
+                History
+              </p>
+            </div>
+            <div className="createNewSales-hub-body">
+              {feacher.showChat && <CreateNewSalesComment />}
+              {feacher.showHistory && <CreateNewSalesHistory />}
+            </div>
+          </div>
           <div className="createNewSales-btn-container">
             <button
+              style={{ width: "max-content" }}
               className={
                 salesStatus === "Submitted" ||
                 salesStatus === "Submitted(PD)" ||

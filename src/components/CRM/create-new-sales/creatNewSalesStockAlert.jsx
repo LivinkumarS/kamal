@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./createNewSales.css";
+import { toast } from "react-toastify";
 
 export default function creatNewSalesStockAlert({
   setStockAlert,
@@ -38,6 +39,7 @@ export default function creatNewSalesStockAlert({
                 ? "createNewSales-completed-btn"
                 : "createNewSales-active-btn "
             }
+            disabled={purchase_order === "Purchase Ordered" ? true : false}
           >
             Generate Purchase Order
           </button>
@@ -50,8 +52,10 @@ export default function creatNewSalesStockAlert({
             onClick={(e) => {
               e.preventDefault;
               setSalesStatus("Submitted(PD)");
+              toast.success("Sales order has been submitted(PD)");
               setStockAlert(false);
             }}
+            disabled={hasZeroStock ? true : false}
           >
             Proceed with Partial Delivery
           </button>

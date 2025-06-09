@@ -14,9 +14,9 @@ export default function SalesListItems({
   const [taxOptions, settaxOptions] = useState([]);
   const [product_details, setproduct_details] = useState({
     unique_key: unique_key,
-    product_id: "",
+    product_id: "--",
     product_name: "",
-    stock_level: "",
+    stock_level: "--",
     uom: "--",
     unit_price: 0,
     discount: 0,

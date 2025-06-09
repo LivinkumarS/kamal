@@ -412,7 +412,6 @@
   align-items: start;
   flex-direction: column;
   padding: 20px 0;
-
   gap: 20px;
 }
 .newQuotation-statusChange-container:first-child {
