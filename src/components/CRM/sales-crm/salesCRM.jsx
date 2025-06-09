@@ -3,9 +3,7 @@ import "./salesCRM.css";
 import { useNavigate } from "react-router-dom";
 
 export default function salesCRM({
-  currentPage,
   setCurrentPage,
-  salesRowData,
 }) {
   const navigate = useNavigate();
 
