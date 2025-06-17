@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import BugDetailPage from "./components/projectMenu/bug-detail-page/bugDetailPage";
 import AddNewCandidate from "./components/onboardMenu/add-new-candidate/addNewCandidate";
 import CreateNewSales from "./components/CRM/create-new-sales/createNewSales";
+import EditNewSales from "./components/CRM/create-new-sales/editNewSales";
+import CreateNewDelivery from "./components/CRM/create-new-delivery/createNewDelivery";
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
           element={<AddNewCandidate />}
         />
         <Route path="/new-sales" element={<CreateNewSales />} />
+        <Route path="/edit-sales" element={<EditNewSales />} />
+        <Route path="/new-delivery-note" element={<CreateNewDelivery />} />
       </Routes>
     </BrowserRouter>
   );

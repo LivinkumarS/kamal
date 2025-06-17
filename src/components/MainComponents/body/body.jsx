@@ -20,7 +20,9 @@ import CustomMaster from "../../Masters/custom-master/customMaster";
 import QuotationCRM from "../../CRM/quotation-crm/quotationCRM";
 import SalesCRM from "../../CRM/sales-crm/salesCRM";
 import CreateNewSales from "../../CRM/create-new-sales/createNewSales";
+import EditNewSales from "../../CRM/create-new-sales/editNewSales";
 import DeliveryNoteCRM from "../../CRM/deliveryNote-crm/deliveryNoteCRM";
+import CreateNewDelivery from "../../CRM/create-new-delivery/createNewDelivery";
 import InvoiceCRM from "../../CRM/invoice-crm/invoiceCRM";
 
 export default function body({
@@ -33,8 +35,6 @@ export default function body({
 }) {
   //project page
   const [projectId, setProjectId] = useState(0);
-  //sales CRM id
-  const [salesOrderID, setSalesOrderID] = useState(0);
 
   const [showUserDetails, setShowUserDetails] = useState(false);
   const profileRef = useRef(null);
@@ -49,11 +49,6 @@ export default function body({
   function openProjectBugsPage(proId) {
     setCurrentPage("projectBugsPage");
     setProjectId(proId);
-  }
-  //sales CRM id
-  function salesRowData(sales_order_id) {
-    setCurrentPage("createNewSales");
-    setSalesOrderID(sales_order_id);
   }
 
   useEffect(() => {
@@ -164,16 +159,15 @@ export default function body({
         ) : currentPage == "quotationCRM" ? (
           <QuotationCRM />
         ) : currentPage == "salesCRM" ? (
-          <SalesCRM
-            salesRowData={salesRowData}
-            setSalesOrderID={setSalesOrderID}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          <SalesCRM setCurrentPage={setCurrentPage} />
         ) : currentPage == "createNewSales" ? (
-          <CreateNewSales salesOrderID={salesOrderID} />
+          <CreateNewSales setCurrentPage={setCurrentPage} />
+        ) : currentPage == "editNewSales" ? (
+          <EditNewSales setCurrentPage={setCurrentPage} />
         ) : currentPage == "deliveryNoteCRM" ? (
-          <DeliveryNoteCRM />
+          <DeliveryNoteCRM setCurrentPage={setCurrentPage} />
+        ) : currentPage == "createNewDelivery" ? (
+          <CreateNewDelivery />
         ) : currentPage == "invoiceCRM" ? (
           <InvoiceCRM />
         ) : currentPage == "task" ? (

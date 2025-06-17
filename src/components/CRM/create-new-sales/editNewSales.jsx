@@ -6,6 +6,7 @@ import CreatNewSalesStockAlert from "./creatNewSalesStockAlert";
 import CreateNewSalesHistory from "./createNewSalesHistory";
 import CreateNewSalesComment from "./createNewSalesComment";
 import { toast } from "react-toastify";
+import createNewDelivery from "../create-new-delivery/createNewDelivery";
 export default function createNewSales({ setCurrentPage }) {
   // state vales
   const [salesStatus, setSalesStatus] = useState("");

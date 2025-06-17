@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./salesCRM.css";
 import { useNavigate } from "react-router-dom";
 
-export default function salesCRM({
-  setCurrentPage,
-}) {
+export default function salesCRM({ setCurrentPage }) {
   const navigate = useNavigate();
 
   const [salesCurrentPage, setSalesCurrentPage] = useState(1);
@@ -308,7 +306,7 @@ export default function salesCRM({
               setCurrentPage("createNewSales");
             }}
           >
-            + New Sales Order
+            + New Delivery Note
           </button>
         </div>
         <div className="salesCRM-search-box">
@@ -398,6 +396,7 @@ export default function salesCRM({
                   : "salesCRM-inactive-btn"
               }
               disabled={buttonAct.delivery === true ? false : true}
+              onClick={() => setCurrentPage("createNewDelivery")}
             >
               Generate Delivery Note
             </button>
@@ -586,6 +585,7 @@ export default function salesCRM({
                             navigate(
                               `/?tab=editNewSales/${ele.sales_order_id}`
                             );
+                            setCurrentPage("editNewSales");
                           }}
                         >
                           {ele.status === "Draft" ? "Edit" : "View"} details
