@@ -20,8 +20,6 @@ export default function createNewDelivery() {
   const [ApiDelivery, setApiDelivery] = useState({});
   const [deliveryData, setDeliveryData] = useState([]);
 
-  
-
   const deliveryFromApi = {
     deliveryData: [
       {
@@ -271,6 +269,7 @@ export default function createNewDelivery() {
       toast.success("Product Item deleted!");
     }
   }
+  console.log(DeliveryList_data);
   return (
     <>
       {showSerial && (
