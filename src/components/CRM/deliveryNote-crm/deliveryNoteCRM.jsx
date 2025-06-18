@@ -313,7 +313,6 @@ export default function deliveryNoteCRM({ setCurrentPage }) {
                       <p>Reverse Progressing{`(Cancelled → Draft)`} </p>
                     </nav>
                     <svg
-                      className="deliveryCRM-status-filter-logo"
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"
                       height="18"
