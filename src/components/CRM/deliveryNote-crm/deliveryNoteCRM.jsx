@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./deliveryNoteCRM.css";
+import "./deliverynoteCRM.css";
 
 export default function deliveryNoteCRM({ setCurrentPage }) {
   const [deliveryCurrentPage, setDeliveryCurrentPage] = useState(1);
