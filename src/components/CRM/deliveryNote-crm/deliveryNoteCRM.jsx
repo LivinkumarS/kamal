@@ -13,7 +13,7 @@ export default function deliveryNoteCRM({ setCurrentPage }) {
         dn_id: "DN-0001",
         sales_order_ref: "SO-0001",
         customer_name: "Mandy",
-        delivery_type: "Regular",
+        delivery_type: "Regular", 
         delivery_date: "28-05-2025",
         status: "Draft",
       },
