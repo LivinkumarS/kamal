@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./deliverynoteCRM.css";
+import "./deliveryNoteCRM.css";
 
 export default function deliveryNoteCRM({ setCurrentPage }) {
   const [deliveryCurrentPage, setDeliveryCurrentPage] = useState(1);
@@ -237,7 +237,7 @@ export default function deliveryNoteCRM({ setCurrentPage }) {
           </div>
           <div className="deliveryCRM-input-box">
             <label htmlFor="delivery_date">Delivery Date</label>
-            <nav id="Deldvery_date">
+            <nav id="deldvery_date">
               <div>
                 <span>From </span>
                 <input
@@ -367,7 +367,12 @@ export default function deliveryNoteCRM({ setCurrentPage }) {
                     </td>
                     <td id="deliveryCRM-table-action">
                       <nav className="deliveryCRM-dot-container">
-                        <button disabled={ele.status !== "" ? false : true}>
+                        <button
+                          disabled={ele.status !== "" ? false : true}
+                          onClick={() => {
+                            setCurrentPage("editDelivery");
+                          }}
+                        >
                           {ele.status === "Draft" ? "Edit" : "View"} details
                         </button>
                         <button

@@ -300,7 +300,7 @@ export default function quotation() {
                       </td>
                       <td>
                         <div
-                          className={
+                          className={`quotationCRM-status ${
                             ele.status === "Draft"
                               ? "quotationCRM-status-Draft"
                               : ele.status === "Send"
@@ -312,7 +312,7 @@ export default function quotation() {
                               : ele.status === "Expired"
                               ? "quotationCRM-status-Expired"
                               : ""
-                          }
+                          }`}
                         >
                           {ele.status}
                         </div>
@@ -334,7 +334,9 @@ export default function quotation() {
                     </tr>
                   ))
                 ) : (
-                  <tr><td>No Data Found</td></tr>
+                  <tr>
+                    <td>No Data Found</td>
+                  </tr>
                 )}
               </tbody>
             </table>

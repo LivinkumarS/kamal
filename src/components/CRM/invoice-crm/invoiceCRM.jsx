@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./invoiceCRM.css";
 
-export default function invoiceCRM() {
+export default function invoiceCRM({ setCurrentPage }) {
   const [invoiceCurrentPage, setInvoiceCurrentPage] = useState(1);
   const invoicePerPage = 10;
 
@@ -112,7 +112,13 @@ export default function invoiceCRM() {
       <div className="invoiceCRM-container">
         <div className="invoiceCRM-header">
           <p>Invoice List</p>
-          <button>+ New Invoice</button>
+          <button
+            onClick={() => {
+              setCurrentPage("createNewInvoice");
+            }}
+          >
+            + New Invoice
+          </button>
         </div>
         <div className="invoiceCRM-search-box">
           <label htmlFor="searchByID">
@@ -310,7 +316,11 @@ export default function invoiceCRM() {
                     </td>
                     <td id="invoiceCRM-table-action">
                       <nav className="invoiceCRM-dot-container">
-                        <button>
+                        <button
+                          onClick={() => {
+                            setCurrentPage("editInvoice");
+                          }}
+                        >
                           {ele.status === "Draft" ? "Edit" : "View"} details
                         </button>
                         <button

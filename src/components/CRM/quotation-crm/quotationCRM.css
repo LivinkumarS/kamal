@@ -72,7 +72,7 @@
   color: rgba(176, 176, 176, 1);
 }
 .quotationCRM-clearfilter {
-  margin-top: 15px;
+  margin-top: 30px;
   font-size: 14px;
   font-weight: 500;
   color: rgba(35, 78, 112, 1);
@@ -91,7 +91,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  margin-top: 10px;
   flex-wrap: wrap;
 }
 .quotationCRM-input-box {
@@ -157,6 +156,9 @@
   min-width: 150px;
 }
 /* status */
+.quotationCRM-status {
+  width: max-content;
+}
 .quotationCRM-status-Draft {
   background-color: rgba(189, 226, 255, 1);
   border-radius: 10px;

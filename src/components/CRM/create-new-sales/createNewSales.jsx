@@ -466,6 +466,7 @@ export default function createNewSales({ setCurrentPage }) {
                     : "createNewSales-inactive-btn"
                 }
                 disabled={salesBtn.generate_invoice}
+                onClick={() => setCurrentPage("createNewInvoice")}
               >
                 Generate Invoice
               </button>

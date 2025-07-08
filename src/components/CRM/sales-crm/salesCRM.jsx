@@ -306,7 +306,7 @@ export default function salesCRM({ setCurrentPage }) {
               setCurrentPage("createNewSales");
             }}
           >
-            + New Delivery Note
+            + New Sales Order
           </button>
         </div>
         <div className="salesCRM-search-box">
@@ -385,6 +385,9 @@ export default function salesCRM({ setCurrentPage }) {
                   ? "salesCRM-active-btn"
                   : "salesCRM-inactive-btn"
               }
+              onClick={() => {
+                setCurrentPage("createNewPurchase");
+              }}
               disabled={buttonAct.purchase_order === true ? false : true}
             >
               Generate Purchase order
@@ -407,6 +410,7 @@ export default function salesCRM({ setCurrentPage }) {
                   : "salesCRM-inactive-btn"
               }
               disabled={buttonAct.invoice === true ? false : true}
+              onClick={() => setCurrentPage("createNewInvoice")}
             >
               Generate Invoice
             </button>
@@ -601,10 +605,14 @@ export default function salesCRM({ setCurrentPage }) {
                               ? false
                               : true
                           }
+                          onClick={() => {
+                            setCurrentPage("createNewPurchase");
+                          }}
                         >
                           Generate Purchase order
                         </button>
                         <button
+                          onClick={() => setCurrentPage("createNewDelivery")}
                           disabled={
                             ele.status === "Submitted(PD)" ||
                             ele.status === "Submitted" ||
@@ -616,6 +624,7 @@ export default function salesCRM({ setCurrentPage }) {
                           Generate Delivery Note
                         </button>
                         <button
+                          onClick={() => setCurrentPage("createNewInvoice")}
                           disabled={ele.status === "Submitted" ? false : true}
                         >
                           Generate Invoice

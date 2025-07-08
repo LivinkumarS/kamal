@@ -26,6 +26,14 @@
   flex-wrap: wrap;
   width: max-content;
 }
+.createNewDelivery-head > div {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap-reverse;
+  width: max-content;
+}
 .createNewDelivery-head > nav > p {
   font-size: 22px;
   font-weight: 600;
@@ -90,7 +98,6 @@
   align-items: start;
   gap: 3px;
 }
-
 .createNewDelivery-input-box > label {
   font-size: 14px;
   font-weight: 500;

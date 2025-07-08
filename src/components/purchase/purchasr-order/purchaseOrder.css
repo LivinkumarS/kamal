@@ -1,4 +1,4 @@
-.deliveryCRM-container {
+.purchaseOrder-container {
   width: 100%;
   height: 100%;
   padding: 15px;
@@ -6,10 +6,10 @@
   background: rgba(253, 253, 253, 1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.deliveryCRM-container::-webkit-scrollbar {
+.purchaseOrder-container::-webkit-scrollbar {
   display: none;
 }
-.deliveryCRM-header {
+.purchaseOrder-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,12 +17,12 @@
   flex-wrap: wrap;
   width: 100%;
 }
-.deliveryCRM-header > p {
+.purchaseOrder-header > p {
   font-size: 24px;
   font-weight: 500;
   color: rgba(35, 78, 112, 1);
 }
-.deliveryCRM-header > button {
+.purchaseOrder-header > button {
   font-size: 14px;
   font-weight: 600;
   padding: 6px 14px;
@@ -33,7 +33,7 @@
   min-width: 123px;
 }
 /* search box */
-.deliveryCRM-search-box {
+.purchaseOrder-search-box {
   cursor: pointer;
   margin-top: 20px;
   display: flex;
@@ -44,34 +44,34 @@
   width: 100%;
   border: 2px solid rgba(217, 217, 217, 1);
 }
-.deliveryCRM-search-box:focus {
+.purchaseOrder-search-box:focus {
   border: 2px solid rgba(35, 78, 112, 1);
 }
-.deliveryCRM-search-box > label {
+.purchaseOrder-search-box > label {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.deliveryCRM-search-logo {
+.purchaseOrder-search-logo {
   cursor: pointer;
   width: 20px;
   height: 20px;
   fill: rgba(192, 192, 192, 1);
 }
-.deliveryCRM-search-box > input {
+.purchaseOrder-search-box > input {
   width: 95%;
   border: 0px;
   background: transparent;
 }
-.deliveryCRM-search-box > input:focus {
+.purchaseOrder-search-box > input:focus {
   outline: none;
 }
-.deliveryCRM-search-box > input::placeholder {
+.purchaseOrder-search-box > input::placeholder {
   font-size: 15px;
   font-weight: 400;
   color: rgba(176, 176, 176, 1);
 }
-.deliveryCRM-clearfilter {
+.purchaseOrder-clearfilter {
   margin-top: 30px;
   font-size: 14px;
   font-weight: 500;
@@ -80,50 +80,52 @@
   justify-content: end;
   align-items: center;
 }
-.deliveryCRM-clearfilter > p {
+.purchaseOrder-clearfilter > p {
   width: max-content;
   cursor: pointer;
 }
-.deliveryCRM-search-category {
+
+.purchaseOrder-search-category {
   width: 100%;
   display: flex;
   align-items: start;
   justify-content: space-between;
   gap: 15px;
+
   flex-wrap: wrap;
 }
-.deliveryCRM-input-box {
+.purchaseOrder-input-box {
   flex: 1;
   display: flex;
   gap: 3px;
   flex-direction: column;
   min-width: 185px;
 }
-.deliveryCRM-input-box > label {
+.purchaseOrder-input-box > label {
   font-size: 14px;
   font-weight: 500;
   color: rgba(42, 42, 42, 1);
 }
-.deliveryCRM-input-box > input,
-.deliveryCRM-input-box > select,
-.deliveryCRM-input-box > nav {
+.purchaseOrder-input-box > input,
+.purchaseOrder-input-box > select,
+.purchaseOrder-input-box > nav {
   border: 2px solid rgba(35, 78, 112, 1);
   border-radius: 10px;
-  color: rgba(1, 19, 52, 1);
+  color: rgb(23, 27, 33);
   font-size: 14px;
   font-weight: 400;
   background: rgba(255, 255, 255, 1);
   padding: 7px 15px;
   cursor: pointer;
 }
-.deliveryCRM-input-box > nav {
+.purchaseOrder-input-box > nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
 }
-.deliveryCRM-input-box > nav > div {
+.purchaseOrder-input-box > nav > div {
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -131,23 +133,15 @@
   align-items: center;
   gap: 10px;
 }
-.deliveryCRM-input-box > nav > div > span {
+.purchaseOrder-input-box > nav > div > span {
   color: rgba(176, 176, 176, 1);
   font-size: 14px;
   font-weight: 400;
   width: 36px;
 }
-.deliveryCRM-date {
-  flex: 1;
-  border: none;
-  color: rgba(1, 19, 52, 1);
-  cursor: pointer;
-}
-.deliveryCRM-date:focus {
-  outline: none;
-}
+
 /* button */
-.deliveryCRM-active-btn {
+.purchaseOrder-active-btn {
   padding: 6px 14px;
   border-radius: 12px;
   border: 2px solid rgba(35, 78, 112, 1);
@@ -158,7 +152,7 @@
   width: max-content;
   cursor: pointer;
 }
-.deliveryCRM-inactive-btn {
+.purchaseOrder-inactive-btn {
   border: 2px solid rgba(176, 176, 176, 1);
   padding: 6px 14px;
   font-size: 14px;
@@ -169,25 +163,8 @@
   width: max-content;
   cursor: pointer;
 }
-/* table title */
-.deliveryCRM-table-title {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-  margin-top: 30px;
-  gap: 20px;
-}
-.deliveryCRM-table-title > nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
 /* table */
-.deliveryCRM-table-cointainer {
+.purchaseOrder-table-cointainer {
   width: 100%;
   overflow-y: hidden;
   overflow-x: scroll;
@@ -195,21 +172,14 @@
   scroll-behavior: smooth;
   scrollbar-color: lightgray;
 }
-.deliveryCRM-table-cointainer > table {
+.purchaseOrder-table-cointainer > table {
   width: 100%;
   border: 1px solid hsla(0, 0%, 0%, 0.119);
   background: #fff;
-  margin-top: 45px;
+  margin-top: 30px;
   border-radius: 4px;
 }
-.deliveryCRM-delete-logo {
-  width: 20px;
-  height: 20px;
-  fill: black;
-  margin: auto;
-  cursor: pointer;
-}
-.deliveryCRM-table-head > tr > th {
+.purchaseOrder-table-head > tr > th {
   font-size: 16px;
   font-weight: 500;
   color: rgba(35, 78, 112, 1);
@@ -217,7 +187,7 @@
   border-bottom: 1px solid black;
   text-align: start;
 }
-.deliveryCRM-table-body > tr > td {
+.purchaseOrder-table-body > tr > td {
   font-size: 14px;
   font-weight: 400;
   color: rgba(26, 26, 26, 1);
@@ -225,7 +195,7 @@
   border-bottom: 1px solid hsla(0, 0%, 0%, 0.119);
   text-align: start;
 }
-.deliveryCRM-status-filter {
+.purchaseOrder-status-filter {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -234,10 +204,10 @@
   width: max-content;
   position: relative;
 }
-.deliveryCRM-status-filter:hover > .deliveryCRM-filter-box {
+.purchaseOrder-status-filter:hover > .purchaseOrder-filter-box {
   display: block;
 }
-.deliveryCRM-filter-box {
+.purchaseOrder-filter-box {
   display: none;
   background-color: #fff;
   z-index: 1;
@@ -247,7 +217,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-.deliveryCRM-filter-box > p {
+.purchaseOrder-filter-box > p {
   width: 100%;
   padding: 8px 12px;
   font-size: 12px;
@@ -257,72 +227,66 @@
 
   border-radius: 5px;
 }
-.deliveryCRM-filter-box > p:hover {
+.purchaseOrder-filter-box > p:hover {
   background-color: rgb(239, 239, 239);
   color: rgba(35, 78, 112, 1);
 }
-
-.deliveryCRM-table-check {
+.purchaseOrder-table-check {
   width: 18px;
   height: 18px;
   color: rgba(42, 42, 42, 1);
 }
-.deliveryCRM-minbody-width {
-  min-width: 120px;
-  max-width: max-content;
-}
-.deliveryCRM-minhead-width {
-  min-width: 155px;
-  max-width: max-content;
-}
-.deliveryCRM-maxhead-width {
-  min-width: 185px;
-  max-width: max-content;
+.purchaseOrder-delete-logo {
+  width: 20px;
+  height: 20px;
+  fill: black;
+  margin: auto;
+  cursor: pointer;
 }
 /* status */
-.deliveryCRM-Status {
+.purchaseOrder-Status {
   padding: 8px;
   text-align: center;
   border-radius: 10px;
   width: max-content;
 }
-.deliveryCRM-Status-draft {
+.purchaseOrder-Status-draft {
   background-color: rgba(255, 214, 56, 1);
 }
-.deliveryCRM-Status-Delivered {
-  background-color: rgba(34, 197, 94, 1);
+.purchaseOrder-Status-Submitted {
+  background-color: rgba(140, 216, 188, 1);
 }
-.deliveryCRM-Status-Cancelled {
+.purchaseOrder-Status-Cancelled {
   background-color: rgba(255, 77, 79, 1);
 }
-.deliveryCRM-Status-partiallyDelivered {
+.purchaseOrder-Status-PartiallyReceived {
   background-color: rgba(255, 156, 81, 1);
 }
-.deliveryCRM-Status-Returned {
+.purchaseOrder-Status-Received {
   background-color: rgba(229, 231, 235, 1);
 }
 /* action */
-#deliveryCRM-table-action {
+#purchaseOrder-table-action {
   position: relative;
 }
-#deliveryCRM-table-action:hover > .deliveryCRM-dot-container {
+#purchaseOrder-table-action:hover > .purchaseOrder-dot-container {
   display: flex;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 7px;
 }
-.deliveryCRM-dot-container {
+.purchaseOrder-dot-container {
   display: none;
   background: #fff;
   align-items: center;
   z-index: 7;
   position: absolute;
-  top: -90px;
+  top: -50px;
   right: 10px;
   width: max-content;
   align-items: start;
 }
-.deliveryCRM-dot-container > button {
+.purchaseOrder-dot-container > button {
   padding: 10px 15px;
   border-radius: 3px;
   width: 100%;
@@ -332,13 +296,14 @@
   font-weight: 500;
   text-align: start;
 }
-.deliveryCRM-dot-container button:hover {
-  background: lightgray;
+.purchaseOrder-dot-container button:hover {
+  background-color: rgb(239, 239, 239);
   cursor: pointer;
 }
-/* table bottem */
 
-.deliveryCRM-table-bottem {
+/* table-bottem */
+
+.purchaseOrder-table-bottem {
   width: 100%;
   display: flex;
   gap: 20px;
@@ -349,19 +314,19 @@
   border-top: 0px !important;
   border: 1px solid hsla(0, 0%, 0%, 0.119);
 }
-.deliveryCRM-num-entries {
+.purchaseOrder-num-entries {
   font-size: 14px;
   font-weight: 400;
   color: #2a2a2a;
 }
-.deliveryCRM-manage-control-box {
+.purchaseOrder-manage-control-box {
   width: 190px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
 }
-.deliveryCRM-manage-btn {
+.purchaseOrder-manage-btn {
   padding: 8px 10px;
   background-image: linear-gradient(#0056b3, #405189);
   border: none;
@@ -372,30 +337,30 @@
   transition: 0.3s ease-in-out;
   cursor: pointer;
 }
-.deliveryCRM-manage-btn:hover {
+.purchaseOrder-manage-btn:hover {
   transform: scale(1.035);
 }
-.deliveryCRM-num-page {
+.purchaseOrder-num-page {
   font-size: 14px;
   font-weight: 400;
   color: #2a2a2a;
 }
 
 @media (max-width: 1120px) {
-  .deliveryCRM-table-title > nav {
+  .purchaseOrder-table-title > nav {
     width: 100%;
     justify-content: end;
   }
 }
 @media (max-width: 430px) {
-  .deliveryCRM-table-bottem {
+  .purchaseOrder-table-bottem {
     flex-direction: column;
     padding: 20px 10px;
   }
-  .deliveryCRM-num-entries {
+  .purchaseOrder-num-entries {
     width: 100%;
   }
-  .deliveryCRM-manage-control-box {
+  .purchaseOrder-manage-control-box {
     width: 100%;
     justify-content: space-between;
   }

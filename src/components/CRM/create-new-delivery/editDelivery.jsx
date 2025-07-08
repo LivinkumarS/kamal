@@ -31,7 +31,7 @@ export default function createNewDelivery() {
         destination_address: "Abc colony, X city,Y..",
         delivery_table_data: [
           {
-            product_name: "E-shirt",
+            product_name: "E-shirtEdit",
             product_id: "PRO001",
             Quantity: "10",
             umo: "PSC",
@@ -209,8 +209,8 @@ export default function createNewDelivery() {
       case "Cancelled":
         setDeliveryBtn((prev) => ({
           ...prev,
-          delivery_return: true,
           BtnAccess: true,
+          delivery_return: true,
           customerACK: true,
           cancel_dn: true,
           save_draft: true,
@@ -277,9 +277,7 @@ export default function createNewDelivery() {
       toast.success("Product Item deleted!");
     }
   }
-  // console.log(DeliveryList_data);
-  console.log(deliveryInput);
-
+  console.log(DeliveryList_data);
   return (
     <>
       {showSerial && (
@@ -316,6 +314,7 @@ export default function createNewDelivery() {
                 </h3>
               )}
             </nav>
+
             <div>
               <button
                 className={
@@ -629,7 +628,7 @@ export default function createNewDelivery() {
               <button
                 className="createNewDelivery-cancel-btn"
                 onClick={(e) => {
-                  e.preventDefault();
+                  e.preventDefault;
                   prevpg(-1);
                 }}
               >

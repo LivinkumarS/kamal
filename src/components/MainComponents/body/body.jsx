@@ -23,7 +23,15 @@ import CreateNewSales from "../../CRM/create-new-sales/createNewSales";
 import EditNewSales from "../../CRM/create-new-sales/editNewSales";
 import DeliveryNoteCRM from "../../CRM/deliveryNote-crm/deliveryNoteCRM";
 import CreateNewDelivery from "../../CRM/create-new-delivery/createNewDelivery";
+import EditDelivery from "../../CRM/create-new-delivery/editDelivery";
 import InvoiceCRM from "../../CRM/invoice-crm/invoiceCRM";
+import CreateNewInvoice from "../../CRM/create-new-invoice/createNewInvoice";
+import EditInvoice from "../../CRM/create-new-invoice/editInvoice";
+import PurchaseOrder from "../../purchase/purchasr-order/purchaseOrder";
+import CreateNewPurchase from "../../purchase/create-new-purchaseOrder/createNewPurchase";
+import EditPurchase from "../../purchase/create-new-purchaseOrder/editPurchase";
+import StockReceipt from "../../purchase/stock-receipt/stockReceipt";
+import CreateNewStockReceipt from "../../purchase/create-new-stockReceipt/createNewStockReceipt";
 
 export default function body({
   expanded,
@@ -168,8 +176,24 @@ export default function body({
           <DeliveryNoteCRM setCurrentPage={setCurrentPage} />
         ) : currentPage == "createNewDelivery" ? (
           <CreateNewDelivery />
+        ) : currentPage == "editDelivery" ? (
+          <EditDelivery />
         ) : currentPage == "invoiceCRM" ? (
-          <InvoiceCRM />
+          <InvoiceCRM setCurrentPage={setCurrentPage} />
+        ) : currentPage == "createNewInvoice" ? (
+          <CreateNewInvoice />
+        ) : currentPage == "editInvoice" ? (
+          <EditInvoice />
+        ) : currentPage == "purchaseOrder" ? (
+          <PurchaseOrder setCurrentPage={setCurrentPage} />
+        ) : currentPage == "createNewPurchase" ? (
+          <CreateNewPurchase />
+        ) : currentPage == "editPurchase" ? (
+          <EditPurchase />
+        ) : currentPage == "stockReceipt" ? (
+          <StockReceipt setCurrentPage={setCurrentPage} />
+        ) : currentPage == "createNewStockReceipt" ? (
+          <CreateNewStockReceipt />
         ) : currentPage == "task" ? (
           <Task />
         ) : currentPage == "attendance" ? (

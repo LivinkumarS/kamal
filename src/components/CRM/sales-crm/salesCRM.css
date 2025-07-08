@@ -74,7 +74,7 @@
   color: rgba(176, 176, 176, 1);
 }
 .salesCRM-clearfilter {
-  margin-top: 15px;
+  margin-top: 30px;
   font-size: 14px;
   font-weight: 500;
   color: rgba(35, 78, 112, 1);
@@ -92,7 +92,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  margin-top: 10px;
   flex-wrap: wrap;
 }
 .salesCRM-input-box {
@@ -202,6 +201,7 @@
   padding: 8px;
   text-align: center;
   border-radius: 10px;
+  width: max-content;
 }
 .salesCRM-status-filter {
   display: flex;
