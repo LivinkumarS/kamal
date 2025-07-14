@@ -51,9 +51,9 @@ export default function Signin() {
             name: response.data.user?.name || "User",
             email: response.data.user?.email || userMail,
             profilePic:
-              response.data.user?.profile_pic ||
+              response.data.user?.profilePic ||
               "https://m.media-amazon.com/images/I/51T6MpbpQLL.jpg",
-            jobRole: response.data.user?.job_role || "User",
+            jobRole: response.data.user?.jobRole || "User",
             mobile: response.data.user?.mobile || "",
             token: response.data.token,
           },
