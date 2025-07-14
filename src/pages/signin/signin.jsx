@@ -29,7 +29,7 @@ export default function signin() {
         email: "john@example.com",
         profilePic: "https://m.media-amazon.com/images/I/51T6MpbpQLL.jpg",
         jobRole: "Project manager",
-        mobile: "98897887676",
+        mobile: "988987676",
       },
     };
     dispatch(login(userData));

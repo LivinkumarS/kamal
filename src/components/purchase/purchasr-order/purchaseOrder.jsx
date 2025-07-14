@@ -19,7 +19,7 @@ export default function purchaseOrder({ setCurrentPage }) {
     purchaseData: [
       {
         po_id: "PO-0001",
-        supplier_name: "Jon Deo",
+        supplier_name: "Jon",
         po_date: "14-05-2025",
         delivery_date: "15-06-20255",
         status: "Draft",

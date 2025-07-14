@@ -17,6 +17,7 @@ import EditInvoice from "./components/CRM/create-new-invoice/editInvoice";
 import CreateNewPurchase from "./components/purchase/create-new-purchaseOrder/createNewPurchase";
 import EditPurchase from "./components/purchase/create-new-purchaseOrder/editPurchase";
 import CreateNewStockReceipt from "./components/purchase/create-new-stockReceipt/createNewStockReceipt";
+import EditStockReceipt from "./components/purchase/create-new-stockReceipt/editStockReceipt";
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/new-purchase" element={<CreateNewPurchase />} />
         <Route path="/edit-purchase" element={<EditPurchase />} />
         <Route path="/new-stock-receipt" element={<CreateNewStockReceipt />} />
+        <Route path="/edit-stock-receipt" element={<EditStockReceipt />} />
       </Routes>
     </BrowserRouter>
   );

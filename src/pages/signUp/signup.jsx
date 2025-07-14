@@ -38,7 +38,7 @@ export default function signup() {
       },
     };
     dispatch(login(userData));
-    toast.success("Signed up successfully!");
+    toast.success("Signed up successfully!!");
     navigate("/");
   }
 

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./stockReceipt.css";
+import { useNavigate } from "react-router-dom";
 
 export default function stockReceipt({ setCurrentPage }) {
+  const navigate = useNavigate();
   const [stockCurrentPage, setStockCurrentPage] = useState(1);
   const stockPerPage = 10;
 
@@ -303,7 +305,12 @@ export default function stockReceipt({ setCurrentPage }) {
                     </td>
                     <td id="stockReceipt-table-action">
                       <nav className="stockReceipt-dot-container">
-                        <button>
+                        <button
+                          onClick={() => {
+                            navigate(`/?tab=editNewSales/${ele.grn_id}`);
+                            setCurrentPage("editStockReceipt");
+                          }}
+                        >
                           {ele.status === "Draft" ? "Edit" : "View"} details
                         </button>
                         <button disabled={ele.status !== "Submitted"}>

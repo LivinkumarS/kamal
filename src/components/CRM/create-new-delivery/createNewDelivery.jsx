@@ -232,7 +232,7 @@ export default function createNewDelivery() {
   const handleDraftState = (e) => {
     e.preventDefault();
     setDeliveryStatus("Draft");
-    toast.success("Delivery Item in Save Draft State");
+    toast.success("Delivery Item in Draft State");
   };
   const handleSubmitDNState = (e) => {
     e.preventDefault();
