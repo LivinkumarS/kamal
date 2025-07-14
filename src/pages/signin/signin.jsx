@@ -5,49 +5,102 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
 import { toast } from "react-toastify";
 import siteLogo from "../../assets/signin/sitelogo.png";
+import axios from "axios";
 
-export default function signin() {
+export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // controlling inputs
-
   const [userMail, setUserMail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [showassword, setshowpassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [focusname, setfocusname] = useState(false);
-  const [focusmail, setfocusmail] = useState(false);
-
+  const [focuspassword, setfocuspassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  function handleSignIn() {
-    const userData = {
-      user: {
-        id: 1,
-        name: "John Doe",
-        email: "john@example.com",
-        profilePic: "https://m.media-amazon.com/images/I/51T6MpbpQLL.jpg",
-        jobRole: "Project manager",
-        mobile: "988987676",
-      },
-    };
-    dispatch(login(userData));
-    toast.success("Signed in successfully!");
-    navigate("/");
+  const API_URL = "https://saikumar99.pythonanywhere.com/api/login/";
+
+  async function handleSignIn(e) {
+    e.preventDefault();
+
+    if (!userMail || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        API_URL,
+        {
+          email: userMail,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data && response.data.token) {
+        const userData = {
+          user: {
+            id: response.data.user?.id || Date.now(),
+            name: response.data.user?.name || "User",
+            email: response.data.user?.email || userMail,
+            profilePic:
+              response.data.user?.profile_pic ||
+              "https://m.media-amazon.com/images/I/51T6MpbpQLL.jpg",
+            jobRole: response.data.user?.job_role || "User",
+            mobile: response.data.user?.mobile || "",
+            token: response.data.token,
+          },
+        };
+
+        dispatch(login(userData));
+        toast.success("Signed in successfully!");
+        navigate("/");
+      } else {
+        throw new Error("Invalid response format");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      let errorMessage = "Login failed. Please try again.";
+
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        if (error.response.status === 401) {
+          errorMessage = "Invalid email or password";
+        } else if (error.response.data) {
+          errorMessage =
+            error.response.data.message ||
+            error.response.data.detail ||
+            JSON.stringify(error.response.data);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        errorMessage = "No response from server. Please check your connection.";
+      }
+
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <div>
-      <form className="signin-page">
+      <form className="signin-page" onSubmit={handleSignIn}>
         <div className="signin-img">
-          <img src={siteLogo} />
+          <img src={siteLogo} alt="Site Logo" />
           <p>Think the design, design the thinking</p>
         </div>
         <div className="signin-form">
           <div className="signin-cointained">
             <div className="welcome">Sign In</div>
-            <p>Welcome back! Let’s make work smarter, not harder.</p>
+            <p>Welcome back! Let's make work smarter, not harder.</p>
             <div
               className={`username-cointainer ${
                 focusname ? "user-border" : " "
@@ -68,7 +121,7 @@ export default function signin() {
             </div>
             <div
               className={`password-cointainer ${
-                focusmail ? "mail-border" : ""
+                focuspassword ? "mail-border" : ""
               }`}
             >
               {showPassword ? (
@@ -124,17 +177,8 @@ export default function signin() {
                 </svg>
               )}
             </div>
-            {/* <div className="tearms-cointainer">
-              <input type="checkbox" id="terms" required />
-              <label form="terms" className="agree">
-                I agree with{" "}
-                <a href="#" target="_blank">
-                  Terms & Conditions
-                </a>
-              </label>
-            </div> */}
-            <button onClick={handleSignIn} className="login-button">
-              Sign In
+            <button type="submit" className="login-button" disabled={loading}>
+              {loading ? "Signing In..." : "Sign In"}
             </button>
             <div id="changer-link">
               Don't have an account?{" "}
@@ -148,3 +192,9 @@ export default function signin() {
     </div>
   );
 }
+
+
+
+
+
+
